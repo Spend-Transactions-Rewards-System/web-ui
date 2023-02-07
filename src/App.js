@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+import { CssBaseline } from "@mui/material";
+
+import Temp from "./Pages/Temp/Temp";
+import PointsActivity from "./Pages/PointsActivity/PointsActivity";
+import CustomerLayout from "./Layout/CustomerLayout";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <CssBaseline>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Temp />}/>
+            <Route element={<CustomerLayout />}>
+              <Route path="/points-activity" element={<PointsActivity />} />
+            </Route>
+          </Routes>
+        </Router>
+      </CssBaseline>
     </div>
   );
 }
