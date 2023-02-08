@@ -1,0 +1,14 @@
+div > .navBarButton {
+    padding: 16px 8px 16px 24px;
+    text-transform: none;
+    width: 200px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.navIcon {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}

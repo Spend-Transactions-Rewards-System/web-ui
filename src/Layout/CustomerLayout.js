@@ -28,12 +28,12 @@ const CustomerLayout = () => {
             >
                 <Box className="format-spaceBetween">
                     <Typography className="logo">
-                        <b>SCIS</b> BANK
+                        <b>SCIS</b> &nbsp; BANK
                     </Typography>
                     <AccountMenu />                    
                 </Box> 
             </Box>
-            <Typography className="pageHeader">
+            <Typography className="pageHeader-customer">
                 Points Activity
             </Typography>
             <Outlet />

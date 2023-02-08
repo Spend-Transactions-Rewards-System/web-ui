@@ -3,11 +3,18 @@
     font-size: 20px;
 }
 
-.pageHeader.MuiTypography-root {
+.pageHeader-customer.MuiTypography-root {
     color: #2B3674;
     font-size: 20px;
     font-weight: bold;
     margin: 24px 0px;
+}
+
+.pageHeader-tenant.MuiTypography-root {
+    color: #2B3674;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0px;
 }
 
 /* Common format */

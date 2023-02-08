@@ -21,7 +21,6 @@ const CustomButton = ({ text, handleOnClick, link, disabled }) => {
                     backgroundColor: "#aea1e6"
                 }
             }}
-            
         >   
             {text}
         </Button>

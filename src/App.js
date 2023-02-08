@@ -5,10 +5,11 @@ import { CssBaseline } from "@mui/material";
 import Temp from "./Pages/Temp/Temp";
 import PointsActivity from "./Pages/PointsActivity/PointsActivity";
 import CustomerLayout from "./Layout/CustomerLayout";
-// import TenantLayout from "./Layout/TenantLayout";
-// import DataFiles from "./Pages/DataFiles/DataFiles";
-// import Campaigns from "./Pages/Campaigns/Campaigns";
+import TenantLayout from "./Layout/TenantLayout";
+import DataFiles from "./Pages/DataFiles/DataFiles";
+import Campaigns from "./Pages/Campaigns/Campaigns";
 import Error404 from "./Pages/Error404/Error404";
+import UploadData from "./Pages/UploadData/UploadData";
 
 function App() {
   return (
@@ -23,10 +24,11 @@ function App() {
               <Route path="/pointsactivity" element={<PointsActivity />} />
             </Route>
             
-            {/* <Route element={<TenantLayout />}>
+            <Route element={<TenantLayout />}>
               <Route path="/datafiles" element={<DataFiles />} />
+              <Route path="/datafiles/uploaddata" element={<UploadData />} />
               <Route path="/campaigns" element={<Campaigns />} />
-            </Route> */}
+            </Route>
           </Routes>
         </Router>
       </CssBaseline>

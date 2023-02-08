@@ -16,7 +16,8 @@ const AccountMenu = () => {
             sx={{
                 backgroundColor: "#FFFFFF",
                 borderRadius: "30px",
-                width: "110px"
+                width: "130px",
+                px: 1
             }}
         >
             <Button
