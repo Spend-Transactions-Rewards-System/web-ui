@@ -9,12 +9,11 @@ import {
     TableCell, 
     TableBody,
     TablePagination,
-    Button
 } from "@mui/material";
 import _ from "lodash";
-import { IoIosArrowDown } from "react-icons/io";
-import UploadDataFilters from "./DataFilesFilters";
 
+import UploadDataFilters from "../TableFilters/DataFilesFilters";
+import Row from "./Row";
 
 const CollapsibleTable = ({ 
     columnNames, 
@@ -22,9 +21,9 @@ const CollapsibleTable = ({
     details, 
     filter, 
     setFilter, 
+    isDataFiles
 }) => {
-    const [open, setOpen] = useState();
-
+    
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     
@@ -57,29 +56,12 @@ const CollapsibleTable = ({
                 </TableRow>
                 {_.map(mainData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage), (aRow) => {
                     return(
-                        <TableRow key={aRow["id"]}>
-                            {_.map(aRow, (value, key) => {
-                                if (key !== "id" && key !== "rejected") {
-                                    return (
-                                    <TableCell key={key}>{value}</TableCell>)
-                                }
-                            })}
-                            <TableCell align="right">
-                                <Button
-                                    disableRipple
-                                    sx={{
-                                        textTransform: "none",
-                                        color: "#4B2DCC"
-                                    }}
-                                    onClick={() => setOpen((state) => ({
-                                        ...state, [aRow["id"]]: true
-                                    }))}
-                                >
-                                    View Details
-                                    <IoIosArrowDown style={{color:"#A3AED0", marginLeft:"8px"}}/>
-                                </Button>
-                            </TableCell>
-                        </TableRow>
+                        <Row
+                            currRow={aRow}
+                            isDataFiles={isDataFiles} 
+                            details={details[aRow["id"]]}
+                            key={aRow["id"]}
+                        />
                     )
                 })}
                 {emptyRows > 0 && (

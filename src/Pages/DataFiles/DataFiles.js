@@ -1,13 +1,14 @@
 import { useState,useEffect } from "react";
 
+import { Box } from "@mui/material";
 import moment from "moment/moment";
 import _ from "lodash";
 
 import CollapsibleTable from "../../Components/CollapsibleTable/CollapsibleTable";
 import LoadingAnimation from "../../Components/LoadingAnimation/LoadingAnimation";
+import CustomButton from "../../Components/CustomButton/CustomButton";
 
 const columnNames = ["File Name", "Type", "Uploaded Data & Time", "Status"]
-const detailsNames = ["Completed Data & Time", "Type", "Uploaded Data & Time", "Status"]
 
 const DataFiles = () => {
 
@@ -80,14 +81,25 @@ const DataFiles = () => {
     return (
         <> 
             {mainData === null || details === null ? <LoadingAnimation /> : 
-            <CollapsibleTable 
-                columnNames={columnNames}
-                detailsNames={detailsNames}
-                mainData={mainData}
-                details={details}
-                filter={filter}
-                setFilter={setFilter}
-            />
+            <>  
+                <Box 
+                    className="format-flexEnd"
+                    sx={{mb: 2}}
+                >
+                    <CustomButton 
+                        text="Upload data"
+                        link="/datafiles/upload"
+                    />
+                </Box>
+                <CollapsibleTable 
+                    columnNames={columnNames}
+                    mainData={mainData}
+                    details={details}
+                    filter={filter}
+                    setFilter={setFilter}
+                    isDataFiles={true}
+                />
+            </>
             }
         </>
     )

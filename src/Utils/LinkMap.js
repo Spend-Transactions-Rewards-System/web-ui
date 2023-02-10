@@ -3,7 +3,7 @@ const linkMap = {
         name: "Data Files", 
         prevLink: null
     },
-    uploaddata: {
+    upload: {
         name: "Upload Data",
         prevLink: "/datafiles"
     }, 

@@ -26,7 +26,7 @@ function App() {
             
             <Route element={<TenantLayout />}>
               <Route path="/datafiles" element={<DataFiles />} />
-              <Route path="/datafiles/uploaddata" element={<UploadData />} />
+              <Route path="/datafiles/upload" element={<UploadData />} />
               <Route path="/campaigns" element={<Campaigns />} />
             </Route>
           </Routes>
