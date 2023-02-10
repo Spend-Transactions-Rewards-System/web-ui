@@ -79,7 +79,8 @@ const DataFiles = () => {
     }, [filter])   
 
     return (
-        <> 
+        <div> 
+            <script>{document.title="Data Files"}</script>
             {mainData === null || details === null ? <LoadingAnimation /> : 
             <>  
                 <Box 
@@ -101,7 +102,7 @@ const DataFiles = () => {
                 />
             </>
             }
-        </>
+        </div>
     )
 }
 

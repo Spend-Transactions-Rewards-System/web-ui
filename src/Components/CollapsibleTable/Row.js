@@ -17,9 +17,11 @@ const detailDict = {
     "completeDateTime": "Complete Date Time",
     "processed": "Processed", 
     "rejected": "Rejected",
+    "remarks": "Remarks",
+    "amountSpent": "Amount Spent"
 }
 
-const Row = ({ currRow, isDataFiles, details }) => {
+const Row = ({ currRow, isDataFiles, details, colSpan }) => {
 
     const [open, setOpen] = useState(false);
 
@@ -42,7 +44,21 @@ const Row = ({ currRow, isDataFiles, details }) => {
                                         width: "100px"
                                     }}
                                 />
-                            : <>{value}</>
+                            : !isDataFiles && aKey === "balance"  ?
+                                <Typography 
+                                    sx={{
+                                        fontWeight: 400,
+                                        fontSize: "0.875rem",
+                                        lineHeight: 1.43,
+                                        letterSpacing: "0.01071em",
+                                        color: currRow["card"] === "SCIS Shopping" ? "#9D1C00"
+                                                : currRow["card"]  === "SCIS Freedom" ? "#0E972C"
+                                                : "#CB7A00"
+                                    }}
+                                >
+                                    {value}
+                                </Typography>
+                            : value
                         }
                         { currRow["rejected"] > 0 &&  aKey === "status"
                             && currRow["status"].toLowerCase() === "completed"
@@ -72,7 +88,7 @@ const Row = ({ currRow, isDataFiles, details }) => {
             </TableCell>
         </TableRow>
         <TableRow>
-            <TableCell sx={{py: 0}} colSpan={5}>
+            <TableCell sx={{py: 0}} colSpan={colSpan}>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                 <Box sx={{ml: 10, my: 2}}>
                     {_.map(details, (value, key) => {

@@ -28,7 +28,7 @@ const CustomerLayout = () => {
             >
                 <Box className="format-spaceBetween">
                     <Typography className="logo">
-                        <b>SCIS</b> &nbsp; BANK
+                        <b>SCIS</b> BANK
                     </Typography>
                     <AccountMenu />                    
                 </Box> 
