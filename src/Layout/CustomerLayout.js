@@ -11,14 +11,14 @@ const CustomerLayout = () => {
         <Box
             sx={{
                 backgroundColor: "#E0E5F2",
-                p: "50px 32px 40px 32px",
+                p: "70px 32px 80px 32px",
                 minHeight: "100vh",
             }}
         >
             <Box
                 sx={{
                     backgroundColor: "#FFFFFF",
-                    position: "fixed",
+                    position: "absolute",
                     top: 0,
                     left: 0,
                     width: "100%",
@@ -26,10 +26,13 @@ const CustomerLayout = () => {
                     boxShadow: "0px 4px 20px 0px #0000001A"
                 }}
             >
-                <Box className="format-spaceBetween">
-                    <Typography className="logo">
-                        <b>SCIS</b> BANK
-                    </Typography>
+                <Box className="flexbox-spaceBetween">
+                    <img 
+                        src={require("../Assets/logo.png")}
+                        width="80px"
+                        style={{padding: 0}}
+                        alt="logo"
+                    />
                     <AccountMenu />                    
                 </Box> 
             </Box>

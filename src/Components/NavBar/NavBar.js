@@ -41,12 +41,14 @@ const NavBar = () => {
                 left: 0
             }}
         >
-            <Typography 
-                className="logo format-center"
-                sx={{ p: "32px 8px" }}
-            >
-                <b>SCIS</b> &nbsp; BANK 
-            </Typography>
+            <Box className="flexbox-center">
+                <img 
+                    src={require("../../Assets/logo.png")}
+                    width="120px"
+                    style={{padding: "8px 5px"}}
+                    alt="logo"
+                />
+            </Box>
             <hr 
                 style={{
                     backgroundColor: "#F4F7FE", 

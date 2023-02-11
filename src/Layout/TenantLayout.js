@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from "react-router";
 
-import { Box, Breadcrumbs, Link, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import NavBar from "../Components/NavBar/NavBar";
 import CustomBreadcrumbs from "../Components/CustomBreadcrumbs/CustomBreadcrumbs";
@@ -17,14 +17,14 @@ const TenantLayout = () => {
         <Box
             sx={{
                 backgroundColor: "#E0E5F2",
-                p: "16px 32px 40px 32px",
+                p: "16px 32px 80px 32px",
                 minHeight: "100vh",
             }}
         >
             <NavBar />
             <Box sx={{ml: "200px"}} >   
                 <Box 
-                    className="format-spaceBetween"
+                    className="flexbox-spaceBetween"
                     sx={{mb: "24px"}}
                 >
                     <Box>
