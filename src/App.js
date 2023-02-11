@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import { CssBaseline } from "@mui/material";
 
-import Temp from "./Pages/Temp/Temp";
 import PointsActivity from "./Pages/PointsActivity/PointsActivity";
 import CustomerLayout from "./Layout/CustomerLayout";
 import TenantLayout from "./Layout/TenantLayout";
@@ -10,6 +9,7 @@ import DataFiles from "./Pages/DataFiles/DataFiles";
 import Campaigns from "./Pages/Campaigns/Campaigns";
 import Error404 from "./Pages/Error404/Error404";
 import UploadData from "./Pages/UploadData/UploadData";
+import Login from "./Pages/Login/Login";
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
       <CssBaseline>
         <Router>
           <Routes>
-            <Route path="/" element={<Temp />}/>
+            <Route path="/" element={<Login />}/>
             <Route path="*" element={<Error404 />} />
 
             <Route element={<CustomerLayout />}>

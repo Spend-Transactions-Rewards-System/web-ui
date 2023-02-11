@@ -9,7 +9,7 @@ const SearchBar = ({ placeholder, handleOnChange }) => {
             fullWidth
             label={
                 <Box 
-                    className="format-flexStart"
+                    className="flexbox-flexStart"
                     sx={{color: "#888888"}}
                 >
                   <FiSearch /> &nbsp; {placeholder}

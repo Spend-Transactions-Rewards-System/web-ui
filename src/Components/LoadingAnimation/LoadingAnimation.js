@@ -2,7 +2,7 @@ import { Box, CircularProgress } from "@mui/material";
 
 const LoadingAnimation = () => {
     return(
-        <Box className="format-center">
+        <Box className="flexbox-center">
             <CircularProgress
                 sx={{
                 color: "#2B3674",

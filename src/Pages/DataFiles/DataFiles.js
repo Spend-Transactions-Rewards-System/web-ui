@@ -84,7 +84,7 @@ const DataFiles = () => {
             {mainData === null || details === null ? <LoadingAnimation /> : 
             <>  
                 <Box 
-                    className="format-flexEnd"
+                    className="flexbox-flexEnd"
                     sx={{mb: 2}}
                 >
                     <CustomButton 

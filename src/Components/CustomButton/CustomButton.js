@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Button } from "@mui/material";
 
-const CustomButton = ({ text, handleOnClick, link, disabled }) => {
+const CustomButton = ({ text, handleOnClick, link, disabled, fullWidth }) => {
 
     const navigate = useNavigate();
     const handleNavigate = () => {
@@ -14,6 +14,7 @@ const CustomButton = ({ text, handleOnClick, link, disabled }) => {
             variant="contained"
             onClick={handleOnClick ? handleOnClick : handleNavigate}
             disabled={disabled}
+            fullWidth={fullWidth}
             sx={{
                 textTransform: "none", 
                 backgroundColor: "#4B2DCC", 

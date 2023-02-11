@@ -12,7 +12,7 @@ const AccountMenu = () => {
 
     return (
         <Box 
-            className="format-spaceBetween"
+            className="flexbox-spaceBetween"
             sx={{
                 backgroundColor: "#FFFFFF",
                 borderRadius: "30px",

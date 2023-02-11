@@ -1,0 +1,36 @@
+.background {
+    background-image: url("../../Assets/login-design.png");
+    background-position: bottom;
+    background-color: #F4F7FE;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100%;
+    z-index: 1;
+}
+
+.forget {
+    font-size: 12px;
+    padding: 8px 0px 32px 0px;
+    position: relative;
+    float: right;
+    text-decoration: none;
+    color: #4B2DCC;
+    font-weight: 500;
+}
+
+.forget:visited {
+    text-decoration: none;
+    color: red;
+}
+
+.forget:hover {
+    text-decoration: none;
+    color: #aea1e6;
+    cursor: pointer;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #2B3674 inset;
+    -webkit-text-fill-color: #ffffff;
+}
