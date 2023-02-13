@@ -14,18 +14,11 @@
     padding: 8px 0px 32px 0px;
     position: relative;
     float: right;
-    text-decoration: none;
     color: #4B2DCC;
     font-weight: 500;
 }
 
-.forget:visited {
-    text-decoration: none;
-    color: red;
-}
-
 .forget:hover {
-    text-decoration: none;
     color: #aea1e6;
     cursor: pointer;
 }

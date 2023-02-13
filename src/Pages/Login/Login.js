@@ -26,6 +26,7 @@ const Login = () => {
 
     return (
         <Box className="background">
+            <script>{document.title = "Welcome"}</script>
             <Box 
                 className="flexbox-columnFlex" 
                 sx={{m: "auto", width: "300px", pt: "4%"}}
@@ -77,7 +78,13 @@ const Login = () => {
                     )})
                 }
                 <Box sx={{width: "300px"}}>
-                    <Link className="forget">Forget password?</Link>
+                    <Link
+                        className="forget"
+                        underline="none"
+                        sx={{color: "#4B2DCC" }}
+                    >
+                        Forget password?
+                    </Link>
                 </Box>
                 <CustomButton 
                     text="Login"
