@@ -22,7 +22,7 @@ const TenantLayout = () => {
             }}
         >
             <NavBar />
-            <Box sx={{ml: "200px"}} >   
+            <Box sx={{ml: "250px"}} >   
                 <Box 
                     className="flexbox-spaceBetween"
                     sx={{mb: "24px"}}

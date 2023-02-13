@@ -1,7 +1,7 @@
 div > .navBarButton {
     padding: 16px 8px 16px 24px;
     text-transform: none;
-    width: 200px;
+    width: 250px;
     display: flex;
     justify-content: flex-start;
     align-items: center;

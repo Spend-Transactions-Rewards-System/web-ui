@@ -1,0 +1,12 @@
+.logout {
+    padding: 8px;
+    position: relative;
+    float: right;
+    color: #4B2DCC;
+    font-weight: 500;
+}
+
+.logout:hover {
+    color: #aea1e6;
+    cursor: pointer;
+}

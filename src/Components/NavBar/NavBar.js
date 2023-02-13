@@ -34,7 +34,7 @@ const NavBar = () => {
         <Box 
             sx={{
                 backgroundColor: "#FFFFFF", 
-                width: "200px", 
+                width: "250px", 
                 minHeight: "100vh", 
                 position: "fixed", 
                 top: 0, 

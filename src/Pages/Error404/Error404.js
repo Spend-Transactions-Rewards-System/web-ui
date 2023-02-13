@@ -15,6 +15,7 @@ const Error404 = () => {
                 flexDirection: "column"
             }}
         >   
+            <script>{document.title = "Page Not Found"}</script>
             <ErrorImage style={{height: "50%", margin: "40px"}}/>
             <Typography 
                 sx={{

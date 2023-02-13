@@ -1,0 +1,10 @@
+.customButton.MuiButton-root {
+    text-transform: none;
+    background-color: #4B2DCC;
+    border-radius: 12px;
+}
+
+.customButton.MuiButton-root:hover {
+    background-color: #331c93;
+}
+

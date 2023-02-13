@@ -63,7 +63,7 @@ const PointsActivity = () => {
 
     return (
         <div>
-            <script>{document.title="Data Files"}</script>
+            <script>{document.title="Points Activity"}</script>
             {mainData === null || details === null ? <LoadingAnimation /> : 
             <>  
                 <CollapsibleTable 

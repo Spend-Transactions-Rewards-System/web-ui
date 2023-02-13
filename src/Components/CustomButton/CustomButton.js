@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 
 import { Button } from "@mui/material";
 
+import "./CustomButton.css";
+
 const CustomButton = ({ text, handleOnClick, link, disabled, fullWidth }) => {
 
     const navigate = useNavigate();
@@ -15,13 +17,7 @@ const CustomButton = ({ text, handleOnClick, link, disabled, fullWidth }) => {
             onClick={handleOnClick ? handleOnClick : handleNavigate}
             disabled={disabled}
             fullWidth={fullWidth}
-            sx={{
-                textTransform: "none", 
-                backgroundColor: "#4B2DCC", 
-                "&:hover": {
-                    backgroundColor: "#aea1e6"
-                }
-            }}
+            className="customButton"
         >   
             {text}
         </Button>
