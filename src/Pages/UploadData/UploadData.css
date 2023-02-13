@@ -1,0 +1,15 @@
+.upload-header {
+    color: #1B2559;
+}
+
+.upload-text {
+    color: #888888;
+}
+
+/* Layout format */
+.guides-container.MuiCardContent-root {
+    display: flex;
+    justify-content: center;
+    padding: 32px 48px;
+    overflow-x: auto;
+}
