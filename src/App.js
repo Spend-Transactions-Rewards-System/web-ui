@@ -10,6 +10,7 @@ import Campaigns from "./Pages/Campaigns/Campaigns";
 import Error404 from "./Pages/Error404/Error404";
 import UploadData from "./Pages/UploadData/UploadData";
 import Login from "./Pages/Login/Login";
+import AddCampaigns from "./Pages/Campaigns/AddCampaigns";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
               <Route path="/datafiles" element={<DataFiles />} />
               <Route path="/datafiles/upload" element={<UploadData />} />
               <Route path="/campaigns" element={<Campaigns />} />
+              <Route path="/campaigns/addcampaigns" element={<AddCampaigns />} />
             </Route>
           </Routes>
         </Router>
