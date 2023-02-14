@@ -9,7 +9,7 @@ import {
 import { CgClose } from "react-icons/cg";
 import { BsFillFileEarmarkTextFill }  from "react-icons/bs";
 
-const UploadInProgress = ({ fileName, cancelFile, index }) => {
+const UploadInProgress = ({ fileName, cancelFile, index, type }) => {
     return(
         <Card sx={{width: "400px", borderRadius: 3}}>
            <CardContent sx={{backgroundColor: "#EFF4FB"}}>
@@ -30,7 +30,7 @@ const UploadInProgress = ({ fileName, cancelFile, index }) => {
                 />
                 <Box >
                     <Typography sx={{color: "#1B2559"}}>
-                        <b>Uploading</b>
+                        <b>Uploading {` (${type})`}</b>
                     </Typography>    
                     <Typography variant="subtitle2" color="#A3AED0">
                         {fileName}

@@ -2,11 +2,10 @@ import {
     Alert,
     AlertTitle,
     Card, 
-    CardContent, 
     Typography 
 } from "@mui/material";
 
-const UploadStatus = ({ isSuccess, fileName }) => {
+const UploadStatus = ({ isSuccess, fileName, type }) => {
     return(
         <Card sx={{width: "400px", borderRadius: 3}}>
             <Alert 
@@ -14,8 +13,8 @@ const UploadStatus = ({ isSuccess, fileName }) => {
                 severity={isSuccess ? "success" : "error"}
             >
                 <AlertTitle sx={{fontWeight: "bold"}}>
-                    { isSuccess ? "File uploaded successfully"
-                        : "Error - File failed to upload"
+                    { isSuccess ? "File uploaded successfully (" + type + ")"
+                        : "Error - File failed to upload (" + type + ")"
                     }
                 </AlertTitle>
                 <Typography 

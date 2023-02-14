@@ -142,6 +142,9 @@ const UploadData = () => {
                 {_.map(formData, (item, index) => {
                     const name = Object.keys(item)[0];
                     const status = item[name]["status"];
+                    let type = item[name]["type"];
+                    type = type.charAt(0).toUpperCase() + type.slice(1).toLowerCase();
+
                     return(
                         <Grid item xs={12} sx={{pb: 1}} key={index}>
                             { status === "in progress" 
@@ -149,10 +152,12 @@ const UploadData = () => {
                                         fileName={name} 
                                         index={index}
                                         cancelFile={cancelFile} 
+                                        type={type}
                                     />
                                 :   <UploadStatus 
                                         isSuccess={status === "success"} 
                                         fileName={name}  
+                                        type={type}
                                     />
                             }
                         </Grid>

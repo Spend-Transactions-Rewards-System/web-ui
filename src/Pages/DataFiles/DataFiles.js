@@ -111,7 +111,7 @@ export default DataFiles;
 const data = [
     {   
         id: 1, 
-        fileName: "users_01-02-23.csv", 
+        fileName: "01-02-23.csv", 
         type: "users", 
         uploadDateTime: new Date(), 
         status: "processing", 
@@ -122,7 +122,7 @@ const data = [
     }, 
     {   
         id: 2,
-        fileName: "spendings_01-02-23.csv", 
+        fileName: "01-02-23.csv", 
         type: "spendings", 
         uploadDateTime: new Date(), 
         status: "completed", 
@@ -133,7 +133,7 @@ const data = [
     }, 
     {
         id: 3,
-        fileName: "spendings_01-02-23.csv", 
+        fileName: "01-02-23.csv", 
         type: "spendings", 
         uploadDateTime: new Date(), 
         status: "error", 
@@ -144,7 +144,7 @@ const data = [
     }, 
     {
         id: 4,
-        fileName: "spendings_31-01-23.csv", 
+        fileName: "31-01-23.csv", 
         type: "spendings", 
         uploadDateTime: new Date(), 
         status: "completed", 
