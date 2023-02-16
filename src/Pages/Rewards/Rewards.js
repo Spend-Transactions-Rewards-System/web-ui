@@ -63,7 +63,7 @@ const Rewards = () => {
 
     return (
         <div>
-            <script>{document.title="Points Activity"}</script>
+            <script>{document.title="Rewards"}</script>
             {mainData === null || details === null ? <LoadingAnimation /> : 
             <>  
                 <CollapsibleTable 
