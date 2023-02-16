@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import moment from "moment/moment";
 import _ from "lodash";
 
-import NonCollapsibleTable from "../../Components/CollapsibleTable/NonCollapsibleTable";
+import NonCollapsibleTable from "../../Components/NonCollapsibleTable/NonCollapsibleTable";
 import LoadingAnimation from "../../Components/LoadingAnimation/LoadingAnimation";
 import CustomButton from "../../Components/CustomButton/CustomButton";
 
@@ -99,7 +99,11 @@ const data = [
         campaignTitle: "6 points per dollar with Shopee, min spend 150 SGD",
         startDate: "01/02/2023",
         endDate: "28/02/2023",
-        status: "inactive", 
+        status: "Inactive",
+        pointsPerDollar: "5",
+        minSpend: "150",
+        merchant: "some MCC",
+        notification: "this is a notification message"
 
     },
 
@@ -109,7 +113,11 @@ const data = [
         campaignTitle: "4 points per dollar with Grab, min spend 100 SGD ",
         startDate: "01/02/2023",
         endDate: "28/02/2023",
-        status: "active", 
+        status: "Active",
+        pointsPerDollar: "10",
+        minSpend: "200",
+        merchant: "some MCC",
+        notification: "this is a notification message"
 
     },
 ]

@@ -1,9 +1,24 @@
-import React from "react";
+import React from 'react';
+import { useState } from "react";
+import AddCampaignForm from './AddCampaignForm';
 
-const AddCampaigns = () => {
+const AddCampaign = () => {
+    const [formData, setFormData] = useState({
+      title: '',
+      description: '',
+      consent: '',
+      roles: [],
+      duration: '',
+      theme: ''
+    });
+  
+    const updateFormData = (newFormData) => {
+      setFormData(newFormData);
+    }
+  
     return (
-        <h1>addcampaigns page</h1>
+      <AddCampaignForm formData={formData} setFormData={updateFormData} />
     );
-}
-
-export default AddCampaigns;
+  }
+  
+  export default AddCampaign;

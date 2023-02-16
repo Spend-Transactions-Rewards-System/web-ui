@@ -13,7 +13,7 @@ import {
 import _ from "lodash";
 
 import CampaignFilters from "../TableFilters/CampaignFilters";
-import Row from "./Row";
+import Row from "../NonCollapsibleTable/Row";
 import PointsActivityFilters from "../TableFilters/PointsActivityFilters";
 
 const NonCollapsibleTable = ({ 
