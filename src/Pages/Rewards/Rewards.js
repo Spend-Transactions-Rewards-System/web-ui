@@ -8,7 +8,7 @@ import LoadingAnimation from "../../Components/LoadingAnimation/LoadingAnimation
 
 const columnNames = ["Date", "Description", "Type", "Change", "Balance", "Card"]
 
-const PointsActivity = () => {
+const Rewards = () => {
 
     const [origData, setOrigData] = useState(null);
     const [mainData, setMainData] = useState(null);
@@ -80,7 +80,7 @@ const PointsActivity = () => {
     )
 }
 
-export default PointsActivity;
+export default Rewards;
 
 const data = [
     {   
