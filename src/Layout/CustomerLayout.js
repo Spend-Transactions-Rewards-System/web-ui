@@ -37,7 +37,7 @@ const CustomerLayout = () => {
                 </Box> 
             </Box>
             <Typography className="pageHeader-customer">
-                Points Activity
+                Rewards 
             </Typography>
             <Outlet />
         </Box>
