@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 
 import {
     Box,
@@ -25,8 +25,11 @@ const detailDict = {
     "message": "Notification Message" 
 }
 
-const Row = ({ currRow, type, details, colSpan }) => {
+const areEqual = (prevProps, nextProps) => {
+    return JSON.stringify(prevProps) === JSON.stringify(nextProps);
+}
 
+const Row = ({ currRow, type, details, colSpan }) => {
     const [open, setOpen] = useState(false);
 
     return(
@@ -161,4 +164,4 @@ const Row = ({ currRow, type, details, colSpan }) => {
     )
 }
 
-export default Row;
+export default memo(Row, areEqual);
