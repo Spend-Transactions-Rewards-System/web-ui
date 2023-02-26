@@ -98,7 +98,7 @@ const DataFiles = () => {
                     details={details}
                     filter={filter}
                     setFilter={setFilter}
-                    isDataFiles={true}
+                    type="dataFiles"
                 />
             </>
             }

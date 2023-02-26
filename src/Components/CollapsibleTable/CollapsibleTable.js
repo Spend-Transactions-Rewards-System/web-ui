@@ -12,9 +12,11 @@ import {
 } from "@mui/material";
 import _ from "lodash";
 
-import UploadDataFilters from "../TableFilters/DataFilesFilters";
 import Row from "./Row";
-import PointsActivityFilters from "../TableFilters/PointsActivityFilters";
+import UploadDataFilters from "../TableFilters/DataFilesFilters";
+import RewardsFilters from "../TableFilters/RewardsFilters";
+import CampaignsFilters from "../TableFilters/CampaignsFilters";
+
 
 const CollapsibleTable = ({ 
     columnNames, 
@@ -22,7 +24,7 @@ const CollapsibleTable = ({
     details, 
     filter, 
     setFilter, 
-    isDataFiles
+    type
 }) => {
     
     const [page, setPage] = useState(0);
@@ -35,23 +37,27 @@ const CollapsibleTable = ({
         <TableContainer component={Paper}>
             <Table size="small">
                 <TableHead sx={{".MuiTableCell-root": {p: 2, pt: 2.5}}}>
-                    { isDataFiles 
+                    { type === "dataFiles" 
                      ?  <UploadDataFilters 
                             filter={filter}
                             setFilter={setFilter}
                         />
-                     : <PointsActivityFilters
+                     : type === "rewards" ?
+                        <RewardsFilters
+                            filter={filter}
+                            setFilter={setFilter}
+                        />
+                     : <CampaignsFilters
                             filter={filter}
                             setFilter={setFilter}
                         />
                     }
-                    
                 </TableHead>
                 <TableBody>
                 <TableRow sx={{backgroundColor: "#A3AED0"}}>
                     {_.map(columnNames, (aName) => {
                         let name = aName;
-                        if (!isDataFiles && aName === "Balance") {
+                        if (type === "rewards" && aName === "Balance") {
                             if (filter["card"] === "SCIS Shopping") {
                                 name = "Points"
                             } else if (filter["card"] === "SCIS Freedom") {
@@ -77,7 +83,7 @@ const CollapsibleTable = ({
                     return(
                         <Row
                             currRow={aRow}
-                            isDataFiles={isDataFiles} 
+                            type={type} 
                             details={details[aRow["id"]]}
                             colSpan={columnNames.length + 1}
                             key={aRow["id"]}

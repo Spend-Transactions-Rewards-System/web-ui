@@ -18,8 +18,8 @@ const Rewards = () => {
     });
 
     const formatData = () => {
-        let formatMain = []
-        let formatDetails = {}
+        let formatMain = [];
+        let formatDetails = {};
         _.map(data, (aRow) => {
             formatMain.push({ 
                     id: aRow["id"],
@@ -34,7 +34,8 @@ const Rewards = () => {
                     remarks: aRow["remarks"],
                     amountSpent: "$" + aRow["amountSpent"].toLocaleString(undefined, {minimumFractionDigits: 2})
                 };
-            });
+        });
+
         setMainData(formatMain);
         setOrigData(formatMain);
         setDetails(formatDetails);
@@ -72,7 +73,7 @@ const Rewards = () => {
                     details={details}
                     filter={filter}
                     setFilter={setFilter}
-                    isDataFiles={false}
+                    type="rewards"
                 />
             </>
             }

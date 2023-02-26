@@ -18,10 +18,14 @@ const detailDict = {
     "processed": "Processed", 
     "rejected": "Rejected",
     "remarks": "Remarks",
-    "amountSpent": "Amount Spent"
+    "amountSpent": "Amount Spent",
+    "points": "Number of points per dollar",
+    "minSpend": "Minimum spend (SGD)",
+    "merchant": "Merchant", 
+    "message": "Notification Message" 
 }
 
-const Row = ({ currRow, isDataFiles, details, colSpan }) => {
+const Row = ({ currRow, type, details, colSpan }) => {
 
     const [open, setOpen] = useState(false);
 
@@ -32,8 +36,8 @@ const Row = ({ currRow, isDataFiles, details, colSpan }) => {
                 const value = currRow[aKey];
                 if (aKey !== "id" && aKey !== "rejected") {
                     return (
-                    <TableCell key={aKey}>
-                        { isDataFiles && aKey === "status" 
+                    <TableCell key={aKey} >
+                        { type === "dataFiles" && aKey === "status" 
                             ? <Chip 
                                 label={value}
                                 sx={{
@@ -44,7 +48,7 @@ const Row = ({ currRow, isDataFiles, details, colSpan }) => {
                                         width: "100px"
                                     }}
                                 />
-                            : !isDataFiles && aKey === "balance"  ?
+                            : type === "rewards" && aKey === "balance"  ?
                                 <Typography 
                                     sx={{
                                         fontWeight: 400,
@@ -58,6 +62,17 @@ const Row = ({ currRow, isDataFiles, details, colSpan }) => {
                                 >
                                     {value}
                                 </Typography>
+                            : type === "campaigns" && aKey === "status"  ?
+                                <Chip 
+                                label={value}
+                                sx={{
+                                        backgroundColor: value.toLowerCase() === "active" ? "#00873E"
+                                            : value.toLowerCase() === "inactive" ? "#FF9922" 
+                                            : "#BDBDBD", 
+                                        color: "#FFFFFF",
+                                        width: "100px"
+                                    }}
+                                />
                             : value
                         }
                         { currRow["rejected"] > 0 &&  aKey === "status"
@@ -72,7 +87,8 @@ const Row = ({ currRow, isDataFiles, details, colSpan }) => {
                     disableRipple
                     sx={{
                         textTransform: "none",
-                        color: "#4B2DCC"
+                        color: "#4B2DCC",
+                        width: "120px"
                     }}
                     onClick={() => setOpen(!open)}
                 >
@@ -81,8 +97,8 @@ const Row = ({ currRow, isDataFiles, details, colSpan }) => {
                         style={{
                             color:"#A3AED0",
                             marginLeft:"8px", 
-                            rotate: open ? "180deg" : "0deg"}
-                        }
+                            rotate: open ? "180deg" : "0deg"
+                        }}
                     />
                 </Button>
             </TableCell>
@@ -90,7 +106,7 @@ const Row = ({ currRow, isDataFiles, details, colSpan }) => {
         <TableRow>
             <TableCell sx={{py: 0}} colSpan={colSpan}>
                 <Collapse in={open} timeout="auto" unmountOnExit>
-                <Box sx={{ml: 10, my: 2}}>
+                <Box sx={{ml: 10, mr: 2, my: 2}}>
                     {_.map(details, (value, key) => {
                         if (key !== "rejectedFile") {
                             return(
@@ -107,8 +123,10 @@ const Row = ({ currRow, isDataFiles, details, colSpan }) => {
                                     <Box sx={{display:"flex"}}>
                                     <Typography
                                         sx={{
+                                            width: "500px",
                                             color: "rgba(0, 0, 0, 0.87)",
-                                            fontSize: "0.875rem"
+                                            fontSize: "0.875rem",
+                                            whiteSpace: "pre-line"
                                         }}
                                     >
                                         {typeof value === "number" ? value.toLocaleString() : value} 
@@ -124,13 +142,12 @@ const Row = ({ currRow, isDataFiles, details, colSpan }) => {
                                                 fontSize: "0.875rem",
                                                 py: 0, px: 1,
                                                 ml: 2,
-                                                color: "#4B2DCC"
+                                                color: "#4B2DCC",
                                             }}
                                         >
                                             <u>Download report</u>
                                         </Button>
                                     }
-                                   
                                     </Box>
                                 </Box>
                             )
