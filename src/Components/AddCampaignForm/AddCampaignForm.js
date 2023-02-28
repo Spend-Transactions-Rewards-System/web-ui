@@ -29,8 +29,8 @@ const AddCampaignForm = () => {
       pointsPerDollar: "",
       minSpend: "",
       merchant: "",
-      startDate: "",
-      endDate: "",
+      startDate: null,
+      endDate: null,
       message: ""
   });
 
@@ -71,30 +71,18 @@ const AddCampaignForm = () => {
   }
 
   const handleOnChangeDate = (name, value) => {
-    // value format is e.g Sat Mar 04 2023 00:00:00 GMT+0800
-    let currValue = value;
-        if (name === "startDate") {
-            currValue = moment(value).format("DD/MM/YYYY")
-            // currValue format is e.g 03/02/2023
-        }
-        if (name === "endDate") {
-          currValue = moment(value).format("DD/MM/YYYY")
-      }
         setFormData((state) => ({
             ...state, 
-            [name]: currValue
-            
+            [name]: value
         }));
-        console.log("formData.startDate: ", formData.startDate)
-}
-
+  }
 
   
   return(
-    <div class="outerdiv">
+    <div className="outerdiv">
         <Card sx={{overflowX: "auto", borderRadius: '25px'}}>
           <CardContent sx={{p:2, pl: 10}}>
-          <FormControl class="form">
+          <FormControl className="form">
               <Box className="twoColumns">
                   <Typography className="variable">Campaign Title</Typography>
                   <Box className="secondColumn">
@@ -272,7 +260,7 @@ const AddCampaignForm = () => {
           </CardContent>
           
       </Card>
-      <div class="addCampaignButton">
+      <div className="addCampaignButton">
       <CustomButton text="Add campaign"/>
       </div>
       

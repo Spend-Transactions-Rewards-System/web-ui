@@ -13,7 +13,6 @@ import {
 } from '@mui/x-date-pickers';
 import _ from "lodash";
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import moment from "moment";
 
 import CustomButton from "../CustomButton/CustomButton";
 
@@ -28,13 +27,9 @@ const typeList = ["Spendings", "Users"]
 const DataFilesFilters = ({ filter, setFilter }) => {
 
     const handleOnChange = (name, value) => {
-        let currValue = value; 
-        if (name.includes("date")) {
-            currValue = moment(value).format("DD/MM/YYYY")
-        }
         setFilter((state) => ({
             ...state, 
-            [name]: currValue
+            [name]: value
         }));
     }
 
