@@ -1,5 +1,4 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import { 
   LocalizationProvider, 
   DatePicker 
@@ -23,6 +22,13 @@ import {
 
 const AddCampaignForm = () => {
 
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  // 1 input delay on console log.
+  useEffect(() => {
+    console.log("isformvalid:", isFormValid);
+  }, [isFormValid]);
+
   const [formData, setFormData] = useState({
       title: "",
       cardProgram: "",
@@ -34,7 +40,6 @@ const AddCampaignForm = () => {
       message: ""
   });
 
-  console.log(formData)
 
   const [error, setError] = useState({
     title: false,
@@ -68,16 +73,82 @@ const AddCampaignForm = () => {
         [name]: value,
       })); 
 
+      // setIsFormValid(Object.values(formData).every(Boolean) && Object.values(error).every(val => !val));
+      setIsFormValid(
+        error["title"] === false &&
+        error["roles"] === false &&
+        error["pointsPerDollar"] === false &&
+        error["minSpend"] === false &&
+        error["startDate"] === false &&
+        error["endDate"] === false &&
+        formData["title"] !== "" &&
+        formData["cardProgram"] !== "" &&
+        formData["pointsPerDollar"] !== "" &&
+        formData["minSpend"] !== "" &&
+        formData["merchant"] !== "" &&
+        formData["startDate"] !== null &&
+        formData["endDate"] !== null &&
+        formData["message"] !== ""
+      )
+      
   }
 
   const handleOnChangeDate = (name, value) => {
+    
+    const startdateinput = formData.startDate;
+
+    if (name === "startDate") {
+      setError((state) => ({
+        ...state,
+        startDate: value < new Date() ? true : false,
+      }));
+
+      if (error["startDate"] === false) {
         setFormData((state) => ({
-            ...state, 
-            [name]: value
-        }));
+          ...state, 
+          [name]: value
+      }));
+      }
+      
+    }
+
+    if (name === "endDate") {
+      const startDate = new Date(startdateinput);
+      setError((state) => ({
+        ...state,
+        endDate: value < startDate ? true : false,
+      }));
+
+      if (error["endDate"] === false) {
+        setFormData((state) => ({
+          ...state, 
+          [name]: value
+      }));
+      }
+      
+    }
+
+    // setIsFormValid(Object.values(formData).every(Boolean) && Object.values(error).every(val => !val));
+    setIsFormValid(
+      error["title"] === false &&
+      error["roles"] === false &&
+      error["pointsPerDollar"] === false &&
+      error["minSpend"] === false &&
+      error["startDate"] === false &&
+      error["endDate"] === false &&
+      formData["title"] !== "" &&
+      formData["cardProgram"] !== "" &&
+      formData["pointsPerDollar"] !== "" &&
+      formData["minSpend"] !== "" &&
+      formData["merchant"] !== "" &&
+      formData["startDate"] !== null &&
+      formData["endDate"] !== null &&
+      formData["message"] !== ""
+    )
+  
+        
   }
 
-  
   return(
     <div className="outerdiv">
         <Card sx={{overflowX: "auto", borderRadius: '25px'}}>
@@ -100,13 +171,6 @@ const AddCampaignForm = () => {
                 <Box>
                   <Typography className="variable flexColumn">
                       Card Program
-                      {/* <Link
-                        className="projectLink"
-                        to="/projects/samples/themes"
-                        target="_blank"
-                      >
-                        <i>View themes</i>
-                      </Link> */}
                   </Typography>
                 </Box>
                 <Box className="secondColumn">
@@ -217,8 +281,10 @@ const AddCampaignForm = () => {
                           value={formData.startDate}
                           inputFormat="DD/MM/YYYY"
                           onChange={(event) => handleOnChangeDate("startDate", event._d)}
+                          error={error["startDate"]}
                           renderInput={(params) => (    
-                            <TextField {...params} size="small" sx={{ width: "180px", mr: 1 }} />
+                            <TextField {...params} size="small" sx={{ width: "180px", mr: 1 }} 
+                            helperText={error["startDate"] ? "Date cannot be before today" : ""} />
                           )}
                         />
                         <DatePicker
@@ -228,7 +294,8 @@ const AddCampaignForm = () => {
                           inputFormat="DD/MM/YYYY"
                           onChange={(event) => handleOnChangeDate("endDate", event._d)}
                           renderInput={(params) => (
-                            <TextField {...params} size="small" sx={{ width: "180px", mr: 1 }} />
+                            <TextField {...params} size="small" sx={{ width: "180px", mr: 1 }} 
+                            helperText={error["endDate"] ? "End date must be after start date" : ""}/>
                           )}
                         />
                       </LocalizationProvider>
@@ -261,7 +328,7 @@ const AddCampaignForm = () => {
           
       </Card>
       <div className="addCampaignButton">
-      <CustomButton text="Add campaign"/>
+      <CustomButton style={{ backgroundColor: 'red' }} text="Add campaign"/>
       </div>
       
     </div>
