@@ -11,9 +11,9 @@ import _ from "lodash";
 import CustomButton from "../CustomButton/CustomButton";
 import SearchBar from "../SearchBar/SearchBar";
 
-const cardList =["SCIS Shopping", "SCIS PremiumMiles", "SCIS PlatinumMiles", "SCIS Freedom"];
+const cardList =["Active", "Expired", "Inactive"];
 
-const PointsActivityFilters = ({ filter, setFilter }) => {
+const CampaignsFilters = ({ filter, setFilter }) => {
 
     const handleOnChange = (name, value) => {
         setFilter((state) => ({
@@ -24,26 +24,21 @@ const PointsActivityFilters = ({ filter, setFilter }) => {
 
     return(
         <TableRow >
-            <TableCell colSpan={5} >
+            <TableCell colSpan={3} >
                 <FormControl size="small">
-                    <InputLabel id="card">Cards</InputLabel>
+                    <InputLabel id="status">Status</InputLabel>
                     <Select
-                        name="card"
-                        label="cards"
-                        value={filter["card"]}
+                        name="status"
+                        label="status"
+                        value={filter["status"]}
                         sx={{width: "250px", mr: 1}}  
-                        onChange={(event) => handleOnChange("card", event.target.value)}
+                        onChange={(event) => handleOnChange("status", event.target.value)}
                     >   
                         {_.map(cardList, (value) => {
                             return(
                             <MenuItem 
                                 value={value} 
                                 key={value}
-                                sx={{
-                                    color: value === "SCIS Shopping" ? "#9D1C00"
-                                            : value === "SCIS Freedom" ? "#0E972C"
-                                            : "#CB7A00"
-                                }}
                             >
                                 {value}
                             </MenuItem>
@@ -55,15 +50,15 @@ const PointsActivityFilters = ({ filter, setFilter }) => {
                     text="Reset Filter"
                     handleOnClick={() => {
                         setFilter({
-                            card:"" , 
+                            status:"" , 
                             search: ""
                         })
                     }}
                 />
             </TableCell>
-            <TableCell colSpan={2}>
+            <TableCell colSpan={3}>
                 <SearchBar 
-                    placeholder="Search by description"
+                    placeholder="Search by Campaign Title"
                     handleOnChange={(event) => handleOnChange("search", event.target.value)}
                 />
             </TableCell>
@@ -71,4 +66,4 @@ const PointsActivityFilters = ({ filter, setFilter }) => {
     )
 }
 
-export default PointsActivityFilters;
+export default CampaignsFilters;

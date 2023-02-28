@@ -8,7 +8,7 @@ import LoadingAnimation from "../../Components/LoadingAnimation/LoadingAnimation
 
 const columnNames = ["Date", "Description", "Type", "Change", "Balance", "Card"]
 
-const PointsActivity = () => {
+const Rewards = () => {
 
     const [origData, setOrigData] = useState(null);
     const [mainData, setMainData] = useState(null);
@@ -18,8 +18,8 @@ const PointsActivity = () => {
     });
 
     const formatData = () => {
-        let formatMain = []
-        let formatDetails = {}
+        let formatMain = [];
+        let formatDetails = {};
         _.map(data, (aRow) => {
             formatMain.push({ 
                     id: aRow["id"],
@@ -34,7 +34,8 @@ const PointsActivity = () => {
                     remarks: aRow["remarks"],
                     amountSpent: "$" + aRow["amountSpent"].toLocaleString(undefined, {minimumFractionDigits: 2})
                 };
-            });
+        });
+
         setMainData(formatMain);
         setOrigData(formatMain);
         setDetails(formatDetails);
@@ -63,7 +64,7 @@ const PointsActivity = () => {
 
     return (
         <div>
-            <script>{document.title="Points Activity"}</script>
+            <script>{document.title="Rewards"}</script>
             {mainData === null || details === null ? <LoadingAnimation /> : 
             <>  
                 <CollapsibleTable 
@@ -72,7 +73,7 @@ const PointsActivity = () => {
                     details={details}
                     filter={filter}
                     setFilter={setFilter}
-                    isDataFiles={false}
+                    type="rewards"
                 />
             </>
             }
@@ -80,7 +81,7 @@ const PointsActivity = () => {
     )
 }
 
-export default PointsActivity;
+export default Rewards;
 
 const data = [
     {   

@@ -1,10 +1,10 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { Box } from "@mui/material";
 import moment from "moment/moment";
 import _ from "lodash";
 
-import NonCollapsibleTable from "../../Components/NonCollapsibleTable/NonCollapsibleTable";
+import CollapsibleTable from "../../Components/CollapsibleTable/CollapsibleTable";
 import LoadingAnimation from "../../Components/LoadingAnimation/LoadingAnimation";
 import CustomButton from "../../Components/CustomButton/CustomButton";
 
@@ -15,24 +15,30 @@ const Campaigns = () => {
     const [origData, setOrigData] = useState(null);
     const [mainData, setMainData] = useState(null);
     const [details, setDetails] = useState(null);
-    const [filter, setFilter] = useState({ 
-        status: ""
+    const [filter, setFilter] = useState({
+        status: "", search: ""
     });
 
     const formatData = () => {
-        let formatMain = []
-        let formatDetails = {}
+        let formatMain = [];
+        let formatDetails = {};
         _.map(data, (aRow) => {
-            formatMain.push({ 
-                    id: aRow["id"],
-                    cardProgram: aRow["cardProgram"], 
-                    campaignTitle: aRow["campaignTitle"].charAt(0).toUpperCase() + aRow["campaignTitle"].slice(1),
-                    startDate: aRow["startDate"],
-                    endDate: aRow["endDate"],
-                    status: aRow["status"]
-                });
-            
-            });
+            formatMain.push({
+                id: aRow["id"], 
+                cardProgram: aRow["cardProgram"], 
+                title: aRow["title"],
+                startDate: moment(aRow["startDate"]).format("DD/MM/YYYY"), 
+                endDate: moment(aRow["endDate"]).format("DD/MM/YYYY"),
+                status: aRow["status"].charAt(0).toUpperCase() + aRow["status"].slice(1).toLowerCase(),
+            })
+            formatDetails[aRow["id"]] = {
+                points: aRow["points"], 
+                minSpend: aRow["minSpend"],
+                merchant: aRow["merchant"],
+                message: aRow["message"]
+            }
+        });
+
         setMainData(formatMain);
         setOrigData(formatMain);
         setDetails(formatDetails);
@@ -40,14 +46,11 @@ const Campaigns = () => {
 
     const filterData = () => {
         let data = origData;
-        if (filter["status"] === "completedReject") {
-            data = data.filter((item) => item.status.toLowerCase() === "completed" && item.rejected > 0);
-        } else if (filter["status"] === "completed") {
-            data = data.filter((item) => item.status.toLowerCase() === "completed" && item.rejected === 0);
-        } else if (filter["status"] !== "") {
+        if (filter["status"] !== "") {
             data = data.filter((item) => item.status.toLowerCase() === filter["status"].toLowerCase());
-        } else if (filter["search"] !== "") {
-            data = data.filter((item) => item.campaignTitle.toLowerCase().includes(filter["search"].toLowerCase()));
+        }
+        if (filter["search"] !== "") {
+            data = data.filter((item) => item.title.toLowerCase().includes(filter["search"].toLowerCase()));
         }
         setMainData(data);
     }
@@ -60,11 +63,11 @@ const Campaigns = () => {
         if (mainData != null) {
             filterData();
         }
-    }, [filter])   
+    }, [filter])  
 
     return (
-        <div> 
-            <script>{document.title="Data Files"}</script>
+        <div>
+            <script>{document.title="Campaigns"}</script>
             {mainData === null || details === null ? <LoadingAnimation /> : 
             <>  
                 <Box 
@@ -72,17 +75,17 @@ const Campaigns = () => {
                     sx={{mb: 2}}
                 >
                     <CustomButton 
-                        text="Add campaign"
+                        text="Add Campaign"
                         link="/campaigns/addcampaigns"
                     />
                 </Box>
-                <NonCollapsibleTable 
+                <CollapsibleTable 
                     columnNames={columnNames}
                     mainData={mainData}
                     details={details}
                     filter={filter}
                     setFilter={setFilter}
-                    isDataFiles={true}
+                    type="campaigns"
                 />
             </>
             }
@@ -96,28 +99,37 @@ const data = [
     {   
         id: 1, 
         cardProgram: "SCIS Shopping Card", 
-        campaignTitle: "6 points per dollar with Shopee, min spend 150 SGD",
-        startDate: "01/02/2023",
-        endDate: "28/02/2023",
-        status: "Inactive",
-        pointsPerDollar: "5",
-        minSpend: "150",
-        merchant: "some MCC",
-        notification: "this is a notification message"
-
-    },
-
+        title: "6 points per dollar with Shopee, min spend 150 SGD",
+        startDate: new Date(), 
+        endDate: new Date(),
+        status: "active",
+        points: 6, 
+        minSpend: 150,
+        merchant: "Shopee",
+        message: "Earn 6 points for every dollar spent on Shopee with a minimum spend of $150. Terms and conditions apply."
+    }, 
     {   
         id: 2, 
-        cardProgram: "SCIS PlatinumMiles", 
-        campaignTitle: "4 points per dollar with Grab, min spend 100 SGD ",
-        startDate: "01/02/2023",
-        endDate: "28/02/2023",
-        status: "Active",
-        pointsPerDollar: "10",
-        minSpend: "200",
-        merchant: "some MCC",
-        notification: "this is a notification message"
-
-    },
+        cardProgram: "SCIS Shopping Card", 
+        title: "4 points per dollar with Grab, min spend 100 SGD",
+        startDate: new Date(), 
+        endDate: new Date(),
+        status: "inactive",
+        points: 4, 
+        minSpend: 100,
+        merchant: "Grab",
+        message: "Earn 4 points for every dollar spent on Grab with a minimum spend of $100. Terms and conditions apply."
+    }, 
+    {
+        id: 3, 
+        cardProgram: "SCIS Shopping Card", 
+        title: "5 points per dollar with Taobao, min spend 100 SGD",
+        startDate: new Date(), 
+        endDate: new Date(),
+        status: "expired",
+        points: 5, 
+        minSpend: 100,
+        merchant: "Taobao",
+        message: "Earn 5 points for every dollar spent on Taobao with a minimum spend of $100. Terms and conditions apply."
+    }
 ]
