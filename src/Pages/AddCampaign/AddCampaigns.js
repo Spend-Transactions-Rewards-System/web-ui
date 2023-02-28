@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from "react";
-import AddCampaignForm from './AddCampaignForm';
+import AddCampaignForm from '../../Components/AddCampaignForm/AddCampaignForm';
 
 const AddCampaign = () => {
     const [formData, setFormData] = useState({

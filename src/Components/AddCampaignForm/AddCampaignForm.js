@@ -8,7 +8,7 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import moment from "moment";
 import CustomButton from "../../Components/CustomButton/CustomButton";
 import _ from "lodash";
-import "./CampaignForm.css";
+import "../../Pages/Campaigns/AddCampaign.css";
 
 import {
   Box,
@@ -21,7 +21,18 @@ import {
 } from "@mui/material";
 
 
-const AddCampaignForm = ({ formData, setFormData }) => {
+const AddCampaignForm = () => {
+
+  const [formData, setFormData] = useState({
+      title: "",
+      cardProgram: "",
+      pointsPerDollar: "",
+      minSpend: "",
+      merchant: "",
+      startDate: "",
+      endDate: "",
+      message: ""
+  });
 
   console.log(formData)
 
@@ -30,6 +41,8 @@ const AddCampaignForm = ({ formData, setFormData }) => {
     roles: false,
     pointsPerDollar: false,
     minSpend: false,
+    startDate: false,
+    endDate: false,
   });
 
   const handleOnChange = (event) => {
@@ -39,44 +52,49 @@ const AddCampaignForm = ({ formData, setFormData }) => {
       if (name === "pointsPerDollar") {
         setError((state) => ({
           ...state,
-          pointsPerDollar: event.target.value < 1 ? true : false,
+          pointsPerDollar: value < 1 ? true : false,
         }));
       }
 
       if (name === "minSpend") {
         setError((state) => ({
           ...state,
-          minSpend: event.target.value < 1 ? true : false,
+          minSpend: value < 1 ? true : false,
         }));
       }
 
       setFormData((state) => ({ 
         ...state,
         [name]: value,
-      }));    
+      })); 
+
   }
 
   const handleOnChangeDate = (name, value) => {
-    let currValue = value; 
+    // value format is e.g Sat Mar 04 2023 00:00:00 GMT+0800
+    let currValue = value;
         if (name === "startDate") {
             currValue = moment(value).format("DD/MM/YYYY")
+            // currValue format is e.g 03/02/2023
         }
-
         if (name === "endDate") {
           currValue = moment(value).format("DD/MM/YYYY")
       }
         setFormData((state) => ({
             ...state, 
             [name]: currValue
+            
         }));
+        console.log("formData.startDate: ", formData.startDate)
 }
 
 
   
   return(
-      <Card sx={{overflowX: "auto"}}>
+    <div class="outerdiv">
+        <Card sx={{overflowX: "auto", borderRadius: '25px'}}>
           <CardContent sx={{p:2, pl: 10}}>
-          <FormControl>
+          <FormControl class="form">
               <Box className="twoColumns">
                   <Typography className="variable">Campaign Title</Typography>
                   <Box className="secondColumn">
@@ -211,7 +229,7 @@ const AddCampaignForm = ({ formData, setFormData }) => {
                           value={formData.startDate}
                           inputFormat="DD/MM/YYYY"
                           onChange={(event) => handleOnChangeDate("startDate", event._d)}
-                          renderInput={(params) => (
+                          renderInput={(params) => (    
                             <TextField {...params} size="small" sx={{ width: "180px", mr: 1 }} />
                           )}
                         />
@@ -228,36 +246,37 @@ const AddCampaignForm = ({ formData, setFormData }) => {
                       </LocalizationProvider>
                     </Box>
                   </Box>
-
-                    
-                
-                
-            
-
+                         
               <Box className="twoColumns">
                   <Typography className="variable">Notification message</Typography>
                   <Box className="secondColumn">
                     <TextField
-                        name="notification"
-                        value={formData?.notification}
+                        name="message"
+                        value={formData?.message}
                         size="small"
                         fullWidth
                         multiline
                         label="Enter message"
                         minRows={3}
                         inputProps={{ maxLength: 200 }}
-                        helperText={`${formData["notification"] ? formData["notification"].length : 0} / 200`}
+                        helperText={`${formData["message"] ? formData["message"].length : 0} / 200`}
                         onChange={handleOnChange}
                     />
                   </Box>
               </Box>
 
-              <CustomButton 
-                        text="Add campaign"
-                    />
+              
+                    
           </FormControl>
+          
           </CardContent>
+          
       </Card>
+      <div class="addCampaignButton">
+      <CustomButton text="Add campaign"/>
+      </div>
+      
+    </div>
   )
 }
 

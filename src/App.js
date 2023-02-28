@@ -10,7 +10,7 @@ import Campaigns from "./Pages/Campaigns/Campaigns";
 import Error404 from "./Pages/Error404/Error404";
 import UploadData from "./Pages/UploadData/UploadData";
 import Login from "./Pages/Login/Login";
-import AddCampaigns from "./Pages/Campaigns/AddCampaigns";
+import AddCampaigns from "./Pages/AddCampaign/AddCampaigns";
 
 function App() {
   return (
