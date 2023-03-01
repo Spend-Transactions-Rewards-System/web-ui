@@ -8,3 +8,36 @@
     background-color: #331c93;
 }
 
+.customButtonGrey.MuiButton-root {
+    text-transform: none;
+    background-color: #BDBDBD;
+    border-radius: 12px;
+}
+
+.customButtonGrey.MuiButton-root:hover {
+    background-color: #BDBDBD;
+}
+
+.confirmNo.MuiButton-root {
+    text-transform: none;
+    background-color: #BDBDBD;
+    border-radius: 12px;
+    margin-right: 50px;
+    width: 90px;
+}
+
+.confirmNo.MuiButton-root:hover {
+    background-color: #BDBDBD;
+}
+
+.confirmYes.MuiButton-root {
+    text-transform: none;
+    background-color: #4B2DCC;
+    border-radius: 12px;
+    width: 90px;
+}
+
+.confirmYes.MuiButton-root:hover {
+    background-color: #331c93;
+}
+

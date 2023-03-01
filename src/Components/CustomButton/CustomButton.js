@@ -4,7 +4,7 @@ import { Button } from "@mui/material";
 
 import "./CustomButton.css";
 
-const CustomButton = ({ text, handleOnClick, link, disabled, fullWidth }) => {
+const CustomButton = ({ text, handleOnClick, link, disabled, fullWidth, nameOfClass }) => {
 
     const navigate = useNavigate();
     const handleNavigate = () => {
@@ -17,7 +17,7 @@ const CustomButton = ({ text, handleOnClick, link, disabled, fullWidth }) => {
             onClick={handleOnClick ? handleOnClick : handleNavigate}
             disabled={disabled}
             fullWidth={fullWidth}
-            className="customButton"
+            className={nameOfClass}
         >   
             {text}
         </Button>

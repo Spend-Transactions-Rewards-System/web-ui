@@ -6,7 +6,6 @@ import {
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import moment from "moment";
 import CustomButton from "../../Components/CustomButton/CustomButton";
-import CustomButtonGreyedOut from "../../Components/CustomButton/CustomButtonGreyedOut";
 import ConfirmDialog from "./ConfirmDialog";
 import _ from "lodash";
 import "../../Pages/Campaigns/AddCampaign.css";
@@ -335,9 +334,9 @@ const AddCampaignForm = () => {
       </Card>
       <div className="addCampaignButton">
       {isFormValid ? (
-      <CustomButton onClick={handleAddCampaignClick} text="Add campaign" />
+      <CustomButton handleOnClick={handleAddCampaignClick} text="Add campaign" nameOfClass="customButton" />
       ) : (
-      <CustomButtonGreyedOut text="Add campaign" />
+      <CustomButton text="Add campaign" nameOfClass="customButtonGrey"/>
       )}
 
       <ConfirmDialog
@@ -345,13 +344,10 @@ const AddCampaignForm = () => {
         setOpen={setOpen}
         handleConfirm={handleConfirm}
         id="campaign-123"
-        text="Are you sure you want to add this campaign?"
-        header="Add Campaign"
+        text="Are you sure you want to do this?"
+        header="Confirm action"
       />
       </div>
-
-
-
       
     </div>
   )
