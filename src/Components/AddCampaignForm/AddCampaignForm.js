@@ -6,6 +6,8 @@ import {
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import moment from "moment";
 import CustomButton from "../../Components/CustomButton/CustomButton";
+import CustomButtonGreyedOut from "../../Components/CustomButton/CustomButtonGreyedOut";
+import ConfirmDialog from "./ConfirmDialog";
 import _ from "lodash";
 import "../../Pages/Campaigns/AddCampaign.css";
 
@@ -22,12 +24,7 @@ import {
 
 const AddCampaignForm = () => {
 
-  const [isFormValid, setIsFormValid] = useState(false);
-
-  // 1 input delay on console log.
-  useEffect(() => {
-    console.log("isformvalid:", isFormValid);
-  }, [isFormValid]);
+  
 
   const [formData, setFormData] = useState({
       title: "",
@@ -49,6 +46,28 @@ const AddCampaignForm = () => {
     startDate: false,
     endDate: false,
   });
+
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  useEffect(() => {
+    setIsFormValid(
+    error["title"] === false &&
+    error["roles"] === false &&
+    error["pointsPerDollar"] === false &&
+    error["minSpend"] === false &&
+    error["startDate"] === false &&
+    error["endDate"] === false &&
+    formData["title"] !== "" &&
+    formData["cardProgram"] !== "" &&
+    formData["pointsPerDollar"] !== "" &&
+    formData["minSpend"] !== "" &&
+    formData["merchant"] !== "" &&
+    formData["startDate"] !== null &&
+    formData["endDate"] !== null &&
+    formData["message"] !== ""
+  );
+    
+  }, [error, formData]);
 
   const handleOnChange = (event) => {
     const name = event.target.name;
@@ -74,28 +93,10 @@ const AddCampaignForm = () => {
       })); 
 
       // setIsFormValid(Object.values(formData).every(Boolean) && Object.values(error).every(val => !val));
-      setIsFormValid(
-        error["title"] === false &&
-        error["roles"] === false &&
-        error["pointsPerDollar"] === false &&
-        error["minSpend"] === false &&
-        error["startDate"] === false &&
-        error["endDate"] === false &&
-        formData["title"] !== "" &&
-        formData["cardProgram"] !== "" &&
-        formData["pointsPerDollar"] !== "" &&
-        formData["minSpend"] !== "" &&
-        formData["merchant"] !== "" &&
-        formData["startDate"] !== null &&
-        formData["endDate"] !== null &&
-        formData["message"] !== ""
-      )
       
   }
 
   const handleOnChangeDate = (name, value) => {
-    
-    const startdateinput = formData.startDate;
 
     if (name === "startDate") {
       setError((state) => ({
@@ -103,20 +104,28 @@ const AddCampaignForm = () => {
         startDate: value < new Date() ? true : false,
       }));
 
+  
+      if (formData.endDate !== null) {
+        // check if new startdate fixes enddate before startdate error
+        setError((state) => ({
+          ...state,
+          endDate: formData.endDate < value ? true : false,
+        }));
+      }
+      
       if (error["startDate"] === false) {
         setFormData((state) => ({
           ...state, 
           [name]: value
       }));
       }
-      
+
     }
 
     if (name === "endDate") {
-      const startDate = new Date(startdateinput);
       setError((state) => ({
         ...state,
-        endDate: value < startDate ? true : false,
+        endDate: value < formData.startDate ? true : false,
       }));
 
       if (error["endDate"] === false) {
@@ -125,29 +134,28 @@ const AddCampaignForm = () => {
           [name]: value
       }));
       }
-      
-    }
 
-    // setIsFormValid(Object.values(formData).every(Boolean) && Object.values(error).every(val => !val));
-    setIsFormValid(
-      error["title"] === false &&
-      error["roles"] === false &&
-      error["pointsPerDollar"] === false &&
-      error["minSpend"] === false &&
-      error["startDate"] === false &&
-      error["endDate"] === false &&
-      formData["title"] !== "" &&
-      formData["cardProgram"] !== "" &&
-      formData["pointsPerDollar"] !== "" &&
-      formData["minSpend"] !== "" &&
-      formData["merchant"] !== "" &&
-      formData["startDate"] !== null &&
-      formData["endDate"] !== null &&
-      formData["message"] !== ""
-    )
-  
-        
+    }
+    // setIsFormValid(Object.values(formData).every(Boolean) && Object.values(error).every(val => !val));      
   }
+  useEffect(() => {
+    console.log("isformvalid:", isFormValid);
+  }, [isFormValid]);
+
+
+
+
+  const [open, setOpen] = useState(false);
+
+  const handleAddCampaignClick = () => {
+    setOpen(true);
+  };
+
+  const handleConfirm = () => {
+    // Handle the confirm action here
+    setOpen(false);
+  };
+
 
   return(
     <div className="outerdiv">
@@ -318,9 +326,7 @@ const AddCampaignForm = () => {
                         onChange={handleOnChange}
                     />
                   </Box>
-              </Box>
-
-              
+              </Box> 
                     
           </FormControl>
           
@@ -328,8 +334,24 @@ const AddCampaignForm = () => {
           
       </Card>
       <div className="addCampaignButton">
-      <CustomButton style={{ backgroundColor: 'red' }} text="Add campaign"/>
+      {isFormValid ? (
+      <CustomButton onClick={handleAddCampaignClick} text="Add campaign" />
+      ) : (
+      <CustomButtonGreyedOut text="Add campaign" />
+      )}
+
+      <ConfirmDialog
+        open={open}
+        setOpen={setOpen}
+        handleConfirm={handleConfirm}
+        id="campaign-123"
+        text="Are you sure you want to add this campaign?"
+        header="Add Campaign"
+      />
       </div>
+
+
+
       
     </div>
   )
