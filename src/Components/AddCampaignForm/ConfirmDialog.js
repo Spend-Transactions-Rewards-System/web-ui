@@ -28,11 +28,8 @@
                         className="spaceBetween"
                         sx={{pt: 2, px: 2}}
                     >
-
                         <CustomButton text="No" handleOnClick={()=>setOpen(false)} nameOfClass="confirmNo"/>
-                        <CustomButton text="Yes" handleOnClick={handleConfirm} nameOfClass="confirmYes"/>
-                        
-
+                        <CustomButton text="Yes" nameOfClass="confirmYes" link="/campaigns"/>
 
                     </Box>
                 </DialogContent>                        

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import { Box, Button, Typography } from "@mui/material";
 import { MdCloudUpload, MdCampaign } from "react-icons/md";
@@ -8,6 +9,7 @@ import _ from "lodash";
 import "./NavBar.css";
 
 const navMap = {
+
     "Data Files" : 
         {
             icon: <MdCloudUpload />, 

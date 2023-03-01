@@ -48,6 +48,7 @@ const CampaignsFilters = ({ filter, setFilter }) => {
                 </FormControl>
                 <CustomButton 
                     text="Reset Filter"
+                    nameOfClass="customButton"
                     handleOnClick={() => {
                         setFilter({
                             status:"" , 

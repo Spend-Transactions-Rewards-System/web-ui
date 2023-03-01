@@ -90,6 +90,7 @@ const DataFiles = () => {
                     <CustomButton 
                         text="Upload data"
                         link="/datafiles/upload"
+                        nameOfClass="customButton"
                     />
                 </Box>
                 <CollapsibleTable 

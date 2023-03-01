@@ -77,6 +77,7 @@ const Campaigns = () => {
                     <CustomButton 
                         text="Add Campaign"
                         link="/campaigns/addcampaigns"
+                        nameOfClass="customButton"
                     />
                 </Box>
                 <CollapsibleTable 

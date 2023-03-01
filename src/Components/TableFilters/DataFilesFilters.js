@@ -100,6 +100,7 @@ const DataFilesFilters = ({ filter, setFilter }) => {
             </LocalizationProvider>
             <CustomButton 
                 text="Reset Filter"
+                nameOfClass="customButton"
                 handleOnClick={() => {
                     setFilter({
                         status: "", 
