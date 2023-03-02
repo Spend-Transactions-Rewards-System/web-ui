@@ -115,7 +115,7 @@ const AddCampaignForm = () => {
     if (name === "endDate") {
       setError((state) => ({
         ...state,
-        endDate: value < formData.startDate ? true : false,
+        endDate: value <= formData.startDate ? true : false,
       }));
 
       setFormData((state) => ({

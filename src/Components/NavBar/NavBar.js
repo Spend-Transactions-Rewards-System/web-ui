@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 import { Box, Button, Typography } from "@mui/material";
@@ -24,6 +24,7 @@ const navMap = {
 
 const NavBar = () => {
 
+    const { pathname } = useLocation();
     const navigate = useNavigate();
     const [currTab, setCurrTab] = useState("Data Files");
 
@@ -31,6 +32,15 @@ const NavBar = () => {
         navigate(navMap[tab]["link"]);
         setCurrTab(tab);
     }
+
+    useEffect(() => {
+        for (const key in navMap) {
+          if (navMap[key].link === pathname) {
+            setCurrTab(key);
+            break;
+          }
+        }
+      }, [pathname]);
 
     return (
         <Box 
