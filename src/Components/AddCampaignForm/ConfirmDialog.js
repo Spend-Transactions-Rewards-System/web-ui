@@ -29,7 +29,7 @@
                         sx={{pt: 2, px: 2}}
                     >
                         <CustomButton text="No" handleOnClick={()=>setOpen(false)} nameOfClass="confirmNo"/>
-                        <CustomButton text="Yes" nameOfClass="confirmYes" link="/campaigns"/>
+                        <CustomButton text="Yes" nameOfClass="confirmYes" link="/campaigns?showSnackBar=true"/>
 
                     </Box>
                 </DialogContent>                        

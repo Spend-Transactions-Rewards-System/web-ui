@@ -90,6 +90,7 @@ const Login = () => {
                     text="Login"
                     fullWidth={true}
                     handleOnClick={handleLogin}
+                    nameOfClass="customButton"
                 />    
             </Box>
         </Box>

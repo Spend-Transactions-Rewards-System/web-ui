@@ -106,26 +106,22 @@ const AddCampaignForm = () => {
         }));
       }
 
-      if (!(value < new Date((new Date()).setHours(0, 0, 0, 0)))) {
-        setFormData((state) => ({
-          ...state,
-          [name]: value
-        }));
-      }
+      setFormData((state) => ({
+        ...state,
+        [name]: value
+      }));
     }
 
-      if (name === "endDate") {
-        setError((state) => ({
-          ...state,
-          endDate: value < formData.startDate ? true : false,
-        }));
+    if (name === "endDate") {
+      setError((state) => ({
+        ...state,
+        endDate: value < formData.startDate ? true : false,
+      }));
 
-      if (formData.startDate != null) {
-        setFormData((state) => ({
-          ...state,
-          [name]: value
-        }));
-      }
+      setFormData((state) => ({
+        ...state,
+        [name]: value
+      }));
     }
   }
   // useEffect(() => {
@@ -263,8 +259,6 @@ const AddCampaignForm = () => {
               </Box>
             </Box>
 
-
-            {/* date stuff below */}
             <Box className="twoColumns">
               <Typography className="variable">Start & End Date (DD/MM/YYYY)</Typography>
               <Box className="secondColumn">
@@ -333,11 +327,10 @@ const AddCampaignForm = () => {
           setOpen={setOpen}
           handleConfirm={handleConfirm}
           id="campaign-123"
-          text="Are you sure you want to   add campaign?"
+          text="Are you sure you want to add campaign?"
           header="Confirm action"
         />
       </div>
-
     </div>
   )
 }
