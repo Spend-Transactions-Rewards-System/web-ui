@@ -124,33 +124,33 @@ const Row = ({ currRow, type, details, colSpan }) => {
                                         {detailDict[key]} 
                                     </Typography>
                                     <Box sx={{display:"flex"}}>
-                                    <Typography
-                                        sx={{
-                                            width: "500px",
-                                            color: "rgba(0, 0, 0, 0.87)",
-                                            fontSize: "0.875rem",
-                                            whiteSpace: "pre-line"
-                                        }}
-                                    >
-                                        {typeof value === "number" ? value.toLocaleString() : value} 
-                                        {(key === "rejected" || key === "processed")  
-                                            && value !== "null" 
-                                            && " row(s)"
-                                        }
-                                    </Typography>
-                                    { key === "rejected" && value > 0 &&
-                                        <Button
+                                        <Typography
                                             sx={{
-                                                textTransform:"none", 
+                                                width: "500px",
+                                                color: "rgba(0, 0, 0, 0.87)",
                                                 fontSize: "0.875rem",
-                                                py: 0, px: 1,
-                                                ml: 2,
-                                                color: "#4B2DCC",
+                                                whiteSpace: "pre-line"
                                             }}
                                         >
-                                            <u>Download report</u>
-                                        </Button>
-                                    }
+                                            {typeof value === "number" ? value.toLocaleString() : value} 
+                                            {(key === "rejected" || key === "processed")  
+                                                && value !== "null" 
+                                                && " row(s)"
+                                            }
+                                            { key === "rejected" && value > 0 &&
+                                            <Button
+                                                sx={{
+                                                    textTransform:"none", 
+                                                    fontSize: "0.875rem",
+                                                    py: 0, px: 1,
+                                                    ml: 2,
+                                                    color: "#4B2DCC",
+                                                }}
+                                            >
+                                                <u>Download Erroneous Transaction(s)</u>
+                                            </Button>
+                                            }
+                                        </Typography>
                                     </Box>
                                 </Box>
                             )
