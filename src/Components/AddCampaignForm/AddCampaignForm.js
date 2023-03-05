@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
-import {
-  LocalizationProvider,
-  DatePicker
-} from '@mui/x-date-pickers';
+
+import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import moment from "moment";
-import CustomButton from "../../Components/CustomButton/CustomButton";
-import ConfirmDialog from "./ConfirmDialog";
+import { BsDash } from "react-icons/bs";
 import _ from "lodash";
-import "../../Pages/Campaigns/AddCampaign.css";
+
+import CustomButton from "../../Components/CustomButton/CustomButton";
+import "./AddCampaignForm.css";
 
 import {
   Box,
@@ -20,67 +18,33 @@ import {
   Typography,
 } from "@mui/material";
 
-
-const AddCampaignForm = () => {
-
-  const [formData, setFormData] = useState({
-    title: "",
-    cardProgram: "",
-    pointsPerDollar: "",
-    minSpend: "",
-    merchant: "",
-    startDate: null,
-    endDate: null,
-    message: ""
-  });
-
-  const [error, setError] = useState({
-    title: false,
-    roles: false,
-    pointsPerDollar: false,
-    minSpend: false,
-    startDate: false,
-    endDate: false,
-  });
+const AddCampaignForm = ({ formData, setFormData, setOpen }) => {
 
   const [isFormValid, setIsFormValid] = useState(false);
+  const [error, setError] = useState({
+    pointsPerDollar: false,
+    minSpend: false,
+    isToday: false,
+    isAfterEndDate: false,
+  });
 
-  // setIsFormValid(Object.values(formData).every(Boolean) && Object.values(error).every(val => !val));
   useEffect(() => {
     setIsFormValid(
-      error["title"] === false &&
-      error["roles"] === false &&
-      error["pointsPerDollar"] === false &&
-      error["minSpend"] === false &&
-      error["startDate"] === false &&
-      error["endDate"] === false &&
-      formData["title"] !== "" &&
-      formData["cardProgram"] !== "" &&
-      formData["pointsPerDollar"] !== "" &&
-      formData["minSpend"] !== "" &&
-      formData["merchant"] !== "" &&
-      formData["startDate"] !== null &&
-      formData["endDate"] !== null &&
-      formData["message"] !== ""
-    );
+      !(Object.values(error).includes(true) 
+      || Object.values(formData).includes("") 
+      || Object.values(formData).includes(null)
+    ));
 
   }, [error, formData]);
 
   const handleOnChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-
-    if (name === "pointsPerDollar") {
+    
+    if (name === "pointsPerDollar" || name === "minSpend") {
       setError((state) => ({
         ...state,
-        pointsPerDollar: value < 1 ? true : false,
-      }));
-    }
-
-    if (name === "minSpend") {
-      setError((state) => ({
-        ...state,
-        minSpend: value < 1 ? true : false,
+        [name]: value < 1,
       }));
     }
 
@@ -95,60 +59,32 @@ const AddCampaignForm = () => {
     if (name === "startDate") {
       setError((state) => ({
         ...state,
-        startDate: value < new Date((new Date()).setHours(0, 0, 0, 0)) ? true : false,
+        isToday: value < new Date((new Date()).setHours(0, 0, 0, 0)),
+        isAfterEndDate: formData["endDate"] !== null && value > formData["endDate"] 
       }));
-
-
-      if (formData.endDate !== null) {
-        setError((state) => ({
-          ...state,
-          endDate: formData.endDate < value ? true : false,
-        }));
-      }
-
-      setFormData((state) => ({
-        ...state,
-        [name]: value
-      }));
-    }
-
-    if (name === "endDate") {
+    } else {
       setError((state) => ({
         ...state,
-        endDate: value <= formData.startDate ? true : false,
-      }));
-
-      setFormData((state) => ({
-        ...state,
-        [name]: value
+        isAfterEndDate: value < formData["startDate"] 
       }));
     }
+
+    setFormData((state) => ({
+      ...state,
+      [name]: value
+    }));
   }
-  // useEffect(() => {
-  //   console.log("isformvalid:", isFormValid);
-  // }, [isFormValid]);
-
-  const [open, setOpen] = useState(false);
-
-  const handleAddCampaignClick = () => {
-    setOpen(true);
-  };
-
-  const handleConfirm = () => {
-    // Handle the confirm action here
-    setOpen(false);
-  };
 
   return (
-    <div className="outerdiv">
+    <div>
       <Card sx={{ overflowX: "auto", borderRadius: '25px' }}>
-        <CardContent sx={{ p: 2, pl: 10 }}>
-          <FormControl className="form">
+        <CardContent sx={{ py: 5, pl: 10}}>
+          <FormControl>
             <Box className="twoColumns">
               <Typography className="variable">Campaign Title</Typography>
               <Box className="secondColumn">
                 <TextField
-                  value={formData.title ? formData.title : ""}
+                  value={formData.title}
                   size="small"
                   fullWidth
                   label="Enter title"
@@ -193,7 +129,7 @@ const AddCampaignForm = () => {
               </Box>
               <Box className="secondColumn">
                 <TextField
-                  value={formData.pointsPerDollar ? formData.pointsPerDollar : ""}
+                  value={formData.pointsPerDollar}
                   size="small"
                   fullWidth
                   name="pointsPerDollar"
@@ -206,15 +142,13 @@ const AddCampaignForm = () => {
                 />
               </Box>
             </Box>
-
             <Box className="twoColumns">
               <Box>
-                <Typography className="variable">Minimum Spend</Typography>
-                <Typography className="variable-subtitle">(SGD)</Typography>
+                <Typography className="variable">Minimum Spend (SGD)</Typography>
               </Box>
               <Box className="secondColumn">
                 <TextField
-                  value={formData.minSpend ? formData.minSpend : ""}
+                  value={formData.minSpend}
                   size="small"
                   fullWidth
                   name="minSpend"
@@ -227,7 +161,6 @@ const AddCampaignForm = () => {
                 />
               </Box>
             </Box>
-
             <Box className="twoColumns">
               <Box>
                 <Typography className="variable flexColumn">
@@ -258,7 +191,6 @@ const AddCampaignForm = () => {
                 </TextField>
               </Box>
             </Box>
-
             <Box className="twoColumns">
               <Typography className="variable">Start & End Date (DD/MM/YYYY)</Typography>
               <Box className="secondColumn">
@@ -269,12 +201,27 @@ const AddCampaignForm = () => {
                     value={formData.startDate}
                     inputFormat="DD/MM/YYYY"
                     onChange={(event) => handleOnChangeDate("startDate", event._d)}
-
                     renderInput={(params) => (
-                      <TextField {...params} size="small" sx={{ width: "180px", mr: 1 }}
-                        error={error["startDate"]}
-                        helperText={error["startDate"] ? "Date cannot be before today" : ""} />
+                      <TextField 
+                        {...params} 
+                        size="small" 
+                        sx={{ width: "200px" }}
+                        error={error["isToday"] || error["isAfterEndDate"]}
+                        helperText={
+                          error["isToday"] ? "Start date must be after today" 
+                          : error["isAfterEndDate"] ? "Start date must be before end date"
+                          : ""
+                        } 
+                        FormHelperTextProps={{sx: {ml: 0, fontSize: "10px"}}}
+                      />
                     )}
+                  />
+                  <BsDash 
+                    style={{
+                      color:"#1B2559", 
+                      margin: "0px 8px", 
+                      marginBottom: error["isToday"] || error["isAfterEndDate"] ? "16px" : 0 
+                    }}
                   />
                   <DatePicker
                     name="endDate"
@@ -283,52 +230,43 @@ const AddCampaignForm = () => {
                     inputFormat="DD/MM/YYYY"
                     onChange={(event) => handleOnChangeDate("endDate", event._d)}
                     renderInput={(params) => (
-                      <TextField {...params} size="small" sx={{ width: "180px", mr: 1 }}
-                        error={error["endDate"]}
-                        helperText={error["endDate"] ? "End date must be after start date" : ""} />
+                      <TextField 
+                        {...params} 
+                        size="small" 
+                        sx={{ width: "200px"}} 
+                        helperText={ error["isToday"] || error["isAfterEndDate"] ? " " : ""} 
+                        FormHelperTextProps={{sx: {ml: 0, fontSize: "10px"}}}
+                      />
                     )}
                   />
                 </LocalizationProvider>
               </Box>
             </Box>
-
             <Box className="twoColumns">
               <Typography className="variable">Notification message</Typography>
               <Box className="secondColumn">
                 <TextField
                   name="message"
-                  value={formData?.message}
+                  value={formData.message}
                   size="small"
                   fullWidth
                   multiline
                   label="Enter message"
                   minRows={3}
                   inputProps={{ maxLength: 200 }}
-                  helperText={`${formData["message"] ? formData["message"].length : 0} / 200`}
+                  helperText={`${formData["message"].length} / 200`}
                   onChange={handleOnChange}
                 />
               </Box>
             </Box>
-
           </FormControl>
-
         </CardContent>
-
       </Card>
       <div className="addCampaignButton">
-        {isFormValid ? (
-          <CustomButton handleOnClick={handleAddCampaignClick} text="Add campaign" nameOfClass="customButton" />
-        ) : (
-          <CustomButton text="Add campaign" nameOfClass="customButtonGrey" />
-        )}
-
-        <ConfirmDialog
-          open={open}
-          setOpen={setOpen}
-          handleConfirm={handleConfirm}
-          id="campaign-123"
-          text="Are you sure you want to add campaign?"
-          header="Confirm action"
+        <CustomButton 
+          handleOnClick={() => setOpen(true)}
+          text="Add campaign"
+          disabled={!isFormValid}
         />
       </div>
     </div>

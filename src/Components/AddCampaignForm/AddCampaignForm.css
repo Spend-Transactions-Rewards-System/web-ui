@@ -1,0 +1,22 @@
+.twoColumns {
+    display: flex;
+    margin: 10px;
+}
+
+.secondColumn {
+    width: 400px;
+    display:flex;
+    align-items: center;
+}
+
+.variable {
+    width: 300px;
+    color: #1B2559;
+    font-size: 14px;
+}
+
+.addCampaignButton {
+    float: right;
+    margin-top: 30px;
+    margin-left: 5px;
+}

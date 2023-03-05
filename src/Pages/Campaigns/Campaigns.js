@@ -1,15 +1,14 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from 'react-router-dom';
 
-import { Box } from "@mui/material";
+import { Alert, Box, IconButton, Snackbar } from "@mui/material";
 import moment from "moment/moment";
+import { CgClose } from "react-icons/cg";
 import _ from "lodash";
 
 import CollapsibleTable from "../../Components/CollapsibleTable/CollapsibleTable";
 import LoadingAnimation from "../../Components/LoadingAnimation/LoadingAnimation";
 import CustomButton from "../../Components/CustomButton/CustomButton";
-import { Snackbar, Alert, Button } from "@mui/material";
-
 
 const columnNames = ["Card Program", "Campaign Title", "Start Date", "End Date", "Status"]
 
@@ -21,6 +20,15 @@ const Campaigns = () => {
     const [filter, setFilter] = useState({
         status: "", search: ""
     });
+    const [open, setOpen] = useState(false);
+    const location = useLocation();
+    const [addSuccess, setAddSuccess] = useState(null);
+    useEffect(() => {
+        if (location.state !== null) {
+            setOpen(true);
+            setAddSuccess(location.state.addSuccess);
+        }  
+    }, [])
 
     const formatData = () => {
         let formatMain = [];
@@ -68,22 +76,6 @@ const Campaigns = () => {
         }
     }, [filter])
 
-    const [open, setOpen] = useState(true)
-
-    const handleClose = () => {
-        setOpen(false);
-    }
-
-    const action = (
-        <Button color="secondary" size="small" onClick={() => {
-            // Implement your action here
-        }}>
-            UNDO
-        </Button>
-    );
-
-    const showSnackbar = new URLSearchParams(useLocation().search).get('showSnackBar');
-
     return (
         <div>
             <script>{document.title = "Campaigns"}</script>
@@ -109,16 +101,41 @@ const Campaigns = () => {
                     />
                 </>
             }
-            {showSnackbar && <Snackbar
+            <Snackbar
                 open={open}
                 autoHideDuration={6000}
-                onClose={handleClose}
-                message="Note archived"
-                action={action}>
-                <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-                    Campaign added successfully
+                onClose={() => {
+                    setOpen(false);
+                    window.history.replaceState({}, null)
+                }}
+            >
+                <Alert 
+                    severity={addSuccess ? "success" : "error"} 
+                    sx={{ width: '100%' }}
+                >
+                    { addSuccess 
+                        ? "Campaign added successfully" 
+                        :  <><b>Error</b> - Campaign failed to add </>
+                    }
+                    <IconButton 
+                        onClick={() => {
+                            setOpen(false);
+                            window.history.replaceState({}, null)
+                        }}
+                        sx={{
+                            color: addSuccess ? "#1E4620" : "#5F2120", 
+                            p: 0.5, 
+                            ml: 8
+                        }}
+                    >
+                        <CgClose 
+                            style={{PointerEvent: "none"}} 
+                            size="15px"
+                        />
+                    </IconButton>
                 </Alert>
-            </Snackbar>}         
+                
+            </Snackbar>
         </div>
     )
 }
