@@ -1,0 +1,7 @@
+.MuiButtonBase-root.MuiPickersDay-root.Mui-selected {
+    background-color: #4B2DCC;
+}
+
+.MuiButtonBase-root.MuiPickersDay-root.Mui-selected:hover {
+    background-color: #331c93;
+}

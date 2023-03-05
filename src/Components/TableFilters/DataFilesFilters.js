@@ -15,6 +15,7 @@ import _ from "lodash";
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 
 import CustomButton from "../CustomButton/CustomButton";
+import "./TableFilters.css";
 
 const statusList ={
         "Completed": "completed", 

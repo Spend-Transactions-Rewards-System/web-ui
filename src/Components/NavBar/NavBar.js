@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router";
-import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useState } from "react";
 
 import { Box, Button, Typography } from "@mui/material";
 import { MdCloudUpload, MdCampaign } from "react-icons/md";
@@ -24,7 +23,6 @@ const navMap = {
 
 const NavBar = () => {
 
-    const { pathname } = useLocation();
     const navigate = useNavigate();
     const [currTab, setCurrTab] = useState("Data Files");
 
@@ -32,15 +30,6 @@ const NavBar = () => {
         navigate(navMap[tab]["link"]);
         setCurrTab(tab);
     }
-
-    useEffect(() => {
-        for (const key in navMap) {
-          if (navMap[key].link === pathname) {
-            setCurrTab(key);
-            break;
-          }
-        }
-      }, [pathname]);
 
     return (
         <Box 
@@ -56,9 +45,13 @@ const NavBar = () => {
             <Box className="flexbox-center">
                 <img 
                     src={require("../../Assets/logo.png")}
+                    className="navLogo"
                     width="120px"
-                    style={{padding: "8px 5px"}}
                     alt="logo"
+                    onClick={() => {
+                        navigate("/datafiles");
+                        setCurrTab("Data Files");
+                    }}
                 />
             </Box>
             <hr 

@@ -12,3 +12,11 @@ div > .navBarButton {
     display: flex;
     align-items: center;
 }
+
+.navLogo {
+    padding: 8px 5px;
+}
+
+.navLogo:hover {
+    cursor: pointer;
+}
