@@ -11,7 +11,10 @@ const AWS_DOMAIN = process.env.REACT_APP_DOMAIN;
 const CARD_URL = process.env.REACT_APP_CARD_URL;
 const UPLOAD_URL = process.env.REACT_APP_UPLOAD_URL;
 
+const HEADER = { "Content-Type": "application/json" }
+
 const login = async (email, password) => {
+
     return await new Promise((resolve, reject) => {
         
         const cognito = new CognitoIdentityServiceProvider({
@@ -39,7 +42,6 @@ const login = async (email, password) => {
         })
     })
 }
-
 
 const logout = async () => {
 
@@ -72,56 +74,15 @@ const logout = async () => {
     }   
 }
 
-const getDataFiles = async () => {
+const getDataFiles = async (tenant) => {
 
-  const requestBody = JSON.stringify({
-    "tenant": "scis_bank"
+  const requestBody = JSON.stringify({ 
+    "tenant": tenant.queryKey[0]
   })
 
-    try {
-        const response = await axios.post("http://localhost:8080/api/v1/download/list", requestBody, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          
-        });
-        console.log(response.data);
-      } catch (error) {
-        console.error(error);
-    }
-
-
-    // const formData = new FormData();
-    // formData.append("tenant", tenant);  
-
-    // try {
-    //     const response = await axios.get(`${UPLOAD_URL}/download/list`, 
-    //    { data : {
-    //         "tenant": tenant
-    //     },
-    //     });
-    //     console.log(response.data);
-    // } catch (error) {
-    //     console.error(error);
-    // }
-
-    // return await axios
-    //     .get(`${UPLOAD_URL}/download/list`, formData, {
-    //         headers: {
-    //          'Content-Type': 'multipart/form-data',
-    //         },
-    //     })
-    //     .then((res) => res.data)
-    //     .catch((err) => console.log(err));
-    
-    // return await axios({
-    //     method: "get", 
-    //     url: `${UPLOAD_URL}/download/list`, 
-    //     data: formData,
-    //     headers: {"Content-Type": "multipart/form-data"}
-    // })
-    //     .then((res) => console.log(res))
-    //     .catch((err) => console.log(err))
+  return await axios
+    .post(`${UPLOAD_URL}/download/list`, requestBody, { headers: HEADER })
+    .then((res) => res.data)
 }
 
 

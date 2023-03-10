@@ -42,7 +42,7 @@ const Row = ({ currRow, type, details, colSpan }) => {
                     <TableCell key={aKey} >
                         { type === "dataFiles" && aKey === "status" 
                             ? <Chip 
-                                label={value}
+                                label={value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()}
                                 sx={{
                                         backgroundColor: value.toLowerCase() === "completed" ? "#00873E"
                                             : value.toLowerCase() === "processing" ? "#FF9922" 
@@ -67,7 +67,7 @@ const Row = ({ currRow, type, details, colSpan }) => {
                                 </Typography>
                             : type === "campaigns" && aKey === "status"  ?
                                 <Chip 
-                                label={value}
+                                label={value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()}
                                 sx={{
                                         backgroundColor: value.toLowerCase() === "active" ? "#00873E"
                                             : value.toLowerCase() === "inactive" ? "#FF9922" 

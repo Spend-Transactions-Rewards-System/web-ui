@@ -23,7 +23,7 @@ const statusList ={
         "Error": "error", 
         "Processing": "processing"
     };
-const typeList = ["Spendings", "Users"]
+const typeList = ["Spend", "Users"]
 
 const DataFilesFilters = ({ filter, setFilter }) => {
 

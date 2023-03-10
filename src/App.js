@@ -15,7 +15,14 @@ import AddCampaigns from "./Pages/AddCampaign/AddCampaigns";
 import Unauthorised from "./Pages/ErrorPage/Unauthorised";
 import ProtectedRoute from "./Pages/ProtectedRoute/ProtectedRoute";
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1,
+    },
+  },
+})
 
 function App() {
   return (
@@ -27,8 +34,7 @@ function App() {
             <Route path="/" element={<Login />}/>
             <Route path="*" element={<Error404 />} />
             <Route path="/401" element={<Unauthorised />} />
-
-            
+                        
             <Route element={
               // <ProtectedRoute>
                 <CustomerLayout />
