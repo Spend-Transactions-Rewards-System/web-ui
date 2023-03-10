@@ -1,4 +1,5 @@
 import { useState,useEffect } from "react";
+import { useQuery} from "react-query";
 
 import { Box } from "@mui/material";
 import moment from "moment/moment";
@@ -7,10 +8,14 @@ import _ from "lodash";
 import CollapsibleTable from "../../Components/CollapsibleTable/CollapsibleTable";
 import LoadingAnimation from "../../Components/LoadingAnimation/LoadingAnimation";
 import CustomButton from "../../Components/CustomButton/CustomButton";
+import { getDataFiles } from "../../API/api";
 
 const columnNames = ["File Name", "Type", "Uploaded Data & Time", "Status"]
 
 const DataFiles = () => {
+
+    const { data, isLoading, isError } = useQuery("getDataFiles", getDataFiles);
+    console.log(data)  
 
     const [origData, setOrigData] = useState(null);
     const [mainData, setMainData] = useState(null);

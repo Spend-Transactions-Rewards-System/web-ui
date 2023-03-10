@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { CssBaseline } from "@mui/material";
 
@@ -12,9 +13,12 @@ import UploadData from "./Pages/UploadData/UploadData";
 import Login from "./Pages/Login/Login";
 import AddCampaigns from "./Pages/AddCampaign/AddCampaigns";
 
+const queryClient = new QueryClient()
+
 function App() {
   return (
     <div className="App">
+      <QueryClientProvider client={queryClient}>
       <CssBaseline>
         <Router>
           <Routes>
@@ -34,6 +38,7 @@ function App() {
           </Routes>
         </Router>
       </CssBaseline>
+    </QueryClientProvider>
     </div>
   );
 }

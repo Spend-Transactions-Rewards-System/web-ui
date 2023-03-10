@@ -41,7 +41,6 @@ const UploadData = () => {
                 }}
             ]))
         }
-
         setType(null);
     }
 

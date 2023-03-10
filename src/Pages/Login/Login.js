@@ -4,22 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { Box, Link, TextField, Typography } from "@mui/material";
 import _ from "lodash";
 import jwt from "jwt-decode";
-import { HmacSHA256, enc} from "crypto-js";
-import { CognitoIdentityServiceProvider } from "aws-sdk";
 
 import "./Login.css";
 import CustomButton from "../../Components/CustomButton/CustomButton";
-
-const AWS_REGION = process.env.REACT_APP_REGION;
-const USER_POOL_ID = process.env.REACT_APP_USER_POOL_ID;
-const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
-const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
-
-const cognito = new CognitoIdentityServiceProvider({
-    region: AWS_REGION,
-    userPoolId: USER_POOL_ID,
-    clientId: CLIENT_ID,
-});  
+import { login } from "../../API/api";
 
 const Login = () => {
 
@@ -38,25 +26,16 @@ const Login = () => {
 
     const onSubmit = async (event) => {
         event.preventDefault();
-        const params = {
-            AuthFlow: "USER_PASSWORD_AUTH",
-            ClientId: CLIENT_ID, 
-            AuthParameters: {
-              USERNAME: formData["email"],
-              PASSWORD: formData["password"],
-              SECRET_HASH: HmacSHA256(formData["email"] + CLIENT_ID, CLIENT_SECRET).toString(enc.Base64)
-            },
-        };  
 
-        cognito.initiateAuth(params, (err, data) => {
-            if (err) {
-                console.log("Login Failed: ", err.message);
-                setError(true);
-            } else {
-                const token = data.AuthenticationResult.IdToken;
-                localStorage.setItem("token", token);
-                roleNavigation(token);
-            }
+        login(formData["email"], formData["password"])
+        .then((data) => {
+            const token = data.AuthenticationResult.AccessToken;
+            localStorage.setItem("token", token);
+            roleNavigation(token);
+        })
+        .catch((err) => {
+            setError(true);
+            console.log("Login failed: ", err.message)
         })
     }
 
@@ -65,7 +44,7 @@ const Login = () => {
         if (token) {
             roleNavigation(token);
         }
-    });
+    }, []);
 
     return (
         <Box className="background">
