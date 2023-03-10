@@ -134,7 +134,6 @@ const Campaigns = () => {
                         />
                     </IconButton>
                 </Alert>
-                
             </Snackbar>
         </div>
     )

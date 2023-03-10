@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { 
     Box, 
@@ -40,6 +40,7 @@ const UploadData = () => {
                    status: "in progress"
                 }}
             ]))
+            
         }
         setType(null);
     }
@@ -112,11 +113,11 @@ const UploadData = () => {
                                 component="label"
                                 disabled={type === null}
                             >
-                                <form 
+                                {/* <form 
                                     method="post" 
                                     encType="multipart/form-data" 
                                     className="flexbox-center"
-                                >
+                                > */}
                                     <MdUpload size={20} style={{marginRight: 10}}/>
                                     Choose file to upload
                                     <input 
@@ -125,7 +126,7 @@ const UploadData = () => {
                                         accept=".csv" 
                                         onChange={handleAddFile}
                                     />
-                                </form>
+                                {/* </form> */}
                             </Button>
                         </Box>
                     </Box>

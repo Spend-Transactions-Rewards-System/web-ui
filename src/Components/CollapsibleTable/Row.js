@@ -1,17 +1,23 @@
 import { useState, memo } from "react";
 
 import {
+    Alert, 
     Box,
     TableRow, 
     TableCell, 
     Button, 
     Chip,
     Collapse,
-    Typography
+    Typography, 
+    IconButton, 
+    Snackbar
 } from "@mui/material";
 import _ from "lodash";
 import { IoIosArrowDown } from "react-icons/io";
 import { BsExclamationLg } from "react-icons/bs";
+import { CgClose } from "react-icons/cg";
+
+import { downloadErrorFile } from "../../API/api";
 
 const detailDict = {
     "completeDateTime": "Complete Date Time",
@@ -30,7 +36,17 @@ const areEqual = (prevProps, nextProps) => {
 }
 
 const Row = ({ currRow, type, details, colSpan }) => {
+
     const [open, setOpen] = useState(false);
+    const [errorDownload, setErrorDownload] = useState(false);
+
+    const downloadFile = (url, filename) => {
+        downloadErrorFile(url, filename)
+        .catch((err) => {
+            console.log(err.message);
+            setErrorDownload(true);
+        })
+    }
 
     return(
         <>
@@ -146,6 +162,7 @@ const Row = ({ currRow, type, details, colSpan }) => {
                                                     ml: 2,
                                                     color: "#4B2DCC",
                                                 }}
+                                                onClick={() => downloadFile(details["rejectedFile"], currRow["id"])}
                                             >
                                                 <u>Download Erroneous Transaction(s)</u>
                                             </Button>
@@ -160,6 +177,31 @@ const Row = ({ currRow, type, details, colSpan }) => {
                 </Collapse>
             </TableCell>
         </TableRow>
+        <Snackbar
+            open={errorDownload}
+            autoHideDuration={6000}
+            onClose={() => setErrorDownload(false)}
+        >
+            <Alert 
+                severity="error"
+                sx={{ width: '100%' }}
+            >
+                <b>Error</b> - Download file failed. Please try again later.
+                <IconButton 
+                    onClick={() => setErrorDownload(false)}
+                    sx={{
+                        color: "#5F2120", 
+                        p: 0.5, 
+                        ml: 8
+                    }}
+                >
+                    <CgClose 
+                        style={{PointerEvent: "none"}} 
+                        size="15px"
+                    />
+                </IconButton>
+            </Alert>
+        </Snackbar>
         </>
     )
 }

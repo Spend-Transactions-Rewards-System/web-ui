@@ -85,10 +85,45 @@ const getDataFiles = async (tenant) => {
     .then((res) => res.data)
 }
 
+const downloadErrorFile = async (url, filename) => {
+    
+    return await axios 
+        .get(`${UPLOAD_URL}/download/error?url=`+url, {
+            responseType: 'blob'
+        })
+        .then((res) => {
+            const data = res.data;
+            const url = window.URL.createObjectURL(new Blob([data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', filename);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        })
+}
+
+// const uploadFile = async (file, type, tenant) => {
+
+//     const formData = new FormData();
+//     formData.append("file", file);
+//     formData.append("type", type);
+//     formData.append("tenant", tenant);
+
+//     return await axios
+//         .post(`${UPLOAD_URL}/upload`, formData, {
+//             headers: {
+//                 'Content-Type': 'multipart/form-data'
+//             }
+//         })
+//         .then((res) => res.data)
+// }
 
 
 export {
     login, 
     logout,
     getDataFiles, 
+    downloadErrorFile,
+    // uploadFile
 }
