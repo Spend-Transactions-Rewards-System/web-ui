@@ -8,10 +8,12 @@ import CustomerLayout from "./Layout/CustomerLayout";
 import TenantLayout from "./Layout/TenantLayout";
 import DataFiles from "./Pages/DataFiles/DataFiles";
 import Campaigns from "./Pages/Campaigns/Campaigns";
-import Error404 from "./Pages/Error404/Error404";
+import Error404 from "./Pages/ErrorPage/Error404";
 import UploadData from "./Pages/UploadData/UploadData";
 import Login from "./Pages/Login/Login";
 import AddCampaigns from "./Pages/AddCampaign/AddCampaigns";
+import Unauthorised from "./Pages/ErrorPage/Unauthorised";
+import ProtectedRoute from "./Pages/ProtectedRoute/ProtectedRoute";
 
 const queryClient = new QueryClient()
 
@@ -24,12 +26,22 @@ function App() {
           <Routes>
             <Route path="/" element={<Login />}/>
             <Route path="*" element={<Error404 />} />
+            <Route path="/401" element={<Unauthorised />} />
 
-            <Route element={<CustomerLayout />}>
+            
+            <Route element={
+              // <ProtectedRoute>
+                <CustomerLayout />
+              // </ProtectedRoute>
+            }>
               <Route path="/rewards" element={<Rewards />} />
             </Route>
             
-            <Route element={<TenantLayout />}>
+            <Route element={
+              // <ProtectedRoute>
+                <TenantLayout />
+              // </ProtectedRoute>
+            }>
               <Route path="/datafiles" element={<DataFiles />} />
               <Route path="/datafiles/upload" element={<UploadData />} />
               <Route path="/campaigns" element={<Campaigns />} />

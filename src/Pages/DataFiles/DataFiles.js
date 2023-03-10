@@ -14,8 +14,12 @@ const columnNames = ["File Name", "Type", "Uploaded Data & Time", "Status"]
 
 const DataFiles = () => {
 
-    const { data, isLoading, isError } = useQuery("getDataFiles", getDataFiles);
-    console.log(data)  
+    // const { data, isLoading, isError } = useQuery("getDataFiles", getDataFiles);
+    // console.log(data)  
+
+    useEffect(() => {
+        getDataFiles();
+    }, [])
 
     const [origData, setOrigData] = useState(null);
     const [mainData, setMainData] = useState(null);

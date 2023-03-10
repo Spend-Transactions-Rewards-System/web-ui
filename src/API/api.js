@@ -61,10 +61,11 @@ const logout = async () => {
     
             cognito.globalSignOut(params, (err) => {
                 if (err) {
-                    console.log("Logout Failed: ", err.message);
-                    reject(err);
+                  console.log("Logout Failed: ", err.message);
+                  reject(err);
                 } else {
-                    resolve();
+                  localStorage.removeItem("token"); 
+                  resolve();
                 }
             })
         });
@@ -73,19 +74,22 @@ const logout = async () => {
 
 const getDataFiles = async () => {
 
+  const requestBody = JSON.stringify({
+    "tenant": "scis_bank"
+  })
+
     try {
-        const response = await axios.get("http://localhost:8080/api/v1/download/list", {
+        const response = await axios.post("http://localhost:8080/api/v1/download/list", requestBody, {
           headers: {
             "Content-Type": "application/json",
           },
-          data: JSON.stringify({
-            "tenant": "scis_bank"
-          }),
+          
         });
         console.log(response.data);
       } catch (error) {
         console.error(error);
     }
+
 
     // const formData = new FormData();
     // formData.append("tenant", tenant);  

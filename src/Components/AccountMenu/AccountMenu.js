@@ -13,7 +13,6 @@ const AccountMenu =  () => {
     const handleLogout = () => {
         logout().then(() => {
             navigate("/");
-            localStorage.removeItem("token"); 
         })
     }
 
