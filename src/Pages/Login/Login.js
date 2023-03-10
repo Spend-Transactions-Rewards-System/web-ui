@@ -24,7 +24,7 @@ const Login = () => {
         }
     }
 
-    const onSubmit = async (event) => {
+    const onSubmit = (event) => {
         event.preventDefault();
 
         login(formData["email"], formData["password"])

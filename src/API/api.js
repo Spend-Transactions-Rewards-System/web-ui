@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useQuery} from "react-query";
 import { HmacSHA256, enc} from "crypto-js";
 import { CognitoIdentityServiceProvider } from "aws-sdk";
 
@@ -30,66 +29,54 @@ const login = async (email, password) => {
               SECRET_HASH: HmacSHA256(email + CLIENT_ID, CLIENT_SECRET).toString(enc.Base64)
             },
         };  
-
         cognito.initiateAuth(params, (err, data) => {
             if (err) {
                 console.log("Login Failed: ", err.message);
                 reject(err);
             } else {
-                console.log(data)
                 resolve(data);
             }
         })
     })
 }
 
-// const logout = async () => {
+
+const logout = async () => {
+
+    const token = localStorage.getItem("token");
+
+    const cognito = new CognitoIdentityServiceProvider({
+        region: AWS_REGION,
+        userPoolId: USER_POOL_ID,
+        clientId: CLIENT_ID,
+        accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
+        secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY
+    });  
+
+    if (token) {
+        return await new Promise((resolve, reject) => {
+            const params = {
+                AccessToken: token
+            }
     
-//     return await axios
-//         .get(`${AWS_DOMAIN}/logout`, {
-//         param: {
-//             client_id: CLIENT_ID,
-//             redirect_uri: "http://localhost:3000/"
-//         }
-//         })
-//         .then((resp) => resp.data.data)
-//         .catch((err) => console.log(err))
-
-
-
-
-//     // const cognito = new CognitoIdentityServiceProvider({
-//     //     region: AWS_REGION,
-//     //     userPoolId: USER_POOL_ID,
-//     //     clientId: CLIENT_ID,
-//     //     accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
-//     //     secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY
-//     // });  
-
-//     // if (token) {
-//     //     return await new Promise((resolve, reject) => {
-//     //         const params = {
-//     //             AccessToken: token
-//     //         }
-    
-//     //         cognito.globalSignOut(params, (err, data) => {
-//     //             if (err) {
-//     //                 console.log("Logout Failed: ", err.message);
-//     //                 reject(err);
-//     //             } else {
-//     //                 resolve();
-//     //             }
-//     //         })
-//     //     });
-//     // }   
-// }
+            cognito.globalSignOut(params, (err) => {
+                if (err) {
+                    console.log("Logout Failed: ", err.message);
+                    reject(err);
+                } else {
+                    resolve();
+                }
+            })
+        });
+    }   
+}
 
 const getDataFiles = async () => {
 
     try {
         const response = await axios.get("http://localhost:8080/api/v1/download/list", {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           data: JSON.stringify({
             "tenant": "scis_bank"
@@ -137,5 +124,6 @@ const getDataFiles = async () => {
 
 export {
     login, 
+    logout,
     getDataFiles, 
 }

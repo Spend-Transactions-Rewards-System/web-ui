@@ -4,10 +4,19 @@ import { Box, Link } from "@mui/material";
 import { RiAccountCircleFill } from "react-icons/ri"
 
 import "./AccountMenu.css";
-// import { logout } from "../../API/api";
+import { logout } from "../../API/api";
 
-const AccountMenu = () => {
-   
+const AccountMenu =  () => {
+
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout().then(() => {
+            navigate("/");
+            localStorage.removeItem("token"); 
+        })
+    }
+
     return (
         <Box 
             className="flexbox-spaceBetween"
@@ -22,7 +31,7 @@ const AccountMenu = () => {
                 underline="none"
                 className="logout"
                 sx={{color: "#2B3674"}}
-                // onClick={logout}
+                onClick={handleLogout}
             >
                 Logout
             </Link>
