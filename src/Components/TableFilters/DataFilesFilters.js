@@ -20,7 +20,6 @@ import "./TableFilters.css";
 const statusList ={
         "Completed": "completed", 
         "Completed (with rejected rows)": "completedReject",
-        "Error": "error", 
         "Processing": "processing"
     };
 const typeList = ["Spend", "Users"]

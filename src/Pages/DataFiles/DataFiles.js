@@ -1,5 +1,5 @@
 import { useState,useEffect } from "react";
-import { useQuery} from "react-query";
+import { useQuery } from "react-query";
 
 import { Box } from "@mui/material";
 import moment from "moment/moment";
@@ -22,7 +22,7 @@ const DataFiles = () => {
         status: "", type: "", startDate: null, endDate: null 
     });
     
-    const { isError } = useQuery("scis_bank", getDataFiles, {
+    const { isError } = useQuery(["tenant", "scis_bank"], getDataFiles, {
         onSuccess: (data) => {
             formatData(data.data);
         }, 
@@ -88,7 +88,7 @@ const DataFiles = () => {
     return (
         <div> 
             <script>{document.title="Data Files"}</script>
-            { mainData === null || details === null ? <LoadingAnimation /> :    
+            { mainData === null || details === null ? <LoadingAnimation /> :   
             <>  
                 <Box 
                     className="flexbox-flexEnd"

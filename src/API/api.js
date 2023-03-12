@@ -74,10 +74,10 @@ const logout = async () => {
     }   
 }
 
-const getDataFiles = async (tenant) => {
+const getDataFiles = async (req) => {
 
   const requestBody = JSON.stringify({ 
-    "tenant": tenant.queryKey[0]
+    "tenant": req.queryKey[1]
   })
 
   return await axios
@@ -103,21 +103,20 @@ const downloadErrorFile = async (url, filename) => {
         })
 }
 
-// const uploadFile = async (file, type, tenant) => {
+const uploadFile = async (req) => {
+    
+    const formData = new FormData();
+    formData.append("file", req["file"]);
+    formData.append("type", req["type"]);
+    formData.append("tenant", req["tenant"]);
 
-//     const formData = new FormData();
-//     formData.append("file", file);
-//     formData.append("type", type);
-//     formData.append("tenant", tenant);
-
-//     return await axios
-//         .post(`${UPLOAD_URL}/upload`, formData, {
-//             headers: {
-//                 'Content-Type': 'multipart/form-data'
-//             }
-//         })
-//         .then((res) => res.data)
-// }
+    return await axios
+        .post(`${UPLOAD_URL}/upload`, formData, {
+            headers: { 'Content-Type': 'multipart/form-data' }, 
+            signal: req["controller"].signal
+        })
+        .then((res) => res.data)
+}
 
 
 export {
@@ -125,5 +124,5 @@ export {
     logout,
     getDataFiles, 
     downloadErrorFile,
-    // uploadFile
+    uploadFile
 }

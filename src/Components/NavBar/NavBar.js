@@ -1,11 +1,12 @@
-import { useNavigate } from "react-router";
-import { useState } from "react";
+import { memo } from "react";
+import { useLocation } from "react-router";
 
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography, Link } from "@mui/material";
 import { MdCloudUpload, MdCampaign } from "react-icons/md";
 import _ from "lodash";
 
 import "./NavBar.css";
+import logo from "../../Assets/logo.png";
 
 const navMap = {
 
@@ -23,12 +24,10 @@ const navMap = {
 
 const NavBar = () => {
 
-    const navigate = useNavigate();
-    const [currTab, setCurrTab] = useState("Data Files");
-
-    const handleOnClick = (tab) => {
-        navigate(navMap[tab]["link"]);
-        setCurrTab(tab);
+    const location = useLocation();
+    let currLocation = "Data Files";
+    if (location.pathname.includes("campaign") ) {
+        currLocation = "Campaigns"
     }
 
     return (
@@ -43,16 +42,17 @@ const NavBar = () => {
             }}
         >
             <Box className="flexbox-center">
+                <Link
+                    href={"/datafiles"} 
+                    underline="none"
+                >
                 <img 
-                    src={require("../../Assets/logo.png")}
+                    src={logo}
                     className="navLogo"
                     width="120px"
                     alt="logo"
-                    onClick={() => {
-                        navigate("/datafiles");
-                        setCurrTab("Data Files");
-                    }}
                 />
+                </Link>
             </Box>
             <hr 
                 style={{
@@ -61,32 +61,34 @@ const NavBar = () => {
                     border:"none" 
                 }}
             />
-            {_.map(Object.keys(navMap), (aKey) => {
+            {_.map(navMap, (item, aKey) => {
                 return(
-                    <Button
-                        key={aKey}
+                    <Link 
+                        key={aKey}    
+                        href={item["link"]} 
                         className="navBarButton"
                         sx={{  
-                            borderRight: currTab === aKey ? "5px solid #4B2DCC" : "none", 
+                            borderRight: currLocation === aKey ? "5px solid #4B2DCC" : "none", 
                             borderRadius: 0
                         }}
-                        onClick={() => handleOnClick(aKey)}
-                    >   
+                        underline="none"
+                    >
                         <Box 
                             className="navIcon"
-                            sx={{color: currTab === aKey ? "#4B2DCC" : "#A3AED0"}}
+                            sx={{color: currLocation === aKey ? "#4B2DCC" : "#A3AED0"}}
                         >
-                            {navMap[aKey]["icon"]}
+                            {item["icon"]}
                         </Box>
                         <Typography 
                             sx={{
                                 pl: 2, 
-                                color:  currTab === aKey ? "#2B3674" : "#A3AED0"
+                                color:  currLocation === aKey ? "#2B3674" : "#A3AED0"
                             }}
                         >
                             <b>{aKey}</b>
                         </Typography>
-                    </Button>
+                    </Link>
+
                 )
             })
             }

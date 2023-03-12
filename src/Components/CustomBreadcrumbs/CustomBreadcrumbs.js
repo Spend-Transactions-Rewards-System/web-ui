@@ -29,3 +29,4 @@ const CustomBreadcrumbs = ({ currPage }) => {
 }
 
 export default CustomBreadcrumbs;
+

@@ -1,13 +1,25 @@
 import { 
     Alert,
     AlertTitle,
+    Button, 
     Card, 
     Typography 
 } from "@mui/material";
+import { CgClose } from "react-icons/cg";
 
-const UploadStatus = ({ isSuccess, fileName, type }) => {
+const UploadStatus = ({ isSuccess, fileName, type, errorMessage, cancelFile, index, id }) => {
     return(
-        <Card sx={{width: "400px", borderRadius: 3}}>
+        <Card sx={{
+            width: "450px", 
+            borderRadius: 3, 
+            backgroundColor: isSuccess ? "#EDF7ED" : "#FDEDED"
+        }}>
+             <Button 
+                sx={{float:"right", color: "#1B2559", minWidth: 10, mt: 1, mr: 1}}
+                onClick={() => cancelFile(index, "complete")}
+            >
+                <CgClose style={{pointerEvents: "none" }}/>
+            </Button>
             <Alert 
                 sx={{p: 2}} 
                 severity={isSuccess ? "success" : "error"}
@@ -25,7 +37,7 @@ const UploadStatus = ({ isSuccess, fileName, type }) => {
                 </Typography>  
                 <Typography variant="subtitle2" color="#A3AED0">
                     { isSuccess ? "The data is now being processed"
-                        : "Please upload the file again"
+                        : errorMessage
                     }
                 </Typography>  
             </Alert>
