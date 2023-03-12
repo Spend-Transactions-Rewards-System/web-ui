@@ -36,13 +36,13 @@ const DataFiles = () => {
                     id: aRow["filename"],
                     fileName: aRow["filename"], 
                     type: aRow["type"].charAt(0).toUpperCase() + aRow["type"].slice(1).toLowerCase(), 
-                    uploadDateTime: moment(aRow["uploadTimestamp"]).format("DD/MM/YYYY hh:mm A"), 
+                    uploadDateTime: moment.unix(aRow["uploadTimestamp"]).format("DD/MM/YYYY hh:mm A"), 
                     status: aRow["completeTimestamp"] === 0 ? "Processing" : "Completed",
                     rejected: aRow["numberOfRejected"]
                 });
             formatDetails[aRow["filename"]] = {
                     completeDateTime: aRow["completeTimestamp"] 
-                                    ? moment(aRow["completeTimestamp"]).format("DD/MM/YYYY hh:mm A") 
+                                    ? moment.unix(aRow["completeTimestamp"]).format("DD/MM/YYYY hh:mm A") 
                                     : "null",
                     processed: aRow["numberOfProcessed"] ? aRow["numberOfProcessed"] : "null", 
                     rejected: aRow["numberOfRejected"] ? aRow["numberOfRejected"] : "null", 
