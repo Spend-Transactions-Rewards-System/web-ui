@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { AppProvider } from "./Context/AppContext";
 
 import { CssBaseline } from "@mui/material";
 
@@ -27,6 +28,7 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <div className="App">
+      <AppProvider>
       <QueryClientProvider client={queryClient}>
       <CssBaseline>
         <Router>
@@ -57,6 +59,7 @@ function App() {
         </Router>
       </CssBaseline>
     </QueryClientProvider>
+    </AppProvider>
     </div>
   );
 }

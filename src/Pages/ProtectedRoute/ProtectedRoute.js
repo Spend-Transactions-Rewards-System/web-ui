@@ -2,6 +2,8 @@ import { Navigate, useLocation } from "react-router-dom";
 
 import jwt from "jwt-decode";
 
+import getToken from "../../Utils/getToken";
+
 const authorisedPath = {
     "tenant": ["/datafiles", "/datafiles/upload", "/campaigns", "/campaigns/addcampaigns" ], 
     "customer": ["/rewards" ]
@@ -9,14 +11,17 @@ const authorisedPath = {
 
 const ProtectedRoute = ({ children }) => {
 
-    const token = localStorage.getItem("token");
+    const token = getToken().accessToken;
     const { pathname } = useLocation();
+    let d = new Date(0);
 
     if (token) {
         const decodedToken = jwt(token);
         const expirationDate = decodedToken["exp"];
         if (expirationDate < Math.floor(Date.now() / 1000)) {
-            localStorage.removeItem("token"); 
+            d.setDate(d.setUTCSeconds(expirationDate).getDate() - 1) ; 
+            document.cookie=`accessToken= ; expires= ${d}`;
+            document.cookie=`idToken= ; expires= ${d}`;
             return <Navigate to="/" />
         }
 

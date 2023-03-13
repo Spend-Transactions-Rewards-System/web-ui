@@ -11,7 +11,7 @@ import CustomButton from "../../Components/CustomButton/CustomButton";
 import { getDataFiles } from "../../API/api";
 import ErrorMessage from "../../Components/ErrorMessage/ErrorMessage";
 
-const columnNames = ["File Name", "Type", "Uploaded Data & Time", "Status"]
+const columnNames = ["File Name", "Type", "Uploaded Data & Time", "Status"] ;
 
 const DataFiles = () => {
 
@@ -115,3 +115,4 @@ const DataFiles = () => {
 }
 
 export default DataFiles;
+

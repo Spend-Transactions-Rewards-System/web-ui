@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAppContext } from "../../Context/AppContext";
 
 import { Box, Link, TextField, Typography } from "@mui/material";
 import _ from "lodash";
@@ -8,10 +9,12 @@ import jwt from "jwt-decode";
 import "./Login.css";
 import CustomButton from "../../Components/CustomButton/CustomButton";
 import { login } from "../../API/api";
+import getToken from "../../Utils/getToken";
 
 const Login = () => {
 
     const navigate = useNavigate();
+    const { setUserId } = useAppContext();
     const [formData, setFormData] = useState({});
     const [error, setError] = useState();
 
@@ -29,9 +32,17 @@ const Login = () => {
 
         login(formData["email"], formData["password"])
         .then((data) => {
-            const token = data.AuthenticationResult.AccessToken;
-            localStorage.setItem("token", token);
-            roleNavigation(token);
+            const result = data.AuthenticationResult;
+            const accessToken = result.AccessToken;
+            const idToken = result.IdToken;
+
+            let expirationDate = new Date(0);
+            expirationDate = expirationDate.setUTCSeconds(jwt(accessToken).exp);           
+            
+            document.cookie = `accessToken=${accessToken}; expires= ${expirationDate}`;
+            document.cookie = `idToken=${idToken}; expires= ${expirationDate}`;
+            setUserId(jwt(idToken).name);
+            roleNavigation(accessToken);
         })
         .catch((err) => {
             setError(true);
@@ -40,9 +51,11 @@ const Login = () => {
     }
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (token) {
-            roleNavigation(token);
+        const result = getToken();
+        console.log(result)
+        if (result) {
+            setUserId(jwt(result.IdToken).name);
+            roleNavigation(result.accessToken);
         }
     }, []);
 

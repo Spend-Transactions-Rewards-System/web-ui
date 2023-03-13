@@ -2,6 +2,8 @@ import axios from "axios";
 import { HmacSHA256, enc} from "crypto-js";
 import { CognitoIdentityServiceProvider } from "aws-sdk";
 
+import getToken from "../Utils/getToken";
+
 const AWS_REGION = process.env.REACT_APP_REGION;
 const USER_POOL_ID = process.env.REACT_APP_USER_POOL_ID;
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
@@ -45,7 +47,8 @@ const login = async (email, password) => {
 
 const logout = async () => {
 
-    const token = localStorage.getItem("token");
+    const token = getToken().accessToken;
+    let d = new Date();
 
     const cognito = new CognitoIdentityServiceProvider({
         region: AWS_REGION,
@@ -66,7 +69,9 @@ const logout = async () => {
                   console.log("Logout Failed: ", err.message);
                   reject(err);
                 } else {
-                  localStorage.removeItem("token"); 
+                    d.setDate(d.getDate() - 1);
+                    document.cookie=`accessToken= ; expires= ${d}`;
+                    document.cookie=`idToken= ; expires= ${d}`;
                   resolve();
                 }
             })
