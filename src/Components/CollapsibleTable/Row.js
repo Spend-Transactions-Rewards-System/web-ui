@@ -28,7 +28,8 @@ const detailDict = {
     "points": "Number of points per dollar",
     "minSpend": "Minimum spend (SGD)",
     "merchant": "Merchant", 
-    "message": "Notification Message" 
+    "message": "Notification Message",
+    "currency": "Currency"
 }
 
 const areEqual = (prevProps, nextProps) => {
@@ -75,10 +76,11 @@ const Row = ({ currRow, type, details, colSpan }) => {
                                         lineHeight: 1.43,
                                         letterSpacing: "0.01071em",
                                         color: currRow["card"] === "SCIS Shopping" ? "#9D1C00"
-                                                : currRow["card"]  === "SCIS Freedom" ? "#0E972C"
-                                                : "#CB7A00"
+                                             : currRow["card"] === "SCIS Freedom" ? "#0E972C"
+                                             : "#CB7A00"
                                     }}
                                 >
+                                    
                                     {value}
                                 </Typography>
                             : type === "campaigns" && aKey === "status"  ?

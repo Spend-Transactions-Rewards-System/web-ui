@@ -85,6 +85,12 @@ const getDataFiles = async (tenant) => {
     .then((res) => res.data)
 }
 
+const getRewards = async (req) => {
+    return await axios
+      .get(`${CARD_URL}/card/rewards/${req.queryKey[1]}/${req.queryKey[0]}`)
+      .then((res) => res.data)
+  }
+
 const downloadErrorFile = async (url, filename) => {
     
     return await axios 
@@ -125,5 +131,6 @@ export {
     logout,
     getDataFiles, 
     downloadErrorFile,
+    getRewards,
     // uploadFile
 }
