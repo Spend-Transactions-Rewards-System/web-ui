@@ -61,9 +61,7 @@ const Row = ({ currRow, type, details, colSpan }) => {
                             ? <Chip 
                                 label={value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()}
                                 sx={{
-                                        backgroundColor: value.toLowerCase() === "completed" ? "#00873E"
-                                            : value.toLowerCase() === "processing" ? "#FF9922" 
-                                            : "#D32F2F", 
+                                        backgroundColor: value.toLowerCase() === "completed" ? "#00873E" : "#FF9922", 
                                         color: "#FFFFFF",
                                         width: "100px"
                                     }}

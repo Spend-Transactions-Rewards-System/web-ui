@@ -9,14 +9,13 @@ import {
 import { CgClose } from "react-icons/cg";
 import { BsFillFileEarmarkTextFill }  from "react-icons/bs";
 
-const UploadInProgress = ({ fileName, cancelFile, index, type }) => {
+const UploadInProgress = ({ fileName, cancelFile, index, type, id }) => {
     return(
-        <Card sx={{width: "400px", borderRadius: 3}}>
+        <Card sx={{width: "450px", borderRadius: 3}}>
            <CardContent sx={{backgroundColor: "#EFF4FB"}}>
             <Button 
                 sx={{float:"right", color: "#1B2559", minWidth: 10}}
-                name={index}
-                onClick={cancelFile}
+                onClick={() => cancelFile(index, "in-progress")}
             >
                 <CgClose style={{pointerEvents: "none" }}/>
             </Button>

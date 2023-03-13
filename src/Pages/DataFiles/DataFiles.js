@@ -1,5 +1,5 @@
 import { useState,useEffect } from "react";
-import { useQuery} from "react-query";
+import { useQuery } from "react-query";
 
 import { Box } from "@mui/material";
 import moment from "moment/moment";
@@ -22,7 +22,7 @@ const DataFiles = () => {
         status: "", type: "", startDate: null, endDate: null 
     });
     
-    const { isError } = useQuery("scis_bank", getDataFiles, {
+    const { isError } = useQuery(["tenant", "scis_bank"], getDataFiles, {
         onSuccess: (data) => {
             formatData(data.data);
         }, 
@@ -36,13 +36,13 @@ const DataFiles = () => {
                     id: aRow["filename"],
                     fileName: aRow["filename"], 
                     type: aRow["type"].charAt(0).toUpperCase() + aRow["type"].slice(1).toLowerCase(), 
-                    uploadDateTime: moment(aRow["uploadTimestamp"]).format("DD/MM/YYYY hh:mm A"), 
+                    uploadDateTime: moment.unix(aRow["uploadTimestamp"]).format("DD/MM/YYYY hh:mm A"), 
                     status: aRow["completeTimestamp"] === 0 ? "Processing" : "Completed",
                     rejected: aRow["numberOfRejected"]
                 });
             formatDetails[aRow["filename"]] = {
                     completeDateTime: aRow["completeTimestamp"] 
-                                    ? moment(aRow["completeTimestamp"]).format("DD/MM/YYYY hh:mm A") 
+                                    ? moment.unix(aRow["completeTimestamp"]).format("DD/MM/YYYY hh:mm A") 
                                     : "null",
                     processed: aRow["numberOfProcessed"] ? aRow["numberOfProcessed"] : "null", 
                     rejected: aRow["numberOfRejected"] ? aRow["numberOfRejected"] : "null", 
@@ -88,7 +88,7 @@ const DataFiles = () => {
     return (
         <div> 
             <script>{document.title="Data Files"}</script>
-            { mainData === null || details === null ? <LoadingAnimation /> :    
+            { mainData === null || details === null ? <LoadingAnimation /> :   
             <>  
                 <Box 
                     className="flexbox-flexEnd"

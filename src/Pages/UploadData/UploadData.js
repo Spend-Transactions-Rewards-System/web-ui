@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { useMutation, useQueryClient } from "react-query";
 
 import { 
     Box, 
@@ -18,11 +19,12 @@ import OrderTable from "../../Components/OrderTable/OrderTable";
 import "./UploadData.css";
 import UploadInProgress from "../../Components/UploadStatus/UploadInProgress";
 import UploadStatus from "../../Components/UploadStatus/UploadStatus";
+import { uploadFile } from "../../API/api";
 
 const guides = [
     "Only .csv files are accepted", 
     "Upload ONE file at a time",
-    "Ensure the column anmes are in the same format and order as the table on the right"
+    "Ensure all columns are present in the file (Refer to table on the right)"
 ]
 
 const UploadData = () => {
@@ -30,24 +32,83 @@ const UploadData = () => {
     const [formData, setFormData] = useState([]);
     const [type, setType] = useState(null);
 
+    const fileInputRef = useRef(null);
+    const queryClient = useQueryClient();
+    const { mutate } = useMutation(uploadFile);
+
+    const updateFormData = (id, formData, status, errorMessage) => {
+
+        const copy = [...formData]; 
+
+        for (let i = copy.length-1; i >= 0; i--) {
+            if (copy[i]["id"] === id) {
+                copy[i] = { 
+                        ...copy[i], 
+                        status: status, 
+                    }
+                }
+                if (errorMessage) {
+                    copy[i]["errorMessage"] = errorMessage;
+                }
+                setFormData(copy);
+                break
+            }
+    }
+
     const handleAddFile = (event) => {
+
+        const timestamp = new Date().getTime();
+
         const file = event.target.files[0];
         if (file !== undefined) {
             setFormData((state) => ([
                 ...state,
-                { [file.name] : {
-                   type: type, 
-                   status: "in progress"
-                }}
+                {
+                    id: timestamp + file.name, 
+                    filename: file.name, 
+                    type: type, 
+                    status: "in progress", 
+                    file: file,
+                    abort: new AbortController()
+                }
             ]))
-            
         }
         setType(null);
+        fileInputRef.current.value = null;
     }
 
-    const cancelFile = (event) => {
+    useEffect(() => {
+        if (formData.length > 0) {
+            const currFile = formData[formData.length - 1];
+
+            const query = {
+                file: currFile["file"], 
+                type: currFile["type"], 
+                tenant: "scis_bank", 
+                controller: currFile["abort"]
+            }
+
+            mutate(query, {
+                onSuccess: () => {
+                    updateFormData(currFile["id"], formData, "success")
+                    return queryClient.invalidateQueries(query)
+                }, 
+                onError: (err) => {
+                    updateFormData(currFile["id"], formData, "error", err.response.data.data)
+                }, 
+                mutationKey: currFile["id"] 
+            })   
+        }
+    }, [formData.length])
+
+    const cancelFile = (index, status) => {
+
         const newFormData = [...formData];
-        const index = event.target.name;
+        const currFile = newFormData[index];
+
+        if (status === "in-progress") {
+            currFile["abort"].abort();
+        }
 
         if (index === 0) {
             newFormData.shift();
@@ -57,6 +118,28 @@ const UploadData = () => {
 
         return setFormData(newFormData);
     }
+
+    useEffect(() => {
+        const handleBeforeUnload = (event) => {
+            event.preventDefault();
+            event.returnValue = "";
+            
+            for (let i = 0; i < formData.length; i++) {
+                if (formData[i]["status"] === "in progress") {
+                    const confirmed = window.confirm();
+                    if (confirmed) {
+                        formData[i]["abort"].abort();
+                    }
+                    break;
+                };
+            };
+        }
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return() => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        }
+    }, [])
 
     return (
         <div>
@@ -82,9 +165,9 @@ const UploadData = () => {
                         </ul>
                     </Box>
                     <Box sx={{mt: 4}}>
-                        <Typography className="upload-header">Is this file for spends or users?</Typography>
+                        <Typography className="upload-header">Is this file for spend or user?</Typography>
                         <RadioGroup row className="flexbox-flexStart" value={type}>
-                            {_.map(["spends", "users"], (option) => {
+                            {_.map(["spend", "user"], (option) => {
                                 return (
                                 <FormControlLabel
                                     key={option}
@@ -105,7 +188,7 @@ const UploadData = () => {
                         </RadioGroup>
                     </Box>
                     <Box sx={{mt: 4}}>
-                        <Typography className="upload-header">Upload file(.csv)</Typography>
+                        <Typography className="upload-header">Upload file (.csv)</Typography>
                         <Box sx={{mt: 2, ml: 2}}>
                             <Button
                                 variant="contained"
@@ -113,20 +196,15 @@ const UploadData = () => {
                                 component="label"
                                 disabled={type === null}
                             >
-                                {/* <form 
-                                    method="post" 
-                                    encType="multipart/form-data" 
-                                    className="flexbox-center"
-                                > */}
-                                    <MdUpload size={20} style={{marginRight: 10}}/>
-                                    Choose file to upload
-                                    <input 
-                                        type="file" 
-                                        hidden 
-                                        accept=".csv" 
-                                        onChange={handleAddFile}
-                                    />
-                                {/* </form> */}
+                                <MdUpload size={20} style={{marginRight: 10}}/>
+                                Choose file to upload
+                                <input 
+                                    type="file" 
+                                    hidden 
+                                    accept=".csv" 
+                                    onChange={handleAddFile}
+                                    ref={fileInputRef}
+                                />
                             </Button>
                         </Box>
                     </Box>
@@ -140,9 +218,10 @@ const UploadData = () => {
                     </Grid>
                 }   
                 {_.map(formData, (item, index) => {
-                    const name = Object.keys(item)[0];
-                    const status = item[name]["status"];
-                    let type = item[name]["type"];
+                    const name = item.filename;
+                    const status = item.status;
+                    const id = item.id;
+                    let type = item.type;
                     type = type.charAt(0).toUpperCase() + type.slice(1).toLowerCase();
 
                     return(
@@ -153,11 +232,16 @@ const UploadData = () => {
                                         index={index}
                                         cancelFile={cancelFile} 
                                         type={type}
+                                        id={id}
                                     />
                                 :   <UploadStatus 
                                         isSuccess={status === "success"} 
                                         fileName={name}  
                                         type={type}
+                                        errorMessage={item.errorMessage}
+                                        cancelFile={cancelFile}
+                                        index={index}
+                                        id={id}
                                     />
                             }
                         </Grid>

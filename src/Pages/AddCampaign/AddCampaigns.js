@@ -16,8 +16,11 @@ const AddCampaign = () => {
     merchant: "",
     startDate: null,
     endDate: null,
-    message: ""
+    notificationTitle: "", 
+    notificationMessage: ""
   });
+
+  console.log(formData)
 
   const handleConfirm = () => {
     navigate("/campaigns", {

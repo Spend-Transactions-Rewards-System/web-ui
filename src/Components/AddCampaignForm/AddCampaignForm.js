@@ -243,18 +243,31 @@ const AddCampaignForm = ({ formData, setFormData, setOpen }) => {
               </Box>
             </Box>
             <Box className="twoColumns">
+              <Typography className="variable">Notification Title</Typography>
+              <Box className="secondColumn">
+                <TextField
+                  value={formData.notificationTitle}
+                  size="small"
+                  fullWidth
+                  label="Enter notification title"
+                  name="notificationTitle"
+                  onChange={handleOnChange}
+                />
+              </Box>
+            </Box>
+            <Box className="twoColumns">
               <Typography className="variable">Notification message</Typography>
               <Box className="secondColumn">
                 <TextField
-                  name="message"
-                  value={formData.message}
+                  name="notificationMessage"
+                  value={formData.notificationMessage}
                   size="small"
                   fullWidth
                   multiline
                   label="Enter message"
                   minRows={3}
                   inputProps={{ maxLength: 200 }}
-                  helperText={`${formData["message"].length} / 200`}
+                  helperText={`${formData["notificationMessage"].length} / 200`}
                   onChange={handleOnChange}
                 />
               </Box>

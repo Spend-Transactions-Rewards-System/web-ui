@@ -1,7 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
 
 import jwt from "jwt-decode";
-import { logout } from "../../API/api";
 
 const authorisedPath = {
     "tenant": ["/datafiles", "/datafiles/upload", "/campaigns", "/campaigns/addcampaigns" ], 
@@ -16,7 +15,6 @@ const ProtectedRoute = ({ children }) => {
     if (token) {
         const decodedToken = jwt(token);
         const expirationDate = decodedToken["exp"];
-        console.log(expirationDate)
         if (expirationDate < Math.floor(Date.now() / 1000)) {
             localStorage.removeItem("token"); 
             return <Navigate to="/" />
