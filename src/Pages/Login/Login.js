@@ -41,8 +41,10 @@ const Login = () => {
             let expirationDate = new Date(0);
             expirationDate = expirationDate.setUTCSeconds(jwt(accessToken).exp);           
             
-            document.cookie = `accessToken=${accessToken}; expires= ${expirationDate}`;
-            document.cookie = `idToken=${idToken}; expires= ${expirationDate}`;
+            // document.cookie = `accessToken=${accessToken}; expires= ${expirationDate}`;
+            // document.cookie = `idToken=${idToken}; expires= ${expirationDate}`;
+            document.cookie = `accessToken=${accessToken}`;
+            document.cookie = `idToken=${idToken}`;
             setUserId(jwt(idToken).name);
             roleNavigation(accessToken);
         })
