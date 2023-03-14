@@ -9,11 +9,11 @@ import CustomButton from "../../Components/CustomButton/CustomButton";
 import "./AddCampaignForm.css";
 
 import {
+  Autocomplete, 
   Box,
   Card,
   CardContent,
   FormControl,
-  MenuItem,
   TextField,
   Typography,
 } from "@mui/material";
@@ -33,20 +33,38 @@ const AddCampaignForm = ({ formData, setFormData, setOpen }) => {
       !(Object.values(error).includes(true) 
       || Object.values(formData).includes("") 
       || Object.values(formData).includes(null)
+      || Object.values(formData).includes([])
     ));
 
   }, [error, formData]);
 
-  const handleOnChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
+  const handleOnChange = (name, currValue) => {
     
+    let value = currValue;
+
     if (name === "pointsPerDollar" || name === "minSpend") {
       setError((state) => ({
         ...state,
         [name]: value < 1,
       }));
+    } else if (name === "startDate") {
+      setError((state) => ({
+        ...state,
+        isToday: value < new Date((new Date()).setHours(0, 0, 0, 0)),
+        isAfterEndDate: formData["endDate"] !== null && value > formData["endDate"] 
+      }));
+    } else if (name === "endDate") {
+      setError((state) => ({
+        ...state,
+        isAfterEndDate: value < formData["startDate"] 
+      }));
     }
+
+    if (name === "category") {
+      let cat = [...formData["category"]];
+      cat.push(value);
+      value = cat;
+    }    
 
     setFormData((state) => ({
       ...state,
@@ -54,26 +72,7 @@ const AddCampaignForm = ({ formData, setFormData, setOpen }) => {
     }));
   }
 
-  const handleOnChangeDate = (name, value) => {
-
-    if (name === "startDate") {
-      setError((state) => ({
-        ...state,
-        isToday: value < new Date((new Date()).setHours(0, 0, 0, 0)),
-        isAfterEndDate: formData["endDate"] !== null && value > formData["endDate"] 
-      }));
-    } else {
-      setError((state) => ({
-        ...state,
-        isAfterEndDate: value < formData["startDate"] 
-      }));
-    }
-
-    setFormData((state) => ({
-      ...state,
-      [name]: value
-    }));
-  }
+  console.log(formData)
 
   return (
     <div>
@@ -89,38 +88,23 @@ const AddCampaignForm = ({ formData, setFormData, setOpen }) => {
                   fullWidth
                   label="Enter title"
                   name="title"
-                  onChange={handleOnChange}
+                  onChange={ (event) => handleOnChange("title", event.target.value) }
                 />
               </Box>
             </Box>
             <Box className="twoColumns">
               <Box>
-                <Typography className="variable flexColumn">
-                  Card Program
-                </Typography>
+                <Typography className="variable flexColumn">Card Program</Typography>
               </Box>
               <Box className="secondColumn">
-                <TextField
-                  size="small"
-                  fullWidth
-                  select
-                  name="cardProgram"
-                  label="Select card program"
-                  value={formData.cardProgram}
-                  onChange={handleOnChange}
-                >
-                  {_.map(["SCIS Freedom Card", "SCIS PlatinumMiles", "SCIS PremiumMiles Card", "SCIS Shopping Card"], (value) => {
-                    return (
-                      <MenuItem
-                        key={value}
-                        id={value.toLowerCase()}
-                        value={value.toLowerCase()}
-                      >
-                        {value}
-                      </MenuItem>
-                    );
-                  })}
-                </TextField>
+                <Autocomplete
+                    id="cardProgram"
+                    options={["SCIS Freedom Card", "SCIS PlatinumMiles", "SCIS PremiumMiles Card", "SCIS Shopping Card"]}
+                    fullWidth
+                    value={formData.cardProgram}
+                    renderInput={(params) => <TextField {...params} label="Select card program" size="small"  />}
+                    onChange={ (event) => handleOnChange("cardProgram", event.target.textContent ) }
+                  />
               </Box>
             </Box>
             <Box className="twoColumns">
@@ -136,7 +120,7 @@ const AddCampaignForm = ({ formData, setFormData, setOpen }) => {
                   type="number"
                   label="Enter number of points"
                   InputProps={{ inputProps: { min: 1 } }}
-                  onChange={handleOnChange}
+                  onChange={ (event) => handleOnChange("pointsPerDollar", event.target.value) }
                   error={error["pointsPerDollar"]}
                   helperText={error["pointsPerDollar"] ? "Must be at least 1" : ""}
                 />
@@ -155,7 +139,7 @@ const AddCampaignForm = ({ formData, setFormData, setOpen }) => {
                   type="number"
                   label="Enter minimum spend"
                   InputProps={{ inputProps: { min: 1 } }}
-                  onChange={handleOnChange}
+                  onChange={ (event) => handleOnChange("minSpend", event.target.value) }
                   error={error["minSpend"]}
                   helperText={error["minSpend"] ? "Must be at least 1" : ""}
                 />
@@ -163,32 +147,33 @@ const AddCampaignForm = ({ formData, setFormData, setOpen }) => {
             </Box>
             <Box className="twoColumns">
               <Box>
-                <Typography className="variable flexColumn">
-                  Merchant
-                </Typography>
+                <Typography className="variable flexColumn">Merchant</Typography>
               </Box>
               <Box className="secondColumn">
-                <TextField
-                  size="small"
+                <Autocomplete
+                  id="merchant"
+                  options={["MCC 1", "MCC 2", "MCC 3", "MCC 4"]}
                   fullWidth
-                  select
-                  name="merchant"
-                  label="Select merchant"
                   value={formData.merchant}
-                  onChange={handleOnChange}
-                >
-                  {_.map(["MCC 1", "MCC 2", "MCC 3", "MCC 4"], (value) => {
-                    return (
-                      <MenuItem
-                        key={value}
-                        id={value.toLowerCase()}
-                        value={value.toLowerCase()}
-                      >
-                        {value}
-                      </MenuItem>
-                    );
-                  })}
-                </TextField>
+                  renderInput={(params) => <TextField {...params} label="Merchant" size="small"  />}
+                  onChange={ (event) => handleOnChange("merchant", event.target.textContent ) }
+                />
+              </Box>
+            </Box>
+            <Box className="twoColumns">
+              <Box>
+                <Typography className="variable flexColumn">Category</Typography>
+              </Box>
+              <Box className="secondColumn">
+                <Autocomplete
+                    id="category"
+                    options={["Miscellaneous and Specialty Retail Stores", "Online Shopping", "Direct Marketing-Catalog Merchants"]}
+                    fullWidth
+                    multiple
+                    value={formData.category}
+                    renderInput={(params) => <TextField {...params} label="Category" size="small"  />}
+                    onChange={ (event) => handleOnChange("category", event.target.textContent ) }
+                  />
               </Box>
             </Box>
             <Box className="twoColumns">
@@ -200,7 +185,7 @@ const AddCampaignForm = ({ formData, setFormData, setOpen }) => {
                     label="Start Date"
                     value={formData.startDate}
                     inputFormat="DD/MM/YYYY"
-                    onChange={(event) => handleOnChangeDate("startDate", event._d)}
+                    onChange={(event) => handleOnChange("startDate", event._d)}
                     renderInput={(params) => (
                       <TextField 
                         {...params} 
@@ -228,7 +213,7 @@ const AddCampaignForm = ({ formData, setFormData, setOpen }) => {
                     label="End Date"
                     value={formData.endDate}
                     inputFormat="DD/MM/YYYY"
-                    onChange={(event) => handleOnChangeDate("endDate", event._d)}
+                    onChange={(event) => handleOnChange("endDate", event._d)}
                     renderInput={(params) => (
                       <TextField 
                         {...params} 
@@ -251,7 +236,7 @@ const AddCampaignForm = ({ formData, setFormData, setOpen }) => {
                   fullWidth
                   label="Enter notification title"
                   name="notificationTitle"
-                  onChange={handleOnChange}
+                  onChange={ (event) => handleOnChange("notificationTitle", event.target.value) }
                 />
               </Box>
             </Box>
@@ -268,7 +253,7 @@ const AddCampaignForm = ({ formData, setFormData, setOpen }) => {
                   minRows={3}
                   inputProps={{ maxLength: 200 }}
                   helperText={`${formData["notificationMessage"].length} / 200`}
-                  onChange={handleOnChange}
+                  onChange={ (event) => handleOnChange("notificationMessage", event.target.value) }
                 />
               </Box>
             </Box>

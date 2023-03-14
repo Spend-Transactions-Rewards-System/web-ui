@@ -10,10 +10,11 @@ const AddCampaign = () => {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
-    cardProgram: "",
+    cardProgram: null,
     pointsPerDollar: "",
     minSpend: "",
-    merchant: "",
+    merchant: null, 
+    category: [],
     startDate: null,
     endDate: null,
     notificationTitle: "", 
