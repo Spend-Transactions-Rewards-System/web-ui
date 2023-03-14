@@ -6,14 +6,14 @@ const getToken = () => {
     const cookieDict = {}
 
     _.forEach(cookiesList, (aCookie) => {
-        if (aCookie.includes("accessToken")) {
-            cookieDict["accessToken"] = aCookie.slice("accessToken=".length);
-        } else if (aCookie.includes("idToken")) {
-            cookieDict["idToken"] = aCookie.slice("idToken=".length);
+        if (aCookie.includes("access")) {
+            cookieDict["accessToken"] = aCookie.slice("access=".length);
+        } else if (aCookie.includes("id")) {
+            cookieDict["idToken"] = aCookie.slice("id=".length);
         }
     })
 
-    return Object.keys(cookieDict).length === 0 ? null : cookieDict;
+    return cookieDict;
 
 }
 

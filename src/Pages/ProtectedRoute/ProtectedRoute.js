@@ -22,8 +22,8 @@ const ProtectedRoute = ({ children }) => {
             const expirationDate = decodedToken["exp"];
             if (expirationDate < Math.floor(Date.now() / 1000)) {
                 d.setDate(d.setUTCSeconds(expirationDate).getDate() - 1) ; 
-                document.cookie=`accessToken= ; expires= ${d}`;
-                document.cookie=`idToken= ; expires= ${d}`;
+                document.cookie=`access= ; expires= ${d}`;
+                document.cookie=`id= ; expires= ${d}`;
                 return <Navigate to="/" />
             }
     

@@ -70,8 +70,8 @@ const logout = async () => {
                   reject(err);
                 } else {
                     d.setDate(d.getDate() - 1);
-                    document.cookie=`accessToken= ; expires= ${d}`;
-                    document.cookie=`idToken= ; expires= ${d}`;
+                    document.cookie=`access= ; expires= ${d}`;
+                    document.cookie=`id= ; expires= ${d}`;
                   resolve();
                 }
             })
