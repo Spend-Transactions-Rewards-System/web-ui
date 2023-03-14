@@ -12,6 +12,7 @@ const AWS_DOMAIN = process.env.REACT_APP_DOMAIN;
 
 const CARD_URL = process.env.REACT_APP_CARD_URL;
 const UPLOAD_URL = process.env.REACT_APP_UPLOAD_URL;
+const CAMPAIGN_URL = process.env.REACT_APP_CAMPAIGN_URL;
 
 const HEADER = { "Content-Type": "application/json" }
 
@@ -129,6 +130,26 @@ const uploadFile = async (req) => {
         .then((res) => res.data)
 }
 
+const addCampaign = async (req) => {
+
+    const data = JSON.stringify({
+        "title": req["title"],
+        "start_date":  req["startDate"],
+        "end_date": req["endDate"],
+        "mcc": req["mcc"],
+        "category": req["category"],
+        "min_dollar_spent": req["minSpend"],
+        "points_per_dollar": req["pointsPerDollar"],
+        "card_program_id": req["card_program_id"],
+        "notifications_list": req["notifications_list"],
+        "notification_title": req["notification_title"],
+        "notification_message": req["notification_message"]
+    })
+    return await axios
+        .post(`${CAMPAIGN_URL}/campaign`, data, { headers: HEADER })
+        .then((res) => res.data)
+}
+
 
 export {
     login, 
@@ -136,5 +157,6 @@ export {
     getDataFiles, 
     downloadErrorFile,
     getRewards,
-    uploadFile
+    uploadFile,
+    addCampaign,
 }

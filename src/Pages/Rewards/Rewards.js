@@ -3,6 +3,7 @@ import { useQuery} from "react-query";
 import moment from "moment/moment";
 import _ from "lodash";
 
+import { useAppContext } from "../../Context/AppContext";
 import CollapsibleTable from "../../Components/CollapsibleTable/CollapsibleTable";
 import LoadingAnimation from "../../Components/LoadingAnimation/LoadingAnimation";
 import { getRewards } from "../../API/api";
@@ -26,9 +27,8 @@ const Rewards = () => {
         card: "", search: ""
     });
 
-    // from token
-    const customerId = "customer03"
-    const { isError } = useQuery([customerId, "scis_bank"], getRewards, {
+    const { userid } = useAppContext()
+    const { isError } = useQuery([userid, "scis_bank"], getRewards, {
         onSuccess: (data) => {
             formatData(data);
         },
