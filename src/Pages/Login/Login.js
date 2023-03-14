@@ -36,6 +36,8 @@ const Login = () => {
             const accessToken = result.AccessToken;
             const idToken = result.IdToken;
 
+            console.log(result)
+
             let expirationDate = new Date(0);
             expirationDate = expirationDate.setUTCSeconds(jwt(accessToken).exp);           
             
@@ -52,11 +54,14 @@ const Login = () => {
 
     useEffect(() => {
         const result = getToken();
-        console.log(result)
-        if (result) {
-            setUserId(jwt(result.IdToken).name);
-            roleNavigation(result.accessToken);
-        }
+        try {  
+            const idToken = result?.idToken;
+            const accessToken = result?.accessToken;
+            if (idToken !== null && accessToken !== null) {
+                setUserId(jwt(idToken).name);
+                roleNavigation(accessToken);
+            }
+        } catch { }
     }, []);
 
     return (
