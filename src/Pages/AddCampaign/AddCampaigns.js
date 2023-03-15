@@ -14,7 +14,6 @@ const AddCampaign = () => {
     pointsPerDollar: "",
     minSpend: "",
     merchant: null, 
-    category: [],
     startDate: null,
     endDate: null,
     notificationTitle: "", 
