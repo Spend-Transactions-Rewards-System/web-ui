@@ -2,7 +2,7 @@ import axios from "axios";
 import { HmacSHA256, enc} from "crypto-js";
 import { CognitoIdentityServiceProvider } from "aws-sdk";
 
-import getToken from "../Utils/getToken";
+import { getToken } from "../Utils/getUserInfo";
 
 const AWS_REGION = process.env.REACT_APP_REGION;
 const USER_POOL_ID = process.env.REACT_APP_USER_POOL_ID;

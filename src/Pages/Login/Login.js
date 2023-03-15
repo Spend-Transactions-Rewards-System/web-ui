@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppContext } from "../../Context/AppContext";
 
 import { Box, Link, TextField, Typography } from "@mui/material";
 import _ from "lodash";
@@ -9,12 +8,11 @@ import jwt from "jwt-decode";
 import "./Login.css";
 import CustomButton from "../../Components/CustomButton/CustomButton";
 import { login } from "../../API/api";
-import getToken from "../../Utils/getToken";
+import { getToken } from "../../Utils/getUserInfo";
 
 const Login = () => {
 
     const navigate = useNavigate();
-    const { setUserId } = useAppContext();
     const [formData, setFormData] = useState({});
     const [error, setError] = useState();
 
@@ -43,7 +41,6 @@ const Login = () => {
             // document.cookie = `id=${idToken}; expires= ${expirationDate}`;
             document.cookie = `access=${accessToken}`;
             document.cookie = `id=${idToken}`;
-            setUserId(jwt(idToken).name);
             roleNavigation(accessToken);
         })
         .catch((err) => {
@@ -58,7 +55,6 @@ const Login = () => {
             const idToken = result?.idToken;
             const accessToken = result?.accessToken;
             if (idToken !== null && accessToken !== null) {
-                setUserId(jwt(idToken).name);
                 roleNavigation(accessToken);
             }
         } catch { }
