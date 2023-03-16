@@ -1,4 +1,5 @@
 import _ from "lodash";
+import jwt from "jwt-decode";
 
 const getToken = () => {
 
@@ -14,7 +15,11 @@ const getToken = () => {
     })
 
     return cookieDict;
-
 }
 
-export default getToken;
+const getUserId = () => {
+    const token = getToken();
+    return jwt(token.idToken).name
+}
+
+export { getToken, getUserId } ;

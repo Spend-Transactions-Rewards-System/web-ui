@@ -33,15 +33,12 @@ const AddCampaignForm = ({ formData, setFormData, setOpen }) => {
       !(Object.values(error).includes(true) 
       || Object.values(formData).includes("") 
       || Object.values(formData).includes(null)
-      || Object.values(formData).includes([])
     ));
 
   }, [error, formData]);
 
-  const handleOnChange = (name, currValue) => {
+  const handleOnChange = (name, value) => {
     
-    let value = currValue;
-
     if (name === "pointsPerDollar" || name === "minSpend") {
       setError((state) => ({
         ...state,
@@ -59,12 +56,6 @@ const AddCampaignForm = ({ formData, setFormData, setOpen }) => {
         isAfterEndDate: value < formData["startDate"] 
       }));
     }
-
-    if (name === "category") {
-      let cat = [...formData["category"]];
-      cat.push(value);
-      value = cat;
-    }    
 
     setFormData((state) => ({
       ...state,
@@ -158,22 +149,6 @@ const AddCampaignForm = ({ formData, setFormData, setOpen }) => {
                   renderInput={(params) => <TextField {...params} label="Merchant" size="small"  />}
                   onChange={ (event) => handleOnChange("merchant", event.target.textContent ) }
                 />
-              </Box>
-            </Box>
-            <Box className="twoColumns">
-              <Box>
-                <Typography className="variable flexColumn">Category</Typography>
-              </Box>
-              <Box className="secondColumn">
-                <Autocomplete
-                    id="category"
-                    options={["Miscellaneous and Specialty Retail Stores", "Online Shopping", "Direct Marketing-Catalog Merchants"]}
-                    fullWidth
-                    multiple
-                    value={formData.category}
-                    renderInput={(params) => <TextField {...params} label="Category" size="small"  />}
-                    onChange={ (event) => handleOnChange("category", event.target.textContent ) }
-                  />
               </Box>
             </Box>
             <Box className="twoColumns">

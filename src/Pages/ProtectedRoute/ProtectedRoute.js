@@ -2,7 +2,7 @@ import { Navigate, useLocation } from "react-router-dom";
 
 import jwt from "jwt-decode";
 
-import getToken from "../../Utils/getToken";
+import { getToken } from "../../Utils/getUserInfo";
 
 const authorisedPath = {
     "tenant": ["/datafiles", "/datafiles/upload", "/campaigns", "/campaigns/addcampaigns" ], 
