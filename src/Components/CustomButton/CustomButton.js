@@ -18,6 +18,7 @@ const CustomButton = ({ text, handleOnClick, link, disabled, fullWidth, classNam
             disabled={disabled}
             fullWidth={fullWidth}
             className={className ? className : "customButton"}
+            role="button"
         >   
             {text}
         </Button>

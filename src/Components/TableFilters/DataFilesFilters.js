@@ -44,6 +44,7 @@ const DataFilesFilters = ({ filter, setFilter }) => {
                     value={filter["status"]}
                     sx={{width: "150px", mr: 1}}  
                     onChange={(event) => handleOnChange("status", event.target.value)}
+                    role="select"
                 >   
                     {_.map(statusList, (value, key) => {
                         return(
@@ -60,6 +61,7 @@ const DataFilesFilters = ({ filter, setFilter }) => {
                     value={filter["type"]}
                     sx={{width: "150px", mr: 1}}  
                     onChange={(event) => handleOnChange("type", event.target.value)}
+                    role="select"
                 >   
                     {_.map(typeList, (value) => {
                         return(

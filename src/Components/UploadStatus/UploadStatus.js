@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { CgClose } from "react-icons/cg";
 
-const UploadStatus = ({ isSuccess, fileName, type, errorMessage, cancelFile, index, id }) => {
+const UploadStatus = ({ isSuccess, fileName, type, errorMessage, cancelFile, index }) => {
     return(
         <Card sx={{
             width: "450px", 
@@ -24,7 +24,7 @@ const UploadStatus = ({ isSuccess, fileName, type, errorMessage, cancelFile, ind
                 sx={{p: 2}} 
                 severity={isSuccess ? "success" : "error"}
             >
-                <AlertTitle sx={{fontWeight: "bold"}}>
+                <AlertTitle sx={{fontWeight: "bold"}} data-testid="alertTitle">
                     { isSuccess ? "File uploaded successfully (" + type + ")"
                         : "Error - File failed to upload (" + type + ")"
                     }

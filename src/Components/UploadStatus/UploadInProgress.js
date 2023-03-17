@@ -9,7 +9,7 @@ import {
 import { CgClose } from "react-icons/cg";
 import { BsFillFileEarmarkTextFill }  from "react-icons/bs";
 
-const UploadInProgress = ({ fileName, cancelFile, index, type, id }) => {
+const UploadInProgress = ({ fileName, cancelFile, index, type }) => {
     return(
         <Card sx={{width: "450px", borderRadius: 3}}>
            <CardContent sx={{backgroundColor: "#EFF4FB"}}>

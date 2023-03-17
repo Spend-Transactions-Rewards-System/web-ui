@@ -1,4 +1,3 @@
-import { memo } from "react";
 import { useLocation } from "react-router";
 
 import { Box, Typography, Link } from "@mui/material";

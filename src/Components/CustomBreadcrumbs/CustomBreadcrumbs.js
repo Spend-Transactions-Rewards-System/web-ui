@@ -4,6 +4,8 @@ import { linkMap } from "../../Utils/LinkMap";
 
 const CustomBreadcrumbs = ({ currPage }) => {
 
+    console.log(currPage)
+
     return(
         <Breadcrumbs>
             { currPage["prevLink"] &&
