@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from "react-router-dom";
 
 import AddCampaignForm from '../AddCampaignForm';
@@ -36,7 +36,7 @@ describe("AddCampaignForm", () => {
     it("should render input elements", () => {
         render(
             <MockAddCampaignForm 
-                formData={mockFormData} 
+                formData={mockFormData}
                 setFormData={mockSetFormData}
                 setOpen={mockSetOpen}
             />
@@ -50,3 +50,4 @@ describe("AddCampaignForm", () => {
                 + startDateElement.length + endDateElement.length).toBe(9);
     })
 })
+
