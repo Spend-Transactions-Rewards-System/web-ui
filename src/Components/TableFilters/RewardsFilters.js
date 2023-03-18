@@ -33,6 +33,7 @@ const RewardsFilters = ({ filter, setFilter }) => {
                         value={filter["card"]}
                         sx={{width: "250px", mr: 1}}  
                         onChange={(event) => handleOnChange("card", event.target.value)}
+                        role="select"
                     >   
                         {_.map(cardList, (value) => {
                             return(

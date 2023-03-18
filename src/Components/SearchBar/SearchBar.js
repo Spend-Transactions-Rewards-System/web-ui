@@ -1,4 +1,3 @@
-
 import { Box, TextField } from "@mui/material";
 import { FiSearch } from "react-icons/fi";
 
@@ -16,6 +15,7 @@ const SearchBar = ({ placeholder, handleOnChange }) => {
                 </Box>
               }
             onChange={handleOnChange}
+            role="searchBar"
         />
     )
 }

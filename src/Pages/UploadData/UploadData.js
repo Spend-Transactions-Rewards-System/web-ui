@@ -195,6 +195,7 @@ const UploadData = () => {
                                 className="customButton"
                                 component="label"
                                 disabled={type === null}
+                                role="button"
                             >
                                 <MdUpload size={20} style={{marginRight: 10}}/>
                                 Choose file to upload

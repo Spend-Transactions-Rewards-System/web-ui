@@ -95,6 +95,7 @@ const AddCampaignForm = ({ formData, setFormData, setOpen }) => {
                     value={formData.cardProgram}
                     renderInput={(params) => <TextField {...params} label="Select card program" size="small"  />}
                     onChange={ (event) => handleOnChange("cardProgram", event.target.textContent ) }
+                    data-testid="cardProgram"
                   />
               </Box>
             </Box>
@@ -148,6 +149,7 @@ const AddCampaignForm = ({ formData, setFormData, setOpen }) => {
                   value={formData.merchant}
                   renderInput={(params) => <TextField {...params} label="Merchant" size="small"  />}
                   onChange={ (event) => handleOnChange("merchant", event.target.textContent ) }
+                  data-testid="merchant"
                 />
               </Box>
             </Box>

@@ -29,10 +29,11 @@ const CampaignsFilters = ({ filter, setFilter }) => {
                     <InputLabel id="status">Status</InputLabel>
                     <Select
                         name="status"
-                        label="status"
+                        label="Status"
                         value={filter["status"]}
                         sx={{width: "250px", mr: 1}}  
                         onChange={(event) => handleOnChange("status", event.target.value)}
+                        role="select"
                     >   
                         {_.map(cardList, (value) => {
                             return(
