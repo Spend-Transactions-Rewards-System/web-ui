@@ -13,6 +13,19 @@ on:
   pull_request:
     branches: [ test-gihan ]
 
+env:
+  REACT_APP_ACCESS_KEY_ID: ${{ secrets.REACT_APP_AWS_ACCESS_KEY_ID }}
+  REACT_APP_SECRET_ACCESS_KEY: ${{ secrets.REACT_APP_AWS_SECRET_ACCESS_KEY }}
+  REACT_APP_REGION: ${{ secrets.REACT_APP_REGION }}
+
+  REACT_APP_USER_POOL_ID: ${{ secrets.REACT_APP_USER_POOL_ID }}
+  REACT_APP_CLIENT_ID: ${{ secrets.REACT_APP_CLIENT_ID }}
+  REACT_APP_CLIENT_SECRET: ${{ secrets.REACT_APP_CLIENT_SECRET }} 
+
+  REACT_APP_UPLOAD_URL: ${{ secrets.REACT_APP_UPLOAD_URL }}
+  REACT_APP_CARD_URL: ${{ secrets.REACT_APP_CARD_URL }}
+  REACT_APP_CAMPAIGN_URL: ${{ secrets.REACT_APP_CAMPAIGN_URL }}
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -25,20 +38,20 @@ jobs:
       with: 
         node-version: '16.x'
 
-    - name: Install dependencies
-      run: npm install
+    - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.REACT_APP_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.REACT_APP_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.REACT_APP_REGION }}
 
     - name: Build React app
-      run: npm run build
+      run: npm install && npm run build
 
     - name: Test React app
       run: npm run test
 
     - name: Upload to S3
       run: aws s3 sync ./build/ s3://project-2022-23t2-g1-team3-s3 --delete
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: ${{ secrets.AWS_REGION }}
 
 
