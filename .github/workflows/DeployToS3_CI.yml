@@ -4,14 +4,10 @@
 name: Deploy to S3
 
 on:
-  # push:
-  #   branches: [ main ]
-  # pull_request:
-  #   branches: [ main ]
   push:
-    branches: [ test-gihan ]
+    branches: [ main ]
   pull_request:
-    branches: [ test-gihan ]
+    branches: [ main ]
 
 env:
   REACT_APP_ACCESS_KEY_ID: ${{ secrets.REACT_APP_AWS_ACCESS_KEY_ID }}
