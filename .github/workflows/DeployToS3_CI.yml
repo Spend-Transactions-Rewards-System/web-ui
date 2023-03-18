@@ -36,14 +36,7 @@ jobs:
     - name: Install Node.js and NPM
       uses: actions/setup-node@v1
       with: 
-        node-version: '16.x'
-
-    - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.REACT_APP_AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.REACT_APP_AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.REACT_APP_REGION }}
+        node-version: '16.x'          
 
     - name: Build React app
       run: npm install && npm run build
@@ -53,5 +46,10 @@ jobs:
 
     - name: Upload to S3
       run: aws s3 sync ./build/ s3://project-2022-23t2-g1-team3-s3 --delete
+      env: 
+        AWS_ACCESS_KEY_ID: ${{ secrets.REACT_APP_AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.REACT_APP_AWS_SECRET_ACCESS_KEY }}
+        AWS-REGION: ${{ secrets.REACT_APP_REGION }}
+
 
 
