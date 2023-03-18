@@ -23,7 +23,7 @@
     cursor: pointer;
 }
 
-input:-webkit-autofill {
+#login input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px #2B3674 inset;
     -webkit-text-fill-color: #ffffff;
 }
