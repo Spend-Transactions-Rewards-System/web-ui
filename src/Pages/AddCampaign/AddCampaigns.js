@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import ConfirmDialog from '../../Components/ConfirmDialog/ConfirmDialog';
@@ -30,6 +30,26 @@ const AddCampaign = () => {
       }
     })
   }
+
+  useEffect(() => {
+
+    const formDataValue = Object.values(formData);
+
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue="";
+    } 
+
+    for (let i = 0; i < formDataValue.length ; i++) {
+      if (formDataValue[i] !== null && formDataValue[i].length !== 0) {
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return() => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        }
+      }
+    }
+
+  }, [formData])
     
   return (
     <div>
