@@ -8,7 +8,6 @@ const AWS_REGION = process.env.REACT_APP_REGION;
 const USER_POOL_ID = process.env.REACT_APP_USER_POOL_ID;
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
-const AWS_DOMAIN = process.env.REACT_APP_DOMAIN;
 
 const CARD_URL = process.env.REACT_APP_CARD_URL;
 const UPLOAD_URL = process.env.REACT_APP_UPLOAD_URL;
