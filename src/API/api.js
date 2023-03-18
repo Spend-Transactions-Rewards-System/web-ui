@@ -97,6 +97,12 @@ const getRewards = async (req) => {
       .then((res) => res.data)
   }
 
+  const getCampaigns = async (req) => {
+    return await axios
+      .get(`${CAMPAIGN_URL}/campaign`)
+      .then((res) => res.data)
+  }
+
 const downloadErrorFile = async (url, filename) => {
     
     return await axios 
@@ -131,20 +137,22 @@ const uploadFile = async (req) => {
 }
 
 const addCampaign = async (req) => {
-
     const data = JSON.stringify({
         "title": req["title"],
         "start_date":  req["startDate"],
         "end_date": req["endDate"],
         "mcc": req["mcc"],
-        "category": req["category"],
         "min_dollar_spent": req["minSpend"],
         "points_per_dollar": req["pointsPerDollar"],
         "card_program_id": req["card_program_id"],
-        "notifications_list": req["notifications_list"],
-        "notification_title": req["notification_title"],
-        "notification_message": req["notification_message"]
+        "notifications_list": [
+            {
+                "notification_title": req["notification_title"],
+                "notification_message": req["notification_message"]
+            }
+        ]
     })
+
     return await axios
         .post(`${CAMPAIGN_URL}/campaign`, data, { headers: HEADER })
         .then((res) => res.data)
@@ -159,4 +167,5 @@ export {
     getRewards,
     uploadFile,
     addCampaign,
+    getCampaigns,
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useQuery} from "react-query";
 import { useLocation } from 'react-router-dom';
 
 import { Alert, Box, IconButton, Snackbar } from "@mui/material";
@@ -9,10 +10,18 @@ import _ from "lodash";
 import CollapsibleTable from "../../Components/CollapsibleTable/CollapsibleTable";
 import LoadingAnimation from "../../Components/LoadingAnimation/LoadingAnimation";
 import CustomButton from "../../Components/CustomButton/CustomButton";
+import { getCampaigns } from "../../API/api";
 
 const columnNames = ["Card Program", "Campaign Title", "Start Date", "End Date", "Status"]
 
 const Campaigns = () => {
+
+      const cardIdDict = {
+        0: "SCIS Freedom Card",
+        1: "SCIS PlatinumMiles Card",
+        2: "SCIS PremiumMiles Card",
+        3: "SCIS Shopping Card",
+      }
 
     const [origData, setOrigData] = useState(null);
     const [mainData, setMainData] = useState(null);
@@ -30,23 +39,31 @@ const Campaigns = () => {
         }  
     }, [])
 
-    const formatData = () => {
+
+    const { isError } = useQuery(["0", "scis_bank"], getCampaigns, {
+        onSuccess: (data) => {
+            formatData(data);
+        },
+    });
+
+    const formatData = (data) => {
+        const currDate = new Date();
         let formatMain = [];
         let formatDetails = {};
         _.map(data, (aRow) => {
             formatMain.push({
-                id: aRow["id"],
-                cardProgram: aRow["cardProgram"],
+                id: aRow["campaignId"],
+                cardProgram: cardIdDict[aRow["cardProgramId"]],
                 title: aRow["title"],
                 startDate: moment(aRow["startDate"]).format("DD/MM/YYYY"),
                 endDate: moment(aRow["endDate"]).format("DD/MM/YYYY"),
-                status: aRow["status"].charAt(0).toUpperCase() + aRow["status"].slice(1).toLowerCase(),
+                status: currDate < moment(aRow["startDate"]).toDate() ? 'inactive' : currDate > moment(aRow["endDate"]).toDate() ? 'expired' : 'active',
             })
-            formatDetails[aRow["id"]] = {
-                points: aRow["points"],
-                minSpend: aRow["minSpend"],
-                merchant: aRow["merchant"],
-                message: aRow["message"]
+            formatDetails[aRow["campaignId"]] = {
+                points: aRow["rewardRate"],
+                minSpend: aRow["minDollarSpent"],
+                merchant: aRow["mcc"],
+                // message: aRow["message"]
             }
         });
 
@@ -65,10 +82,6 @@ const Campaigns = () => {
         }
         setMainData(data);
     }
-
-    useEffect(() => {
-        formatData(data);
-    }, [])
 
     useEffect(() => {
         if (mainData != null) {
@@ -141,41 +154,3 @@ const Campaigns = () => {
 
 export default Campaigns;
 
-const data = [
-    {
-        id: 1,
-        cardProgram: "SCIS Shopping Card",
-        title: "6 points per dollar with Shopee, min spend 150 SGD",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "active",
-        points: 6,
-        minSpend: 150,
-        merchant: "Shopee",
-        message: "Earn 6 points for every dollar spent on Shopee with a minimum spend of $150. Terms and conditions apply."
-    },
-    {
-        id: 2,
-        cardProgram: "SCIS Shopping Card",
-        title: "4 points per dollar with Grab, min spend 100 SGD",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "inactive",
-        points: 4,
-        minSpend: 100,
-        merchant: "Grab",
-        message: "Earn 4 points for every dollar spent on Grab with a minimum spend of $100. Terms and conditions apply."
-    },
-    {
-        id: 3,
-        cardProgram: "SCIS Shopping Card",
-        title: "5 points per dollar with Taobao, min spend 100 SGD",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "expired",
-        points: 5,
-        minSpend: 100,
-        merchant: "Taobao",
-        message: "Earn 5 points for every dollar spent on Taobao with a minimum spend of $100. Terms and conditions apply."
-    }
-]

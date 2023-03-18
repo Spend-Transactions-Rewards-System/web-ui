@@ -63,8 +63,6 @@ const AddCampaignForm = ({ formData, setFormData, setOpen }) => {
     }));
   }
 
-  console.log(formData)
-
   return (
     <div>
       <Card sx={{ overflowX: "auto", borderRadius: '25px' }}>
