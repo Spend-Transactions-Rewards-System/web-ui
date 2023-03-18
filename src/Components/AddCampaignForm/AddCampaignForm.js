@@ -47,7 +47,7 @@ const AddCampaignForm = ({ formData, setFormData, setOpen }) => {
     } else if (name === "startDate") {
       setError((state) => ({
         ...state,
-        isToday: value < new Date((new Date()).setHours(0, 0, 0, 0)),
+        isToday: value <= new Date((new Date()).setHours(0, 0, 0, 0)),
         isAfterEndDate: formData["endDate"] !== null && value > formData["endDate"] 
       }));
     } else if (name === "endDate") {

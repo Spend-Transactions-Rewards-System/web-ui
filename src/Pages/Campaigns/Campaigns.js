@@ -47,23 +47,23 @@ const Campaigns = () => {
     });
 
     const formatData = (data) => {
-        const currDate = new Date();
+        const currDate = new Date((new Date()).setHours(0, 0, 0, 0));
         let formatMain = [];
         let formatDetails = {};
         _.map(data, (aRow) => {
             formatMain.push({
-                id: aRow["campaignId"],
-                cardProgram: cardIdDict[aRow["cardProgramId"]],
+                id: aRow["notifications_list"][0]["campaign_id"],
+                cardProgram: cardIdDict[aRow["card_program_id"]],
                 title: aRow["title"],
-                startDate: moment(aRow["startDate"]).format("DD/MM/YYYY"),
-                endDate: moment(aRow["endDate"]).format("DD/MM/YYYY"),
-                status: currDate < moment(aRow["startDate"]).toDate() ? 'inactive' : currDate > moment(aRow["endDate"]).toDate() ? 'expired' : 'active',
+                startDate: moment(aRow["start_date"]).format("DD/MM/YYYY"),
+                endDate: moment(aRow["end_date"]).format("DD/MM/YYYY"),
+                status: currDate < moment(aRow["start_date"]).toDate() ? 'inactive' : currDate > moment(aRow["end_date"]).toDate() ? 'expired' : 'active',
             })
-            formatDetails[aRow["campaignId"]] = {
-                points: aRow["rewardRate"],
-                minSpend: aRow["minDollarSpent"],
+            formatDetails[aRow["notifications_list"][0]["campaign_id"]] = {
+                points: aRow["points_per_dollar"],
+                minSpend: aRow["min_dollar_spent"],
                 merchant: aRow["mcc"],
-                // message: aRow["message"]
+                message: aRow["notifications_list"][0]["notification_message"]
             }
         });
 
