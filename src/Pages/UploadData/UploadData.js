@@ -120,26 +120,22 @@ const UploadData = () => {
     }
 
     useEffect(() => {
+    
         const handleBeforeUnload = (event) => {
             event.preventDefault();
-            event.returnValue = "";
-            
-            for (let i = 0; i < formData.length; i++) {
-                if (formData[i]["status"] === "in progress") {
-                    const confirmed = window.confirm();
-                    if (confirmed) {
-                        formData[i]["abort"].abort();
-                    }
-                    break;
-                };
-            };
-        }
+            event.returnValue="";
+        } 
 
-        window.addEventListener('beforeunload', handleBeforeUnload);
-        return() => {
-            window.removeEventListener('beforeunload', handleBeforeUnload);
-        }
-    }, [])
+        for (let i = 0; i < formData.length; i++) {
+            if (formData[i]["status"] === "in progress") {
+                window.addEventListener('beforeunload', handleBeforeUnload);
+                return() => {
+                    window.removeEventListener('beforeunload', handleBeforeUnload);
+                }
+            };
+        };
+        
+      }, [formData])
 
     return (
         <div>

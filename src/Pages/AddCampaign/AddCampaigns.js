@@ -48,28 +48,26 @@ const AddCampaign = () => {
     })
   }
 
-
   useEffect(() => {
+
+    const formDataValue = Object.values(formData);
 
     const handleBeforeUnload = (event) => {
       event.preventDefault();
-      event.returnValue = "";
+      event.returnValue="";
+    } 
 
-      const values = Object.values(formData);
-
-      for (let i = 0; i < values.length; i++) {
-        if (values[i] !== "" || values[i] !== null) {
-          window.confirm()
+    for (let i = 0; i < formDataValue.length ; i++) {
+      if (formDataValue[i] !== null && formDataValue[i].length !== 0) {
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return() => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
         }
       }
     }
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    }
-  }, [])
-
+  }, [formData])
+    
   return (
     <div>
       <script>{document.title = "Add Campaign"}</script>
