@@ -20,6 +20,8 @@ import {
 
 const AddCampaignForm = ({ formData, setFormData, setOpen }) => {
 
+  const merchant_list = ["Kaligo", "Grab", "Shell"]
+  
   const [isFormValid, setIsFormValid] = useState(false);
   const [error, setError] = useState({
     pointsPerDollar: false,
@@ -142,7 +144,7 @@ const AddCampaignForm = ({ formData, setFormData, setOpen }) => {
               <Box className="secondColumn">
                 <Autocomplete
                   id="merchant"
-                  options={["MCC 1", "MCC 2", "MCC 3", "MCC 4"]}
+                  options={merchant_list}
                   fullWidth
                   value={formData.merchant}
                   renderInput={(params) => <TextField {...params} label="Merchant" size="small"  />}
