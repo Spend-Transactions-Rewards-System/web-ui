@@ -36,17 +36,17 @@ function App() {
             <Route path="/401" element={<Unauthorised />} />
                         
             <Route element={
-              // <ProtectedRoute>
+              <ProtectedRoute>
                 <CustomerLayout />
-              // </ProtectedRoute>
+              </ProtectedRoute>
             }>
               <Route path="/rewards" element={<Rewards />} />
             </Route>
             
             <Route element={
-              // <ProtectedRoute>
+              <ProtectedRoute>
                 <TenantLayout />
-              // </ProtectedRoute>
+              </ProtectedRoute>
             }>
               <Route path="/datafiles" element={<DataFiles />} />
               <Route path="/datafiles/upload" element={<UploadData />} />

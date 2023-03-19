@@ -1,15 +1,27 @@
 import { cleanup, render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import AddCampaigns from '../AddCampaigns';
 
 afterEach(cleanup)
 
+const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        retry: false,
+      },
+    },
+  })
+
 const MockAddCampaigns = () => {
     return(
+      <QueryClientProvider client={queryClient}>
         <BrowserRouter>
             <AddCampaigns />
         </BrowserRouter>
+      </QueryClientProvider>
     )
 } 
 
