@@ -31,7 +31,10 @@ const ProtectedRoute = ({ children }) => {
             if (!(authorisedPath[role].includes(pathname))) {
                 return <Navigate to="/401" />
             }
-        } 
+        } else {
+            return <Navigate to="/401" />
+        }
+
     } catch {
         return <Navigate to="/401" />
     }   

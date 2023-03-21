@@ -66,7 +66,9 @@ const logout = async () => {
     
             cognito.globalSignOut(params, (err) => {
                 if (err) {
-                  console.log("Logout Failed: ", err.message);
+                    d.setDate(d.getDate() - 1);
+                    document.cookie=`access= ; expires= ${d}`;
+                    document.cookie=`id= ; expires= ${d}`;
                   reject(err);
                 } else {
                     d.setDate(d.getDate() - 1);
