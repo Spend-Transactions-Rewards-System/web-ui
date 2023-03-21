@@ -5,7 +5,7 @@ const ErrorMessage = () => {
     return(
         <Typography sx={{display:"flex", alignItems: "center"}}>
             <BiErrorCircle size={20} style={{marginRight: 10}}/>
-            An error occurred, please try again later.
+            An error occurred while loading the table, please try again later.
         </Typography>
     )
 

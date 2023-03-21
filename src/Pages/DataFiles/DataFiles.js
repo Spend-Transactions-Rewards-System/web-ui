@@ -81,10 +81,25 @@ const DataFiles = () => {
         }
     }, [filter])   
 
-    if (isError) {
-        return <ErrorMessage /> 
+    const ButtonComponent = () => {
+        return(
+            <CustomButton 
+                text="Upload data"
+                link="/datafiles/upload"
+                nameOfClass="customButton"
+            />
+        )
     }
 
+    if (isError) {
+        return (
+            <Box className="flexbox-spaceBetween">
+                <ErrorMessage /> 
+                <ButtonComponent />
+            </Box>
+        )
+    }
+    
     return (
         <div> 
             <script>{document.title="Data Files"}</script>
@@ -94,11 +109,7 @@ const DataFiles = () => {
                     className="flexbox-flexEnd"
                     sx={{mb: 2}}
                 >
-                    <CustomButton 
-                        text="Upload data"
-                        link="/datafiles/upload"
-                        nameOfClass="customButton"
-                    />
+                    <ButtonComponent />
                 </Box>
                 <CollapsibleTable 
                     columnNames={columnNames}

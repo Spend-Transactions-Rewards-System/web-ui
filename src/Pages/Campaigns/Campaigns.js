@@ -10,6 +10,7 @@ import _ from "lodash";
 import CollapsibleTable from "../../Components/CollapsibleTable/CollapsibleTable";
 import LoadingAnimation from "../../Components/LoadingAnimation/LoadingAnimation";
 import CustomButton from "../../Components/CustomButton/CustomButton";
+import ErrorMessage from "../../Components/ErrorMessage/ErrorMessage";
 import { getCampaigns } from "../../API/api";
 
 const columnNames = ["Card Program", "Campaign Title", "Start Date", "End Date", "Status"]
@@ -89,6 +90,25 @@ const Campaigns = () => {
         }
     }, [filter])
 
+    const ButtonComponent = () => {
+        return(
+                <CustomButton
+                    text="Add Campaign"
+                    link="/campaigns/addcampaigns"
+                    nameOfClass="customButton"
+                />
+        )
+    }
+
+    if (isError) {
+        return (
+            <Box className="flexbox-spaceBetween">
+                <ErrorMessage /> 
+                <ButtonComponent />
+            </Box>
+        )
+    }
+
     return (
         <div>
             <script>{document.title = "Campaigns"}</script>
@@ -98,11 +118,7 @@ const Campaigns = () => {
                         className="flexbox-flexEnd"
                         sx={{ mb: 2 }}
                     >
-                        <CustomButton
-                            text="Add Campaign"
-                            link="/campaigns/addcampaigns"
-                            nameOfClass="customButton"
-                        />
+                        <ButtonComponent />
                     </Box>
                     <CollapsibleTable
                         columnNames={columnNames}
