@@ -10,10 +10,10 @@ const AccountMenu =  () => {
 
     const navigate = useNavigate();
 
-    const handleLogout = () => {
-        logout().then(() => {
-            navigate("/");
-        })
+    const handleLogout = async () => {
+        await logout()
+            .then(() => navigate("/"))
+            .catch(() => navigate("/"))
     }
 
     return (
