@@ -11,7 +11,7 @@ describe("Error Message", () => {
            <ErrorMessage />
         )
         
-        const textElement = screen.getByText(/an error occurred, please try again later/i);
+        const textElement = screen.getByText(/an error occurred while loading the table, please try again later/i);
 
         expect(textElement).toBeInTheDocument();
     })
