@@ -24,7 +24,7 @@ import { uploadFile } from "../../API/api";
 const guides = [
     "Only .csv files are accepted", 
     "Upload ONE file at a time",
-    "Ensure all columns are present in the file (Refer to table on the right)"
+    "Ensure all columns are present in the file (Refer to table)"
 ]
 
 const UploadData = () => {
@@ -94,9 +94,10 @@ const UploadData = () => {
                     return queryClient.invalidateQueries(query)
                 }, 
                 onError: (err) => {
-                    updateFormData(currFile["id"], formData, "error", err.response.data.data)
+                    const errorMessage = err.response ? err.response.data.data : "Please try again";
+                    updateFormData(currFile["id"], formData, "error", errorMessage);
                 }, 
-                mutationKey: currFile["id"] 
+                mutationKey: currFile["id"]
             })   
         }
     }, [formData.length])
@@ -143,7 +144,7 @@ const UploadData = () => {
         <Card>
             <CardContent className="guides-container">
                 <Grid container gap={1}>
-                <Grid item xs={6} >
+                <Grid item xs={12} md={6} >
                     <Box>
                         <Typography className="upload-header">Guides</Typography>
                         <ul>
@@ -206,7 +207,7 @@ const UploadData = () => {
                         </Box>
                     </Box>
                 </Grid>
-                <Grid item xs={5.8}>
+                <Grid item xs={12} md={5.8}>
                     <OrderTable />
                 </Grid>
                 { formData.length > 0 && 

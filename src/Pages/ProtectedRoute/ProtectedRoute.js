@@ -1,6 +1,7 @@
 import { Navigate, useLocation } from "react-router-dom";
 
 import jwt from "jwt-decode";
+import moment from "moment";
 
 import { getToken } from "../../Utils/getUserInfo";
 
@@ -15,27 +16,30 @@ const ProtectedRoute = ({ children }) => {
 
     try {
         const token = getToken().accessToken;
-        let d = new Date(0);
     
         if (token) {
             const decodedToken = jwt(token);
             const expirationDate = decodedToken["exp"];
+
             if (expirationDate < Math.floor(Date.now() / 1000)) {
-                d.setDate(d.setUTCSeconds(expirationDate).getDate() - 1) ; 
-                document.cookie=`access= ; expires= ${d}`;
-                document.cookie=`id= ; expires= ${d}`;
+                const newExpirationDate = moment.unix(expirationDate).subtract(1, "days"); 
+                document.cookie=`access= ; expires= ${newExpirationDate}`;
+                document.cookie=`id= ; expires= ${newExpirationDate}`;
                 return <Navigate to="/" />
             }
     
             const role = jwt(token)['cognito:groups'][0];
             if (!(authorisedPath[role].includes(pathname))) {
+                console.log("error role")
                 return <Navigate to="/401" />
             }
         } else {
+            console.log("error else")
             return <Navigate to="/401" />
         }
 
     } catch {
+        console.log("error catch")
         return <Navigate to="/401" />
     }   
 

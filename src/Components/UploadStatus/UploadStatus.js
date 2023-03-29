@@ -12,7 +12,7 @@ const UploadStatus = ({ isSuccess, fileName, type, errorMessage, cancelFile, ind
         <Card sx={{
             width: "450px", 
             borderRadius: 3, 
-            backgroundColor: isSuccess ? "#EDF7ED" : "#FDEDED"
+            backgroundColor: isSuccess ? "#EDF7ED" : "#FDEDED",
         }}>
              <Button 
                 sx={{float:"right", color: "#1B2559", minWidth: 10, mt: 1, mr: 1}}

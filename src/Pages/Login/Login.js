@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Box, Link, TextField, Typography } from "@mui/material";
 import _ from "lodash";
 import jwt from "jwt-decode";
+import moment from "moment";
 
 import "./Login.css";
 import CustomButton from "../../Components/CustomButton/CustomButton";
@@ -33,12 +34,10 @@ const Login = () => {
             const result = data.AuthenticationResult;
             const accessToken = result.AccessToken;
             const idToken = result.IdToken;
-
-            let expirationDate = new Date(0);
-            expirationDate.setDate(expirationDate.setUTCSeconds(jwt(accessToken).exp));           
+            const expirationDate = moment.unix(jwt(accessToken).exp)._d;       
             
-            document.cookie = `access=${accessToken}; expires= ${expirationDate}`;
-            document.cookie = `id=${idToken}; expires= ${expirationDate}`;
+            document.cookie = `access=${accessToken}; expires=${expirationDate}`;
+            document.cookie = `id=${idToken}; expires=${expirationDate}`;
             roleNavigation(accessToken);
         })
         .catch((err) => {

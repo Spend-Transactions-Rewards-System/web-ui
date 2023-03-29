@@ -8,12 +8,7 @@ const AWS_REGION = process.env.REACT_APP_REGION;
 const USER_POOL_ID = process.env.REACT_APP_USER_POOL_ID;
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
-
-const CARD_URL = process.env.REACT_APP_CARD_URL;
-const UPLOAD_URL = process.env.REACT_APP_UPLOAD_URL;
-const CAMPAIGN_URL = process.env.REACT_APP_CAMPAIGN_URL;
-
-const HEADER = { "Content-Type": "application/json" }
+const BASE_URL = process.env.REACT_APP_BASE_URL; 
 
 const login = async (email, password) => {
 
@@ -83,31 +78,44 @@ const logout = async () => {
 
 const getDataFiles = async (req) => {
 
-  const requestBody = JSON.stringify({ 
-    "tenant": req.queryKey[1]
-  })
+    const requestBody = JSON.stringify({ 
+        "tenant": req.queryKey[1]
+    })
 
-  return await axios
-    .post(`${UPLOAD_URL}/download/list`, requestBody, { headers: HEADER })
-    .then((res) => res.data)
+    return await axios
+        .post(`${BASE_URL}/download/list`, requestBody, { 
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+        .then((res) => res.data)
 }
 
 const getRewards = async (req) => {
+
+    const token = getToken().accessToken;
+
     return await axios
-      .get(`${CARD_URL}/card/rewards/${req.queryKey[1]}/${req.queryKey[0]}`)
+        .get(`${BASE_URL}/cards/card/rewards/${req.queryKey[1]}/${req.queryKey[0]}`, {
+            headers: {
+                "Authorization" : `Bearer ${token}`
+            }
+        })
+    //   .get(`${CARD_URL}/card/rewards/${req.queryKey[1]}/${req.queryKey[0]}`)
       .then((res) => res.data)
   }
 
-  const getCampaigns = async (req) => {
+const getCampaigns = async (req) => {
     return await axios
-      .get(`${CAMPAIGN_URL}/campaign`)
-      .then((res) => res.data)
-  }
+        .get(`${BASE_URL}/campaign`)
+        // .get(`${CAMPAIGN_URL}/campaign`)
+        .then((res) => res.data)
+}
 
 const downloadErrorFile = async (url, filename) => {
     
     return await axios 
-        .get(`${UPLOAD_URL}/download/error?url=`+url, {
+        .get(`${BASE_URL}/upload/download/error?url=`+url, {
             responseType: 'blob'
         })
         .then((res) => {
@@ -124,14 +132,19 @@ const downloadErrorFile = async (url, filename) => {
 
 const uploadFile = async (req) => {
     
+    const token = getToken().accessToken;
+
     const formData = new FormData();
     formData.append("file", req["file"]);
     formData.append("type", req["type"]);
     formData.append("tenant", req["tenant"]);
 
     return await axios
-        .post(`${UPLOAD_URL}/upload`, formData, {
-            headers: { 'Content-Type': 'multipart/form-data' }, 
+        .post(`${BASE_URL}/upload/file`, formData, {
+            headers: { 
+                'Content-Type': 'multipart/form-data',
+                "Authorization" : `Bearer ${token}` 
+            }, 
             signal: req["controller"].signal
         })
         .then((res) => res.data)
@@ -155,7 +168,12 @@ const addCampaign = async (req) => {
     })
 
     return await axios
-        .post(`${CAMPAIGN_URL}/campaign`, data, { headers: HEADER })
+        .post(`${BASE_URL}/campaign`, data, { 
+            headers: { 
+                "Content-Type": "application/json" 
+            }
+        })
+        // .post(`${CAMPAIGN_URL}/campaign`, data, { headers: HEADER })
         .then((res) => res.data)
 }
 
