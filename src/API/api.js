@@ -83,7 +83,7 @@ const getDataFiles = async (req) => {
     })
 
     return await axios
-        .post(`${BASE_URL}/download/list`, requestBody, { 
+        .post(`${BASE_URL}/upload/download/list`, requestBody, { 
             headers: {
                 "Content-Type": "application/json",
             }
@@ -140,7 +140,7 @@ const uploadFile = async (req) => {
     formData.append("tenant", req["tenant"]);
 
     return await axios
-        .post(`${BASE_URL}/upload/file`, formData, {
+        .post(`${BASE_URL}/upload/upload/file`, formData, {
             headers: { 
                 'Content-Type': 'multipart/form-data',
                 "Authorization" : `Bearer ${token}` 
@@ -151,6 +151,7 @@ const uploadFile = async (req) => {
 }
 
 const addCampaign = async (req) => {
+    
     const data = JSON.stringify({
         "title": req["title"],
         "start_date":  req["startDate"],
