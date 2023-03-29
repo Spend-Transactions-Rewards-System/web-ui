@@ -94,8 +94,13 @@ const UploadData = () => {
                     return queryClient.invalidateQueries(query)
                 }, 
                 onError: (err) => {
-                    const errorMessage = err.response ? err.response.data.data : "Please try again";
-                    updateFormData(currFile["id"], formData, "error", errorMessage);
+
+                    if (err.name === "CanceledError") {
+                        updateFormData(currFile["id"], formData, "error", "File cancelled successfully");
+                    } else {
+                        const errorMessage = err.response ? err.response.data.data : "Please try again";
+                        updateFormData(currFile["id"], formData, "error", errorMessage);
+                    }
                 }, 
                 mutationKey: currFile["id"]
             })   
