@@ -22,7 +22,7 @@ const statusList ={
         "Completed (with rejected rows)": "completedReject",
         "Processing": "processing"
     };
-const typeList = ["Spend", "Users"]
+const typeList = ["Spend", "User"]
 
 const DataFilesFilters = ({ filter, setFilter }) => {
 
