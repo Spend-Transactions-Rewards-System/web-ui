@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { CssBaseline } from "@mui/material";
+import { HelmetProvider, Helmet } from "react-helmet-async";
 
 import Rewards from "./Pages/Rewards/Rewards";
 import CustomerLayout from "./Layout/CustomerLayout";
@@ -14,6 +15,8 @@ import Login from "./Pages/Login/Login";
 import AddCampaigns from "./Pages/AddCampaign/AddCampaigns";
 import Unauthorised from "./Pages/ErrorPage/Unauthorised";
 import ProtectedRoute from "./Pages/ProtectedRoute/ProtectedRoute";
+import CustomMeta from "./Components/CustomMeta/CustomMeta";
+
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,7 +31,9 @@ function App() {
   return (
     <div className="App">
       <QueryClientProvider client={queryClient}>
-      <CssBaseline>
+      <HelmetProvider>
+        <CssBaseline>
+        <CustomMeta />
         <Router>
           <Routes>
             <Route path="/" element={<Login />}/>
@@ -56,6 +61,7 @@ function App() {
           </Routes>
         </Router>
       </CssBaseline>
+    </HelmetProvider>
     </QueryClientProvider>
     </div>
   );

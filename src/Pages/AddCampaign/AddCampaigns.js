@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation } from "react-query";
 
 import ConfirmDialog from '../../Components/ConfirmDialog/ConfirmDialog';
 import AddCampaignForm from '../../Components/AddCampaignForm/AddCampaignForm';

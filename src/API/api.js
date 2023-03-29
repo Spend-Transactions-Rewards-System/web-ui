@@ -98,7 +98,7 @@ const getRewards = async (req) => {
     return await axios
         .get(`${BASE_URL}/cards/card/rewards/${req.queryKey[1]}/${req.queryKey[0]}`, {
             headers: {
-                "Authorization" : `Bearer ${token}`
+                "Authorization" : `Bearer ${token}`,
             }
         })
     //   .get(`${CARD_URL}/card/rewards/${req.queryKey[1]}/${req.queryKey[0]}`)
@@ -116,7 +116,7 @@ const downloadErrorFile = async (url, filename) => {
     
     return await axios 
         .get(`${BASE_URL}/upload/download/error?url=`+url, {
-            responseType: 'blob'
+            responseType: 'blob',
         })
         .then((res) => {
             const data = res.data;
@@ -143,7 +143,7 @@ const uploadFile = async (req) => {
         .post(`${BASE_URL}/upload/upload/file`, formData, {
             headers: { 
                 'Content-Type': 'multipart/form-data',
-                "Authorization" : `Bearer ${token}` 
+                "Authorization" : `Bearer ${token}`,
             }, 
             signal: req["controller"].signal
         })
@@ -171,7 +171,7 @@ const addCampaign = async (req) => {
     return await axios
         .post(`${BASE_URL}/campaign`, data, { 
             headers: { 
-                "Content-Type": "application/json" 
+                "Content-Type": "application/json",
             }
         })
         // .post(`${CAMPAIGN_URL}/campaign`, data, { headers: HEADER })
