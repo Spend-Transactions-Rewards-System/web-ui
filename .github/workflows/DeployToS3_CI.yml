@@ -10,9 +10,9 @@ on:
     branches: [ main ]
 
 env:
-  REACT_APP_ACCESS_KEY_ID: ${{ secrets.REACT_APP_AWS_ACCESS_KEY_ID }}
-  REACT_APP_SECRET_ACCESS_KEY: ${{ secrets.REACT_APP_AWS_SECRET_ACCESS_KEY }}
-  REACT_APP_REGION: ${{ secrets.REACT_APP_REGION }}
+  REACT_APP_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  REACT_APP_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  REACT_APP_REGION: ${{ secrets.AWS_REGION }}
 
   REACT_APP_USER_POOL_ID: ${{ secrets.REACT_APP_USER_POOL_ID }}
   REACT_APP_CLIENT_ID: ${{ secrets.REACT_APP_CLIENT_ID }}
@@ -41,14 +41,14 @@ jobs:
       run: npm run test
 
     - name: Upload to S3
-      run: aws s3 sync ./build/ s3://g1t3-s3-primary --delete
+      run: aws s3 sync ./build/ s3://${{ secrets.AWS_S3_MAIN_APP }} --delete
       env: 
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: ${{ secrets.AWS_REGION }}
 
     - name: Upload to S3 for failover
-      run: aws s3 sync ./build/ s3://g1t3-s3-secondary --delete
+      run: aws s3 sync ./build/ s3://${{ secrets.AWS_S3_FAILOVER }} --delete
       env: 
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

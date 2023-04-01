@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { CssBaseline } from "@mui/material";
-import { HelmetProvider, Helmet } from "react-helmet-async";
+import { HelmetProvider } from "react-helmet-async";
 
 import Rewards from "./Pages/Rewards/Rewards";
 import CustomerLayout from "./Layout/CustomerLayout";
@@ -14,7 +14,7 @@ import UploadData from "./Pages/UploadData/UploadData";
 import Login from "./Pages/Login/Login";
 import AddCampaigns from "./Pages/AddCampaign/AddCampaigns";
 import Unauthorised from "./Pages/ErrorPage/Unauthorised";
-import ProtectedRoute from "./Pages/ProtectedRoute/ProtectedRoute";
+import ProtectedRoute from "./Layout/ProtectedRoute/ProtectedRoute";
 import CustomMeta from "./Components/CustomMeta/CustomMeta";
 
 

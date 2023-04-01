@@ -30,16 +30,13 @@ const ProtectedRoute = ({ children }) => {
     
             const role = jwt(token)['cognito:groups'][0];
             if (!(authorisedPath[role].includes(pathname))) {
-                console.log("error role")
                 return <Navigate to="/401" />
             }
         } else {
-            console.log("error else")
             return <Navigate to="/401" />
         }
 
     } catch {
-        console.log("error catch")
         return <Navigate to="/401" />
     }   
 
