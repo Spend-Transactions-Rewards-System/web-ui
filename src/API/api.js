@@ -96,7 +96,7 @@ const getRewards = async (req) => {
     const token = getToken().accessToken;
 
     return await axios
-        .get(`${BASE_URL}/card/cards/rewards/${req.queryKey[1]}/${req.queryKey[0]}`, {
+        .get(`${BASE_URL}/card/rewards/${req.queryKey[1]}/${req.queryKey[0]}`, {
             headers: {
                 "Authorization" : `Bearer ${token}`,
             }

@@ -33,7 +33,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
       <HelmetProvider>
         <CssBaseline>
-        {/* <CustomMeta /> */}
+        <CustomMeta />
         <Router>
           <Routes>
             <Route path="/" element={<Login />}/>

@@ -28,7 +28,6 @@ const Rewards = () => {
     });
 
     const userId = getUserId();
-    console.log(userId)
     const { isError } = useQuery([userId, "scis"], getRewards, {
         onSuccess: (data) => {
             formatData(data);

@@ -19,9 +19,6 @@ const getToken = () => {
 
 const getUserId = () => {
     const token = getToken();
-    console.log("id token", jwt(token.idToken))
-    console.log("access token", jwt(token.accessToken))
-
     return jwt(token.idToken)["custom:id"];
 }
 
