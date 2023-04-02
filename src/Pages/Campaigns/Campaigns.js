@@ -18,10 +18,10 @@ const columnNames = ["Card Program", "Campaign Title", "Start Date", "End Date",
 const Campaigns = () => {
 
       const cardIdDict = {
-        0: "SCIS Freedom Card",
-        1: "SCIS PlatinumMiles Card",
-        2: "SCIS PremiumMiles Card",
-        3: "SCIS Shopping Card",
+        1: "SCIS Freedom Card",
+        2: "SCIS PlatinumMiles Card",
+        3: "SCIS PremiumMiles Card",
+        4: "SCIS Shopping Card",
       }
 
     const [origData, setOrigData] = useState(null);
@@ -51,22 +51,26 @@ const Campaigns = () => {
         const currDate = new Date((new Date()).setHours(0, 0, 0, 0));
         let formatMain = [];
         let formatDetails = {};
-        _.map(data, (aRow) => {
+        _.map(data, (aRow, index) => {
+            let id = aRow["notifications_list"][0]?.campaign_id;
+            id = id ? id : index;
             formatMain.push({
-                id: aRow["notifications_list"][0]["campaign_id"],
+                id: id,
                 cardProgram: cardIdDict[aRow["card_program_id"]],
                 title: aRow["title"],
                 startDate: moment(aRow["start_date"]).format("DD/MM/YYYY"),
                 endDate: moment(aRow["end_date"]).format("DD/MM/YYYY"),
                 status: currDate < moment(aRow["start_date"]).toDate() ? 'inactive' : currDate > moment(aRow["end_date"]).toDate() ? 'expired' : 'active',
             })
-            formatDetails[aRow["notifications_list"][0]["campaign_id"]] = {
+            formatDetails[id] = {
                 points: aRow["points_per_dollar"],
                 minSpend: aRow["min_dollar_spent"],
                 merchant: aRow["mcc"],
-                message: aRow["notifications_list"][0]["notification_message"]
+                message: aRow["notifications_list"][0]?.notification_message 
+                            ? aRow["notifications_list"][0]?.notification_message 
+                            : "null"
             }
-        });
+        })
 
         setMainData(formatMain);
         setOrigData(formatMain);

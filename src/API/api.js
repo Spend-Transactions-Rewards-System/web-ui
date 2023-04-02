@@ -96,19 +96,17 @@ const getRewards = async (req) => {
     const token = getToken().accessToken;
 
     return await axios
-        .get(`${BASE_URL}/cards/card/rewards/${req.queryKey[1]}/${req.queryKey[0]}`, {
+        .get(`${BASE_URL}/card/cards/rewards/${req.queryKey[1]}/${req.queryKey[0]}`, {
             headers: {
                 "Authorization" : `Bearer ${token}`,
             }
         })
-    //   .get(`${CARD_URL}/card/rewards/${req.queryKey[1]}/${req.queryKey[0]}`)
       .then((res) => res.data)
-  }
+}
 
 const getCampaigns = async (req) => {
     return await axios
-        .get(`${BASE_URL}/campaign`)
-        // .get(`${CAMPAIGN_URL}/campaign`)
+        .get(`${BASE_URL}/campaign/campaigns`)
         .then((res) => res.data)
 }
 
@@ -169,7 +167,7 @@ const addCampaign = async (req) => {
     })
 
     return await axios
-        .post(`${BASE_URL}/campaign`, data, { 
+        .post(`${BASE_URL}/campaign/campaigns`, data, { 
             headers: { 
                 "Content-Type": "application/json",
             }

@@ -28,7 +28,8 @@ const Rewards = () => {
     });
 
     const userId = getUserId();
-    const { isError } = useQuery([userId, "scis_bank"], getRewards, {
+    console.log(userId)
+    const { isError } = useQuery([userId, "scis"], getRewards, {
         onSuccess: (data) => {
             formatData(data);
         },
