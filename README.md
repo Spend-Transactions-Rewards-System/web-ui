@@ -1,5 +1,5 @@
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
-<a name="readme-top"></a>
+<a name="readme-top" id="readme-top"></a>
 
 
 <!-- PROJECT LOGO -->
@@ -135,13 +135,19 @@ The frontend provides a user-interface for users to view and interact with the a
 <!-- SCREENSHOT OF THE APP -->
 ## Screenshot of the App
 1. Login Page
+![Login](./public/Screenshots/Login.PNG)
 2. Tenant: Data files Page
+![Data Files](./public/Screenshots/DataFiles.PNG)
 3. Tenant: Upload file Page
+![Upload](./public/Screenshots/Upload.PNG)
 4. Tenant: Campaigns Page
+![Campaigns](./public/Screenshots/Campaigns.PNG)
 5. Tenant: Add Campaign Page
+![Add Campaign](./public/Screenshots/AddCampaign.PNG)
 6. Customer: Rewards Page
+![Rewards](./public/Screenshots/Rewards.PNG)
 7. Error Page (for failover)
-
+![Error](./public/Screenshots/Error.PNG)
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
