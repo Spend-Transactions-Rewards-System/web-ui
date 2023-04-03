@@ -37,7 +37,7 @@ const ProtectedRoute = ({ children }) => {
         }
 
     } catch {
-        return <Navigate to="/401" />
+        return <Navigate to="/" />
     }   
 
     return children;   

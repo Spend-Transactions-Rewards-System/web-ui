@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 
+import moment from "moment";
+
 import ConfirmDialog from '../../Components/ConfirmDialog/ConfirmDialog';
 import AddCampaignForm from '../../Components/AddCampaignForm/AddCampaignForm';
 import { addCampaign } from "../../API/api";
@@ -32,8 +34,8 @@ const AddCampaign = () => {
   const handleConfirm = () => {
     const query = {
       "title": formData["title"],
-      "startDate": formData["startDate"],
-      "endDate": formData["endDate"],
+      "startDate": moment(formData["startDate"]).format("DD-MM-YYYY"),
+      "endDate": moment(formData["endDate"]).format("DD-MM-YYYY"),
       "mcc": formData["merchant"],
       "minSpend": parseInt(formData["minSpend"], 10),
       "pointsPerDollar": parseInt(formData["pointsPerDollar"], 10),
