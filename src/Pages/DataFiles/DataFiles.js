@@ -41,9 +41,6 @@ const DataFiles = () => {
                     rejected: aRow["numberOfRejected"]
                 });
             formatDetails[aRow["filename"]] = {
-                    completeDateTime: aRow["completeTimestamp"] 
-                                    ? moment.unix(aRow["completeTimestamp"]).format("DD/MM/YYYY hh:mm A") 
-                                    : "null",
                     processed: aRow["numberOfProcessed"] ? aRow["numberOfProcessed"] : "null", 
                     rejected: aRow["numberOfRejected"] ? aRow["numberOfRejected"] : "null", 
                     rejectedFile: aRow["url"]["error"]
