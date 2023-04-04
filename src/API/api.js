@@ -82,10 +82,13 @@ const getDataFiles = async (req) => {
         "tenant": req.queryKey[1]
     })
 
+    const token = getToken().accessToken;
+
     return await axios
         .post(`${BASE_URL}/upload/download/list`, requestBody, { 
             headers: {
                 "Content-Type": "application/json",
+                "Authorization" : `Basic ${token}`,
             }
         })
         .then((res) => res.data)
@@ -98,23 +101,35 @@ const getRewards = async (req) => {
     return await axios
         .get(`${BASE_URL}/card/rewards/${req.queryKey[1]}/${req.queryKey[0]}`, {
             headers: {
-                "Authorization" : `Bearer ${token}`,
+                "Authorization" : `Basic ${token}`,
             }
         })
       .then((res) => res.data)
 }
 
 const getCampaigns = async (req) => {
+
+    const token = getToken().accessToken;
+
     return await axios
-        .get(`${BASE_URL}/campaign/campaigns`)
+        .get(`${BASE_URL}/campaign/campaigns`, {
+            headers: {
+                "Authorization" : `Basic ${token}`,
+            }
+        })
         .then((res) => res.data)
 }
 
 const downloadErrorFile = async (url, filename) => {
+
+    const token = getToken().accessToken;
     
     return await axios 
         .get(`${BASE_URL}/upload/download/error?url=`+url, {
             responseType: 'blob',
+            headers: {
+                "Authorization" : `Basic ${token}`,
+            }
         })
         .then((res) => {
             const data = res.data;
@@ -141,7 +156,7 @@ const uploadFile = async (req) => {
         .post(`${BASE_URL}/upload/upload/file`, formData, {
             headers: { 
                 'Content-Type': 'multipart/form-data',
-                "Authorization" : `Bearer ${token}`,
+                "Authorization" : `Basic ${token}`,
             }, 
             signal: req["controller"].signal
         })
@@ -166,13 +181,15 @@ const addCampaign = async (req) => {
         ]
     })
 
+    const token = getToken().accessToken;
+
     return await axios
         .post(`${BASE_URL}/campaign/campaigns`, data, { 
             headers: { 
                 "Content-Type": "application/json",
+                "Authorization" : `Basic ${token}`,
             }
         })
-        // .post(`${CAMPAIGN_URL}/campaign`, data, { headers: HEADER })
         .then((res) => res.data)
 }
 
