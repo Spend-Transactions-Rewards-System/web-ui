@@ -82,7 +82,7 @@ const CollapsibleTable = ({
                 {_.map(mainData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage), (aRow) => {
                     return(
                         <Row
-                            key={aRow["id"]}
+                            key={aRow["card"] + aRow["id"]}
                             currRow={aRow}
                             type={type} 
                             details={details[aRow["id"]]}

@@ -38,7 +38,6 @@ const Rewards = () => {
         let formatMain = [];
         let formatDetails = {};
         _.map(data, (aRow) => {
-            console.log(aRow["change"])
             formatMain.push({ 
                     id: aRow["id"],
                     transactionDate: moment(aRow["transactionDate"]).format("YYYY/MM/DD"), 
