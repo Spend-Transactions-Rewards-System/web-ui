@@ -56,6 +56,11 @@ const Rewards = () => {
         });
         
         formatMain.sort((a, b) => {
+
+            if (a.card.toLowerCase().includes("mile") && b.card.toLowerCase().includes("mile")) {
+                return (parseFloat(a.balance.replace(",", "")) > parseFloat(b.balance.replace(",", "")) ? -1 : 1) 
+            }
+
             return  (a.card > b.card) 
                     ? 1 
                     : (a.card === b.card) ?
