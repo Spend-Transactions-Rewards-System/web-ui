@@ -54,7 +54,15 @@ const Rewards = () => {
                     amountSpent: "$" + aRow["amount"].toLocaleString(undefined, {minimumFractionDigits: 2})
                 };
         });
-
+        
+        formatMain.sort((a, b) => {
+            return  (a.card > b.card) 
+                    ? 1 
+                    : (a.card === b.card) ?
+                    (parseFloat(a.balance.replace(",", "")) > parseFloat(b.balance.replace(",", "")) ? -1 : 1) 
+                    :-1
+        });
+    
         setMainData(formatMain);
         setOrigData(formatMain);
         setDetails(formatDetails);

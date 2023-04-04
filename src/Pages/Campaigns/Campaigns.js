@@ -72,6 +72,11 @@ const Campaigns = () => {
             }
         })
 
+        formatMain.sort((a, b) => {
+            return moment(moment(a.startDate, "DD/MM/YYYY"))
+                    .isAfter(moment(b.startDate, "DD/MM/YYYY")) ? 1 : -1
+        });
+
         setMainData(formatMain);
         setOrigData(formatMain);
         setDetails(formatDetails);
