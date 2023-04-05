@@ -39,7 +39,7 @@ const AddCampaign = () => {
       "mcc": formData["merchant"],
       "minSpend": parseInt(formData["minSpend"], 10),
       "pointsPerDollar": parseInt(formData["pointsPerDollar"], 10),
-      "card_program_id": cardIdDict[formData["cardProgram"]],
+      "card_program_id": cardIdDict[formData["cardProgram"]] + 1,
       "notification_title": formData["notificationTitle"],
       "notification_message": formData["notificationMessage"]
     }
